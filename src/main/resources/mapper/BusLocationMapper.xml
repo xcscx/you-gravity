@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.itegg.yougravitybackend.mapper.BusLocationMapper">
+
+    <resultMap id="BaseResultMap" type="com.itegg.yougravitybackend.model.entity.BusLocation">
+            <id property="id" column="id" />
+            <result property="event_id" column="event_id" />
+            <result property="longitude" column="longitude" />
+            <result property="latitude" column="latitude" />
+            <result property="location_name" column="location_name" />
+            <result property="create_time" column="create_time" />
+            <result property="update_time" column="update_time" />
+            <result property="remove_flag" column="remove_flag" />
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        id,event_id,longitude,latitude,location_name,create_time,
+        update_time,remove_flag
+    </sql>
+</mapper>
