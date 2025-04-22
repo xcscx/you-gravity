@@ -27,15 +27,18 @@ public class BusCommentLike {
     /**
      * 点赞用户
      */
-    private Long user_id;
+    @TableField("user_id")
+    private Long userId;
 
     /**
      * 点赞评论
      */
-    private Long comment_id;
+    @TableField("comment_id")
+    private Long commentId;
 
     /**
      * 创建时间
      */
-    private Date create_time;
+    @TableField("create_time")
+    private Date createTime;
 }

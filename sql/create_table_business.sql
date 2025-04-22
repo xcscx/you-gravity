@@ -14,6 +14,19 @@ create table if not exists bus_event
     ) comment '活动表' collate = utf8mb4_unicode_ci;
 
 
+-- 活动参与表
+create table if not exists bus_event_join_user
+(
+    id						bigint auto_increment comment 'id' primary key,
+    event_id      bigint    not null comment '活动id',
+    user_id       bigint    not null comment '用户id',
+    create_time  	datetime  default CURRENT_TIMESTAMP  not null comment '创建时间',
+    update_time   datetime  default CURRENT_TIMESTAMP  not null comment '最后更新时间',
+    remove_flag		TINYINT		default 0		not null comment '是否删除 0-否 1-是',
+    INDEX idx_event_user(event_id,user_id)
+    ) comment '活动参与表' collate = utf8mb4_unicode_ci;
+
+
 -- 地点表
 create table if not exists bus_location
 (

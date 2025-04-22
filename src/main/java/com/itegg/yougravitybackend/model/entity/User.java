@@ -25,51 +25,61 @@ public class User {
     /**
      * 用户账号
      */
-    private String user_account;
+    @TableField("user_account")
+    private String userAccount;
 
     /**
      * 密文密码
      */
-    private String user_password;
+    @TableField("user_password")
+    private String userPassword;
 
     /**
      * 用户昵称
      */
-    private String user_name;
+    @TableField("user_name")
+    private String userName;
 
     /**
      * 用户头像
      */
-    private String user_avatar;
+    @TableField("user_avatar")
+    private String userAvatar;
 
     /**
      * 用户简介
      */
-    private String user_profile;
+    @TableField("user_profile")
+    private String userProfile;
 
     /**
      * 用户标签
      */
+    @TableField("tags")
     private String tags;
 
     /**
      * 用户角色 user/admin
      */
-    private String user_role;
+    @TableField("user_role")
+    private String userRole;
 
     /**
      * 创建时间
      */
-    private Date create_time;
+    @TableField("create_time")
+    private Date createTime;
 
     /**
      * 最后更新时间
      */
-    private Date update_time;
+    @TableField("update_time")
+    private Date updateTime;
 
     /**
      * 是否删除 0-否 1-是
      */
     @TableLogic
-    private Integer remove_flag;
+    @TableField("remove_flag")
+    private Integer removeFlag;
 }

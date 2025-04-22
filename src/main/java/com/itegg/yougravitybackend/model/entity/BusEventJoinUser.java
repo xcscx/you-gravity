@@ -1,21 +1,19 @@
 package com.itegg.yougravitybackend.model.entity;
 
-import com.baomidou.mybatisplus.annotation.*;
-
+import com.baomidou.mybatisplus.annotation.IdType;
+import com.baomidou.mybatisplus.annotation.TableField;
+import com.baomidou.mybatisplus.annotation.TableId;
+import com.baomidou.mybatisplus.annotation.TableName;
 import java.util.Date;
 import lombok.Data;
 
 /**
- * 地点表
- * @TableName bus_location
+ * 活动参与表
+ * @TableName bus_event_join_user
  */
-@TableName(value ="bus_location")
+@TableName(value ="bus_event_join_user")
 @Data
-public class BusLocation {
-
-    @TableField(exist = false)
-    private static final long serialVersionUID = 1L;
-
+public class BusEventJoinUser {
     /**
      * id
      */
@@ -29,22 +27,10 @@ public class BusLocation {
     private Long eventId;
 
     /**
-     * 经度
+     * 用户id
      */
-    @TableField("longitude")
-    private String longitude;
-
-    /**
-     * 纬度
-     */
-    @TableField("latitude")
-    private String latitude;
-
-    /**
-     * 地点名称
-     */
-    @TableField("location_name")
-    private String locationName;
+    @TableField("user_id")
+    private Long userId;
 
     /**
      * 创建时间
@@ -61,7 +47,6 @@ public class BusLocation {
     /**
      * 是否删除 0-否 1-是
      */
-    @TableLogic
     @TableField("remove_flag")
     private Integer removeFlag;
 }

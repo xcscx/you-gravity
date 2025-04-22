@@ -25,36 +25,43 @@ public class UserTag {
     /**
      * 标签名
      */
-    private String tag_name;
+    @TableField("tag_name")
+    private String tagName;
 
     /**
      * 父标签id
      */
-    private Long parent_id;
+    @TableField("parent_id")
+    private Long parentId;
 
     /**
      * 是否为父标签:0不是-1是
      */
-    private Integer is_parent;
+    @TableField("is_parent")
+    private Integer isParent;
 
     /**
      * 创建人名称
      */
-    private Long create_by;
+    @TableField("create_by")
+    private Long createBy;
 
     /**
      * 创建时间
      */
-    private Date create_time;
+    @TableField("create_time")
+    private Date createTime;
 
     /**
      * 最后更新时间
      */
-    private Date update_time;
+    @TableField("update_time")
+    private Date updateTime;
 
     /**
      * 是否删除 0-否 1-是
      */
     @TableLogic
-    private Integer remove_flag;
+    @TableField("remove_flag")
+    private Integer removeFlag;
 }

@@ -25,41 +25,49 @@ public class BusEvent {
     /**
      * 活动名称
      */
-    private String event_name;
+    @TableField("event_name")
+    private String eventName;
 
     /**
      * 活动地点
      */
-    private String event_city;
+    @TableField("event_city")
+    private String eventCity;
 
     /**
      * 开始时间
      */
-    private Date event_start_time;
+    @TableField("event_start_time")
+    private Date eventStartTime;
 
     /**
      * 结束时间
      */
-    private Date event_end_time;
+    @TableField("event_end_time")
+    private Date eventEndTime;
 
     /**
      * 活动背景图片
      */
-    private String event_background_image;
+    @TableField("event_background_image")
+    private String eventBackgroundImage;
 
     /**
      * 创建时间
      */
-    private Date create_time;
+    @TableField("create_time")
+    private Date createTime;
 
     /**
      * 最后更新时间
      */
-    private Date update_time;
+    @TableField("update_time")
+    private Date updateTime;
 
     /**
      * 是否删除 0-否 1-是
      */
     @TableLogic
-    private Integer remove_flag;
+    @TableField("remove_flag")
+    private Integer removeFlag;
 }

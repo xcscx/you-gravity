@@ -25,41 +25,49 @@ public class BusComment {
     /**
      * 地点id
      */
-    private Long location_id;
+    @TableField("location_id")
+    private Long locationId;
 
     /**
      * 评论信息
      */
+    @TableField("message")
     private String message;
 
     /**
      * 点赞数量
      */
-    private Integer like_count;
+    @TableField("like_count")
+    private Integer likeCount;
 
     /**
      * 回复的评论，默认为0
      */
-    private Long parent_id;
+    @TableField("parent_id")
+    private Long parentId;
 
     /**
      * 创建人
      */
-    private Long create_by;
+    @TableField("create_by")
+    private Long createBy;
 
     /**
      * 创建时间
      */
-    private Date create_time;
+    @TableField("create_time")
+    private Date createTime;
 
     /**
      * 最后更新时间
      */
-    private Date update_time;
+    @TableField("update_time")
+    private Date updateTime;
 
     /**
      * 是否删除 0-否 1-是
      */
     @TableLogic
-    private Integer remove_flag;
+    @TableField("remove_flag")
+    private Integer removeFlag;
 }
