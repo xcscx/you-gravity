@@ -6,9 +6,9 @@
 
     <resultMap id="BaseResultMap" type="com.itegg.yougravitybackend.model.entity.BusCommentLike">
             <id property="id" column="id" />
-            <result property="user_id" column="user_id" />
-            <result property="comment_id" column="comment_id" />
-            <result property="create_time" column="create_time" />
+            <result property="userId" column="user_id" />
+            <result property="commentId" column="comment_id" />
+            <result property="createTime" column="create_time" />
     </resultMap>
 
     <sql id="Base_Column_List">

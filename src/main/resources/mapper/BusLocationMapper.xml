@@ -6,13 +6,13 @@
 
     <resultMap id="BaseResultMap" type="com.itegg.yougravitybackend.model.entity.BusLocation">
             <id property="id" column="id" />
-            <result property="event_id" column="event_id" />
+            <result property="eventId" column="event_id" />
             <result property="longitude" column="longitude" />
             <result property="latitude" column="latitude" />
-            <result property="location_name" column="location_name" />
-            <result property="create_time" column="create_time" />
-            <result property="update_time" column="update_time" />
-            <result property="remove_flag" column="remove_flag" />
+            <result property="locationName" column="location_name" />
+            <result property="createTime" column="create_time" />
+            <result property="updateTime" column="update_time" />
+            <result property="removeFlag" column="remove_flag" />
     </resultMap>
 
     <sql id="Base_Column_List">

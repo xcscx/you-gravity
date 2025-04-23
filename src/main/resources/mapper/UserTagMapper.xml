@@ -6,13 +6,13 @@
 
     <resultMap id="BaseResultMap" type="com.itegg.yougravitybackend.model.entity.UserTag">
             <id property="id" column="id" />
-            <result property="tag_name" column="tag_name" />
-            <result property="parent_id" column="parent_id" />
-            <result property="is_parent" column="is_parent" />
-            <result property="create_by" column="create_by" />
-            <result property="create_time" column="create_time" />
-            <result property="update_time" column="update_time" />
-            <result property="remove_flag" column="remove_flag" />
+            <result property="tagName" column="tag_name" />
+            <result property="parentId" column="parent_id" />
+            <result property="isParent" column="is_parent" />
+            <result property="createBy" column="create_by" />
+            <result property="createTime" column="create_time" />
+            <result property="updateTime" column="update_time" />
+            <result property="removeFlag" column="remove_flag" />
     </resultMap>
 
     <sql id="Base_Column_List">
