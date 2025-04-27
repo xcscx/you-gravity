@@ -1,17 +1,17 @@
 -- 活动表
-create table if not exists bus_event
-(
-    id						bigint auto_increment comment 'id' primary key,
-    event_name    varchar(128)    not null comment '活动名称',
-    event_city    varchar(128)    not null comment '活动地点',
-    event_start_time  datetime    not null comment '开始时间',
-    event_end_time  datetime      not null comment '结束时间',
-    event_background_image  varchar(512) null comment '活动背景图片',
-    create_time  	datetime  default CURRENT_TIMESTAMP  not null comment '创建时间',
-    update_time   datetime  default CURRENT_TIMESTAMP  not null comment '最后更新时间',
-    remove_flag		TINYINT		default 0		not null comment '是否删除 0-否 1-是',
-    UNIQUE KEY uk_eventName(event_name)
-    ) comment '活动表' collate = utf8mb4_unicode_ci;
+CREATE TABLE `bus_event` (
+    `id` bigint NOT NULL AUTO_INCREMENT COMMENT 'id',
+    `event_name` varchar(128) COLLATE utf8mb4_unicode_ci NOT NULL COMMENT '活动名称',
+    `event_city` varchar(128) COLLATE utf8mb4_unicode_ci NOT NULL COMMENT '活动地点',
+    `event_start_time` datetime NOT NULL COMMENT '开始时间',
+    `event_end_time` datetime NOT NULL COMMENT '结束时间',
+    `event_background_image` varchar(512) COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT '活动背景图片',
+    `create_time` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
+    `update_time` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '最后更新时间',
+    `remove_flag` tinyint NOT NULL DEFAULT '0' COMMENT '是否删除 0-否 1-是',
+    PRIMARY KEY (`id`),
+    KEY `uk_eventName` (`event_name`) USING BTREE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci COMMENT='活动表';
 
 
 -- 活动参与表

@@ -1,7 +1,13 @@
 package com.itegg.yougravitybackend.mapper;
 
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.itegg.yougravitybackend.model.dto.busEvent.EventJoinQuertRequest;
 import com.itegg.yougravitybackend.model.entity.BusEvent;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
+import com.itegg.yougravitybackend.model.vo.BusEventVO;
+import org.apache.ibatis.annotations.Param;
+
+import java.util.List;
 
 /**
 * @author ITegg
@@ -10,6 +16,8 @@ import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 * @Entity com.itegg.yougravitybackend.model.entity.BusEvent
 */
 public interface BusEventMapper extends BaseMapper<BusEvent> {
+
+    List<BusEventVO> getEventByUserJoin(@Param("eventJoinQuertRequest") EventJoinQuertRequest condition);
 
 }
 
