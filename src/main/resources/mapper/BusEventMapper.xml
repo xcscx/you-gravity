@@ -43,5 +43,29 @@
         order by be.event_start_time desc
     </select>
 
+    <select id="getEventByUserNotJoin" resultType="com.itegg.yougravitybackend.model.vo.BusEventVO">
+        SELECT *
+        FROM bus_event be
+        WHERE be.remove_flag = 0
+          AND be.id NOT IN (SELECT bet.id FROM bus_event bet
+                            LEFT JOIN bus_event_join_user beu ON bet.id = beu.event_id
+                            WHERE bet.remove_flag = 0
+                              AND beu.remove_flag = 0
+                              AND beu.user_id = #{condition.userId})
+        <if test="condition.eventName != null and condition.eventName != ''">
+            AND be.event_name LIKE CONCAT('%', #{condition.eventName}, '%')
+        </if>
+        <if test="condition.eventCity != null and condition.eventCity != ''">
+            AND be.event_city LIKE CONCAT('%', #{condition.eventCity}, '%')
+        </if>
+        <if test="condition.eventStartTime != null">
+            AND be.event_start_time &lt;= #{condition.eventStartTime}
+        </if>
+        <if test="condition.eventEndTime != null">
+            AND be.event_end_time &gt;= #{condition.eventEndTime}
+        </if>
+        order by be.event_start_time desc
+    </select>
+
 
 </mapper>

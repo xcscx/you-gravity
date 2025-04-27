@@ -4,6 +4,7 @@ import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.itegg.yougravitybackend.model.dto.busEvent.EventAddRequest;
 import com.itegg.yougravitybackend.model.dto.busEvent.EventJoinQuertRequest;
 import com.itegg.yougravitybackend.model.dto.busEvent.EventQueryRequest;
+import com.itegg.yougravitybackend.model.dto.busEvent.EventUserJoinRequest;
 import com.itegg.yougravitybackend.model.entity.BusEvent;
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.itegg.yougravitybackend.model.vo.BusEventVO;
@@ -39,13 +40,25 @@ public interface BusEventService extends IService<BusEvent> {
      */
     List<BusEventVO> getEventByUserJoin(EventJoinQuertRequest eventJoinQuertRequest);
 
-    // 当前用户未参与的活动列表
+    /**
+     * 当前用户未参与的活动列表
+     * @param eventJoinQuertRequest 搜索参数
+     * @return 符合条件的分页列表
+     */
+    List<BusEventVO> getEventByUserNotJoin(EventJoinQuertRequest eventJoinQuertRequest);
 
+    /**
+     * 活动报名
+     * @param request 请求参数
+     * @return 是否报名成功
+     */
+    long joinEvent(EventUserJoinRequest request);
 
-    // 活动报名
-
-
-    // 活动退出
-
+    /**
+     * 活动退出
+     * @param request 请求参数
+     * @return 是否退出成功
+     */
+    boolean quitEvent(EventUserJoinRequest request);
 
 }

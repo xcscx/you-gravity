@@ -10,9 +10,7 @@ import com.itegg.yougravitybackend.constant.UserConstant;
 import com.itegg.yougravitybackend.exception.BusinessException;
 import com.itegg.yougravitybackend.exception.ErrorCode;
 import com.itegg.yougravitybackend.exception.ThrowUtils;
-import com.itegg.yougravitybackend.model.dto.busEvent.EventAddRequest;
-import com.itegg.yougravitybackend.model.dto.busEvent.EventQueryRequest;
-import com.itegg.yougravitybackend.model.dto.busEvent.EventUpdateRequest;
+import com.itegg.yougravitybackend.model.dto.busEvent.*;
 import com.itegg.yougravitybackend.model.entity.BusEvent;
 import com.itegg.yougravitybackend.model.vo.BusEventVO;
 import com.itegg.yougravitybackend.service.BusEventService;
@@ -97,23 +95,64 @@ public class BusEventController {
      * @return 活动详情
      */
     @GetMapping("/get")
-    public Result<BusEventVO> getEventById(@RequestBody IdCondition id) {
-        ThrowUtils.throwIf(id == null, ErrorCode.PARAMS_ERROR);
+    public Result<BusEventVO> getEventById(long id) {
+        ThrowUtils.throwIf(ObjectUtil.isNull(id), ErrorCode.PARAMS_ERROR);
         BusEvent byId = busEventService.getById(id);
         BusEventVO vo = new BusEventVO();
         BeanUtils.copyProperties(byId, vo);
         return ResultUtils.ok(vo);
     }
 
-    // 当前用户参与了的活动列表
+    /**
+     * 当前用户参与了的活动列表
+     * @param request 请求参数
+     * @return 符合当前用户已参加的活动列表
+     */
+    @PostMapping("/my/join")
+    public Result<Page<BusEventVO>> listMyJoinEventVOByPage(@RequestBody EventJoinQuertRequest request) {
+        ThrowUtils.throwIf(ObjectUtil.isNull(request), ErrorCode.PARAMS_ERROR);
+        long current = request.getCurrent();
+        long pageSize = request.getPageSize();
+        Page<BusEventVO> eventPage = new Page<>(current, pageSize);
+        eventPage.setRecords(busEventService.getEventByUserJoin(request));
+        return ResultUtils.ok(eventPage);
+    }
 
+    /**
+     * 当前用户没有参与，活动也没有结束的活动列表
+     * @param request 请求参数
+     * @return 当前用户还未参加，但是可以参加的活动列表
+     */
+    @PostMapping("/can/join")
+    public Result<Page<BusEventVO>> listMyCanJoinEventVOByPage(@RequestBody EventJoinQuertRequest request) {
+        ThrowUtils.throwIf(ObjectUtil.isNull(request), ErrorCode.PARAMS_ERROR);
+        long current = request.getCurrent();
+        long pageSize = request.getPageSize();
+        Page<BusEventVO> eventPage = new Page<>(current, pageSize);
+        eventPage.setRecords(busEventService.getEventByUserNotJoin(request));
+        return ResultUtils.ok(eventPage);
+    }
 
-    // 当前用户没有参与，活动也没有结束的活动列表
+    /**
+     * 参加活动
+     * @param request 参加活动请求参数
+     * @return 参加结果
+     */
+    @PostMapping("/join")
+    public Result<Boolean> joinEvent(@RequestBody EventUserJoinRequest request) {
+        ThrowUtils.throwIf(ObjectUtil.isNull(request), ErrorCode.PARAMS_ERROR);
+        return ResultUtils.ok(busEventService.joinEvent(request) > 0);
+    }
 
-
-    // 参加活动
-
-
-    // 退出活动
+    /**
+     * 退出活动
+     * @param request 退出活动请求参数
+     * @return 退出结果
+     */
+    @PostMapping("/quit")
+    public Result<Boolean> quitEvent(@RequestBody EventUserJoinRequest request) {
+        ThrowUtils.throwIf(ObjectUtil.isNull(request), ErrorCode.PARAMS_ERROR);
+        return ResultUtils.ok(busEventService.quitEvent(request));
+    }
 
 }
