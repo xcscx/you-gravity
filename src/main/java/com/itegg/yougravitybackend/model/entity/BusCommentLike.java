@@ -1,10 +1,10 @@
 package com.itegg.yougravitybackend.model.entity;
 
-import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableField;
-import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import java.util.Date;
+
+import com.itegg.yougravitybackend.common.model.IdModel;
 import lombok.Data;
 
 /**
@@ -13,16 +13,7 @@ import lombok.Data;
  */
 @TableName(value ="bus_comment_like")
 @Data
-public class BusCommentLike {
-
-    @TableField(exist = false)
-    private static final long serialVersionUID = 1L;
-
-    /**
-     * id
-     */
-    @TableId(type = IdType.AUTO)
-    private Long id;
+public class BusCommentLike extends IdModel {
 
     /**
      * 点赞用户

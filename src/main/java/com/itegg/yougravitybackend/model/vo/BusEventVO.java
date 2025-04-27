@@ -1,12 +1,10 @@
 package com.itegg.yougravitybackend.model.vo;
 
-import com.baomidou.mybatisplus.annotation.IdType;
-import com.baomidou.mybatisplus.annotation.TableField;
-import com.baomidou.mybatisplus.annotation.TableId;
 import lombok.Data;
 
 import java.io.Serializable;
-import java.util.Date;
+import java.time.LocalDateTime;
+
 
 @Data
 public class BusEventVO implements Serializable {
@@ -31,12 +29,12 @@ public class BusEventVO implements Serializable {
     /**
      * 开始时间
      */
-    private Date eventStartTime;
+    private LocalDateTime eventStartTime;
 
     /**
      * 结束时间
      */
-    private Date eventEndTime;
+    private LocalDateTime eventEndTime;
 
     /**
      * 活动背景图片
@@ -46,6 +44,6 @@ public class BusEventVO implements Serializable {
     /**
      * 创建时间
      */
-    private Date createTime;
+    private LocalDateTime createTime;
 
 }

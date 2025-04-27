@@ -3,7 +3,7 @@ package com.itegg.yougravitybackend.model.dto.busEvent;
 import lombok.Data;
 
 import java.io.Serializable;
-import java.util.Date;
+import java.time.LocalDateTime;
 
 @Data
 public class EventUpdateRequest implements Serializable {
@@ -28,11 +28,11 @@ public class EventUpdateRequest implements Serializable {
     /**
      * 开始时间
      */
-    private Date eventStartTime;
+    private LocalDateTime eventStartTime;
 
     /**
      * 结束时间
      */
-    private Date eventEndTime;
+    private LocalDateTime eventEndTime;
 
 }

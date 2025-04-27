@@ -5,7 +5,7 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 
 import java.io.Serializable;
-import java.util.Date;
+import java.time.LocalDateTime;
 
 @Data
 @EqualsAndHashCode(callSuper = true)
@@ -31,11 +31,11 @@ public class EventQueryRequest extends PageRequest implements Serializable {
     /**
      * 开始时间
      */
-    private Date eventStartTime;
+    private LocalDateTime eventStartTime;
 
     /**
      * 结束时间
      */
-    private Date eventEndTime;
+    private LocalDateTime eventEndTime;
 
 }

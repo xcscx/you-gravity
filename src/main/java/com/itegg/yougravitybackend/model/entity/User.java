@@ -2,7 +2,7 @@ package com.itegg.yougravitybackend.model.entity;
 
 import com.baomidou.mybatisplus.annotation.*;
 
-import java.util.Date;
+import com.itegg.yougravitybackend.common.model.superModel;
 import lombok.Data;
 
 /**
@@ -11,16 +11,7 @@ import lombok.Data;
  */
 @TableName(value ="user")
 @Data
-public class User {
-
-    @TableField(exist = false)
-    private static final long serialVersionUID = 1L;
-
-    /**
-     * id
-     */
-    @TableId(type = IdType.AUTO)
-    private Long id;
+public class User extends superModel {
 
     /**
      * 用户账号
@@ -64,22 +55,4 @@ public class User {
     @TableField("user_role")
     private String userRole;
 
-    /**
-     * 创建时间
-     */
-    @TableField("create_time")
-    private Date createTime;
-
-    /**
-     * 最后更新时间
-     */
-    @TableField("update_time")
-    private Date updateTime;
-
-    /**
-     * 是否删除 0-否 1-是
-     */
-    @TableLogic
-    @TableField("remove_flag")
-    private Integer removeFlag;
 }

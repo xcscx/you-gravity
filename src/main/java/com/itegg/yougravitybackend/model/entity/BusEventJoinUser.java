@@ -1,10 +1,10 @@
 package com.itegg.yougravitybackend.model.entity;
 
-import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableField;
-import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
-import java.util.Date;
+
+
+import com.itegg.yougravitybackend.common.model.superModel;
 import lombok.Data;
 
 /**
@@ -13,12 +13,7 @@ import lombok.Data;
  */
 @TableName(value ="bus_event_join_user")
 @Data
-public class BusEventJoinUser {
-    /**
-     * id
-     */
-    @TableId(type = IdType.AUTO)
-    private Long id;
+public class BusEventJoinUser extends superModel{
 
     /**
      * 活动id
@@ -32,21 +27,4 @@ public class BusEventJoinUser {
     @TableField("user_id")
     private Long userId;
 
-    /**
-     * 创建时间
-     */
-    @TableField("create_time")
-    private Date createTime;
-
-    /**
-     * 最后更新时间
-     */
-    @TableField("update_time")
-    private Date updateTime;
-
-    /**
-     * 是否删除 0-否 1-是
-     */
-    @TableField("remove_flag")
-    private Integer removeFlag;
 }
