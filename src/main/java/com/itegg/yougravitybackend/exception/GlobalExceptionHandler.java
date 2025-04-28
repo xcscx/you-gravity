@@ -2,6 +2,7 @@ package com.itegg.yougravitybackend.exception;
 
 import com.itegg.yougravitybackend.common.Result;
 import com.itegg.yougravitybackend.common.ResultUtils;
+import io.swagger.v3.oas.annotations.Hidden;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
@@ -10,6 +11,7 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
  * 全局异常处理器
  * @author xtx
  */
+@Hidden
 @RestControllerAdvice
 @Slf4j
 public class GlobalExceptionHandler {
