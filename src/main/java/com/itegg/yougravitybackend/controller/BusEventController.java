@@ -80,12 +80,12 @@ public class BusEventController {
      */
     @PostMapping("/list/page")
     @AuthCheck(mustRole = UserConstant.ADMIN_ROLE)
-    public Result<Page<BusEvent>> listEventVOByPage(@RequestBody EventQueryRequest request) {
+    public Result<Page<BusEvent>> listEventByPage(@RequestBody EventQueryRequest request) {
         ThrowUtils.throwIf(ObjectUtil.isNull(request), ErrorCode.PARAMS_ERROR);
         long current = request.getCurrent();
         long pageSize = request.getPageSize();
         Page<BusEvent> eventPage = busEventService.page(new Page<>(current, pageSize),
-                busEventService.getEventVOList(request));
+                busEventService.getEventList(request));
         return ResultUtils.ok(eventPage);
     }
 

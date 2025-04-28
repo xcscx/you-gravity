@@ -28,18 +28,20 @@ create table if not exists bus_event_join_user
 
 
 -- 地点表
-create table if not exists bus_location
-(
-    id						bigint auto_increment comment 'id' primary key,
-    event_id      bigint          not null comment '活动id',
-    longitude     varchar(128)    not null comment '经度',
-    latitude      varchar(128)    not null comment '纬度',
-    location_name  varchar(128)    null comment '地点名称',
-    create_time  	datetime  default CURRENT_TIMESTAMP  not null comment '创建时间',
-    update_time   datetime  default CURRENT_TIMESTAMP  not null comment '最后更新时间',
-    remove_flag		TINYINT		default 0		not null comment '是否删除 0-否 1-是',
-    INDEX idx_locationName(location_name)
-    ) comment '地点表' collate = utf8mb4_unicode_ci;
+CREATE TABLE `bus_location` (
+    `id` bigint NOT NULL AUTO_INCREMENT COMMENT 'id',
+    `event_id` bigint NOT NULL COMMENT '活动id',
+    `url` varchar(512) COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT '图片url',
+    `introduction` varchar(512) COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT '简介',
+    `longitude` varchar(128) COLLATE utf8mb4_unicode_ci NOT NULL COMMENT '经度',
+    `latitude` varchar(128) COLLATE utf8mb4_unicode_ci NOT NULL COMMENT '纬度',
+    `location_name` varchar(128) COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT '地点名称',
+    `create_time` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
+    `update_time` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '最后更新时间',
+    `remove_flag` tinyint NOT NULL DEFAULT '0' COMMENT '是否删除 0-否 1-是',
+    PRIMARY KEY (`id`),
+    KEY `idx_locationName` (`location_name`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci COMMENT='地点表';
 
 
 -- 评论表

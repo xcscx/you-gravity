@@ -20,6 +20,18 @@ public class BusLocation extends superModel {
     private Long eventId;
 
     /**
+     * 图片url
+     */
+    @TableField("url")
+    private String url;
+
+    /**
+     * 简介
+     */
+    @TableField("introduction")
+    private String introduction;
+
+    /**
      * 经度
      */
     @TableField("longitude")

@@ -62,10 +62,7 @@ public class BusEventServiceImpl extends ServiceImpl<BusEventMapper, BusEvent>
     }
 
     @Override
-    public QueryWrapper<BusEvent> getEventVOList(EventQueryRequest eventQueryRequest) {
-        if(ObjectUtil.isNull(eventQueryRequest)) {
-            throw new BusinessException(ErrorCode.PARAMS_ERROR, "查询条件为空");
-        }
+    public QueryWrapper<BusEvent> getEventList(EventQueryRequest eventQueryRequest) {
         QueryWrapper<BusEvent> queryWrapper = new QueryWrapper<>();
         queryWrapper.eq(ObjectUtil.isNotNull(eventQueryRequest.getId()), "id", eventQueryRequest.getId());
         queryWrapper.eq(StrUtil.isNotBlank(eventQueryRequest.getEventName()), "event_name", eventQueryRequest.getEventName());

@@ -31,7 +31,7 @@ public interface BusEventService extends IService<BusEvent> {
      * @Param eventQueryRequest 分页查询参数
      * @return 符合条件的活动列表
      */
-    QueryWrapper<BusEvent> getEventVOList(EventQueryRequest eventQueryRequest);
+    QueryWrapper<BusEvent> getEventList(EventQueryRequest eventQueryRequest);
 
     /**
      * 当前用户已参加的活动列表
