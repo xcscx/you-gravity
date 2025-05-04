@@ -3,6 +3,7 @@ package com.itegg.yougravitybackend.service.impl;
 import cn.hutool.core.util.ObjectUtil;
 import cn.hutool.core.util.StrUtil;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.itegg.yougravitybackend.exception.BusinessException;
 import com.itegg.yougravitybackend.exception.ErrorCode;
@@ -10,19 +11,39 @@ import com.itegg.yougravitybackend.model.dto.busComment.CommentAddRequest;
 import com.itegg.yougravitybackend.model.dto.busComment.CommentQueryRequest;
 import com.itegg.yougravitybackend.model.dto.busComment.CommentReplyRequest;
 import com.itegg.yougravitybackend.model.entity.BusComment;
+import com.itegg.yougravitybackend.model.entity.BusCommentLike;
+import com.itegg.yougravitybackend.model.entity.User;
+import com.itegg.yougravitybackend.model.vo.BusCommentVO;
+import com.itegg.yougravitybackend.service.BusCommentLikeService;
 import com.itegg.yougravitybackend.service.BusCommentService;
 import com.itegg.yougravitybackend.mapper.BusCommentMapper;
+import com.itegg.yougravitybackend.service.UserService;
+import jakarta.annotation.Resource;
+import jakarta.servlet.http.HttpServletRequest;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.BeanUtils;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
+import java.util.stream.Collectors;
 
 /**
 * @author ITegg
 * @description 针对表【bus_comment(评论表)】的数据库操作Service实现
 * @createDate 2025-04-21 15:04:59
 */
+@Slf4j
 @Service
 public class BusCommentServiceImpl extends ServiceImpl<BusCommentMapper, BusComment>
     implements BusCommentService{
+
+    @Resource
+    private UserService userService;
+
+    @Resource
+    @Lazy
+    private BusCommentLikeService busCommentLikeService;
 
     @Override
     public long addComment(CommentAddRequest req) {
@@ -65,16 +86,49 @@ public class BusCommentServiceImpl extends ServiceImpl<BusCommentMapper, BusComm
     }
 
     @Override
-    public QueryWrapper<BusComment> getCommentList(CommentQueryRequest req) {
+    public Page<BusCommentVO> getCommentList(CommentQueryRequest comReq, HttpServletRequest req) {
         // 校验数据
-        if(ObjectUtil.isNull(req.getLocationId()) || req.getLocationId() < 0) {
+        if(ObjectUtil.isNull(comReq.getLocationId()) || comReq.getLocationId() < 0) {
             throw new BusinessException(ErrorCode.PARAMS_ERROR, "无法找到评论地址");
         }
+        User loginUser = userService.getLoginUser(req);
         // 构建查询
         QueryWrapper<BusComment> queryWrapper = new QueryWrapper<>();
-        queryWrapper.eq("location_id", req.getLocationId());
-        queryWrapper.orderBy(StrUtil.isNotEmpty(req.getSortField()), req.getSortOrder().equals("asc"), req.getSortField());
-        return queryWrapper;
+        queryWrapper.eq("location_id", comReq.getLocationId());
+        queryWrapper.orderBy(StrUtil.isNotEmpty(comReq.getSortField()), comReq.getSortOrder().equals("asc"), comReq.getSortField());
+
+        long current = comReq.getCurrent();
+        long pageSize = comReq.getPageSize();
+        Page<BusComment> commentPage = this.page(new Page<>(current, pageSize), queryWrapper);
+        List<BusCommentVO> commentVOList = this.getCommentVOList(commentPage.getRecords(), loginUser);
+        Page<BusCommentVO> commentVOPage = new Page<>(current, pageSize, commentPage.getTotal());
+        commentVOPage.setRecords(commentVOList);
+        log.info("Querying comments for locationId: {}, page: {}, size:{}", comReq.getLocationId(), current, pageSize);
+        return commentVOPage;
+    }
+
+    @Override
+    public Long like(Long id, HttpServletRequest request) {
+        User loginUser = userService.getLoginUser(request);
+        BusCommentLike req = new BusCommentLike();
+        req.setCommentId(id);
+        req.setUserId(loginUser.getId());
+        busCommentLikeService.save(req);
+        return req.getId();
+    }
+
+
+
+    // 获取列表和点赞信息 - 重置列表接口数据
+    private List<BusCommentVO> getCommentVOList(List<BusComment> commentList, User loginUser) {
+        return commentList.stream().map(comment -> {
+            BusCommentVO vo = new BusCommentVO();
+            BeanUtils.copyProperties(vo, comment);
+            if(loginUser != null) {
+                vo.setLike(busCommentLikeService.hasLike(comment.getId(), loginUser.getId()));
+            }
+            return vo;
+        }).collect(Collectors.toList());
     }
 
 }

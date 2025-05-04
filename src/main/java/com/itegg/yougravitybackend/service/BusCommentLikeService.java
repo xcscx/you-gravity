@@ -10,4 +10,12 @@ import com.baomidou.mybatisplus.extension.service.IService;
 */
 public interface BusCommentLikeService extends IService<BusCommentLike> {
 
+    /**
+     * 查看是否点赞
+     * @param commentId 评论id
+     * @param userId 用户id
+     * @return 是否点赞
+     */
+    boolean hasLike(Long commentId, Long userId);
+
 }

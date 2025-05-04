@@ -1,7 +1,8 @@
 package com.itegg.yougravitybackend.model.vo;
 
-import com.baomidou.mybatisplus.annotation.TableField;
+import lombok.Data;
 
+@Data
 public class BusCommentVO {
 
     /**
