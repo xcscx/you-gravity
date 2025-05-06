@@ -12,14 +12,12 @@ public class superModel extends IdModel {
     private static final long serialVersionUID = 1L;
 
     @TableField(
-            value = "create_time",
-            fill = FieldFill.INSERT
+            value = "create_time"
     )
     private LocalDateTime createTime;
 
     @TableField(
-            value = "update_time",
-            fill = FieldFill.INSERT_UPDATE
+            value = "update_time"
     )
     private LocalDateTime updateTime;
 

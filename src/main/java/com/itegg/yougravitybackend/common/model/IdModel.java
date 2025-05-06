@@ -1,5 +1,6 @@
 package com.itegg.yougravitybackend.common.model;
 
+import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableLogic;
 import lombok.Data;
@@ -15,6 +16,7 @@ public class IdModel implements Serializable {
     private Long id;
 
     @TableLogic
+    @TableField(value = "remove_flag")
     private Integer removeFlag;
 
 }

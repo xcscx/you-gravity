@@ -86,9 +86,9 @@ public class UserController {
      * @param userAddRequest 创建用户数据信息
      * @return 用户id
      */
-    @PostMapping("/insert")
+    @PostMapping("/add")
     @AuthCheck(mustRole = UserConstant.ADMIN_ROLE)
-    public Result<Long> insertUser(@RequestBody UserAddRequest userAddRequest) {
+    public Result<Long> addUser(@RequestBody UserAddRequest userAddRequest) {
         ThrowUtils.throwIf(ObjectUtil.isNull(userAddRequest), ErrorCode.PARAMS_ERROR);
         User user = new User();
         BeanUtils.copyProperties(userAddRequest, user);
