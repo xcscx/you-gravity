@@ -1,5 +1,6 @@
 package com.itegg.yougravitybackend.service.impl;
 
+import cn.hutool.core.util.ObjectUtil;
 import cn.hutool.core.util.StrUtil;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
@@ -23,7 +24,7 @@ public class BusEventJoinUserServiceImpl extends ServiceImpl<BusEventJoinUserMap
     @Override
     public long joinEvent(EventUserJoinRequest request) {
         // 校验数据是否合理
-        if(StrUtil.hasBlank(request.getEventId().toString(), request.getUserId().toString())) {
+        if(ObjectUtil.isNull(request.getEventId()) || ObjectUtil.isNull(request.getUserId())) {
             throw new BusinessException(ErrorCode.PARAMS_ERROR, "请选择好参加的 活动/用户");
         }
         // 校验数据是否重复

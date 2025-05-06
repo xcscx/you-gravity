@@ -16,9 +16,9 @@ import java.util.List;
 */
 public interface BusEventMapper extends BaseMapper<BusEvent> {
 
-    List<BusEventVO> getEventByUserJoin(@Param("eventJoinQuertRequest") EventJoinQuertRequest condition);
+    List<BusEventVO> getEventByUserJoin(@Param("condition") EventJoinQuertRequest condition);
 
-    List<BusEventVO> getEventByUserNotJoin(@Param("eventJoinQuertRequest") EventJoinQuertRequest condition);
+    List<BusEventVO> getEventByUserNotJoin(@Param("condition") EventJoinQuertRequest condition);
 
 
 }

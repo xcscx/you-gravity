@@ -49,7 +49,7 @@ public class BusEventServiceImpl extends ServiceImpl<BusEventMapper, BusEvent>
         queryWrapper.eq("event_name", req.getEventName());
         long count = this.baseMapper.selectCount(queryWrapper);
         if(count > 0) {
-            throw new BusinessException(ErrorCode.PARAMS_ERROR, "账号重复");
+            throw new BusinessException(ErrorCode.PARAMS_ERROR, "活动名称重复");
         }
         // 添加活动
         BusEvent event = new BusEvent();
@@ -75,9 +75,6 @@ public class BusEventServiceImpl extends ServiceImpl<BusEventMapper, BusEvent>
 
     @Override
     public List<BusEventVO> getEventByUserJoin(EventJoinQuertRequest eventJoinQuertRequest) {
-        if(ObjectUtil.isNull(eventJoinQuertRequest)) {
-            throw new BusinessException(ErrorCode.PARAMS_ERROR, "查询条件为空");
-        }
         if(ObjectUtil.isNull(eventJoinQuertRequest.getUserId())) {
             throw new BusinessException(ErrorCode.PARAMS_ERROR, "用户ID为空");
         }
@@ -105,7 +102,7 @@ public class BusEventServiceImpl extends ServiceImpl<BusEventMapper, BusEvent>
         // 校验活动
         QueryWrapper<BusEvent> queryWrapper = new QueryWrapper<>();
         queryWrapper.eq(ObjectUtil.isNotNull(request.getEventId()), "id", request.getEventId());
-        queryWrapper.le("event_end_time", LocalTime.now());
+        queryWrapper.ge("event_end_time", LocalDateTime.now());
         if(this.baseMapper.selectCount(queryWrapper) == 0) {
             throw new BusinessException(ErrorCode.PARAMS_ERROR, "活动已结束");
         }

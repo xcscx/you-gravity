@@ -22,12 +22,18 @@
     </sql>
 
     <select id="getEventByUserJoin" resultType="com.itegg.yougravitybackend.model.vo.BusEventVO">
-        SELECT *
+        SELECT be.id,
+               be.event_name as eventName,
+               be.event_city as eventCity,
+               be.event_start_time as eventStartTime,
+               be.event_end_time as eventEndTime,
+               be.event_background_image as eventBackgroundImage,
+               be.create_time as createTime
         FROM bus_event be
         LEFT JOIN bus_event_join_user beu ON be.id = beu.event_id
         WHERE be.remove_flag = 0
           AND beu.remove_flag = 0
-          AND beu.user_id = #{userId}
+          AND beu.user_id = #{condition.userId}
         <if test="condition.eventName != null and condition.eventName != ''">
           AND be.event_name LIKE CONCAT('%', #{condition.eventName}, '%')
         </if>
@@ -44,7 +50,13 @@
     </select>
 
     <select id="getEventByUserNotJoin" resultType="com.itegg.yougravitybackend.model.vo.BusEventVO">
-        SELECT *
+        SELECT be.id,
+               be.event_name as eventName,
+               be.event_city as eventCity,
+               be.event_start_time as eventStartTime,
+               be.event_end_time as eventEndTime,
+               be.event_background_image as eventBackgroundImage,
+               be.create_time as createTime
         FROM bus_event be
         WHERE be.remove_flag = 0
           AND be.id NOT IN (SELECT bet.id FROM bus_event bet
