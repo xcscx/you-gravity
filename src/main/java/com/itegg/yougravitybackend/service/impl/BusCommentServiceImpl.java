@@ -20,10 +20,12 @@ import com.itegg.yougravitybackend.mapper.BusCommentMapper;
 import com.itegg.yougravitybackend.service.UserService;
 import jakarta.annotation.Resource;
 import jakarta.servlet.http.HttpServletRequest;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.BeanUtils;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.support.TransactionTemplate;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -35,6 +37,7 @@ import java.util.stream.Collectors;
 */
 @Slf4j
 @Service
+@RequiredArgsConstructor
 public class BusCommentServiceImpl extends ServiceImpl<BusCommentMapper, BusComment>
     implements BusCommentService{
 
@@ -44,6 +47,8 @@ public class BusCommentServiceImpl extends ServiceImpl<BusCommentMapper, BusComm
     @Resource
     @Lazy
     private BusCommentLikeService busCommentLikeService;
+
+    private final TransactionTemplate transactionTemplate;
 
     @Override
     public long addComment(CommentAddRequest req) {
@@ -114,7 +119,24 @@ public class BusCommentServiceImpl extends ServiceImpl<BusCommentMapper, BusComm
         req.setCommentId(id);
         req.setUserId(loginUser.getId());
         busCommentLikeService.save(req);
-        return req.getId();
+
+        synchronized (loginUser.getId().toString().intern()) {
+            // 编程式事务,评论点赞数+1
+            return transactionTemplate.execute(status -> {
+                BusComment comment = this.getById(id);
+                boolean exists = busCommentLikeService.lambdaQuery()
+                                .eq(BusCommentLike::getCommentId, id)
+                                        .eq(BusCommentLike::getUserId, loginUser.getId())
+                                                .exists();
+                if(exists) {
+                    throw new RuntimeException("用户已经点过赞了");
+                }
+
+                comment.setLikeCount(comment.getLikeCount() + 1);
+                this.updateById(comment);
+                return req.getId();
+            });
+        }
     }
 
 
