@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.itegg.yougravitybackend.mapper.PictureMapper">
+
+    <resultMap id="BaseResultMap" type="com.itegg.yougravitybackend.model.entity.Picture">
+            <id property="id" column="id" />
+            <result property="url" column="url" />
+            <result property="name" column="name" />
+            <result property="introduction" column="introduction" />
+            <result property="category" column="category" />
+            <result property="tags" column="tags" />
+            <result property="picSize" column="pic_size" />
+            <result property="picWidth" column="pic_width" />
+            <result property="picHeight" column="pic_height" />
+            <result property="picScale" column="pic_scale" />
+            <result property="picFormat" column="pic_format" />
+            <result property="userId" column="user_id" />
+            <result property="createTime" column="create_time" />
+            <result property="editTime" column="edit_time" />
+            <result property="updateTime" column="update_time" />
+            <result property="removeFlag" column="remove_flag" />
+            <result property="reviewStatus" column="review_status" />
+            <result property="reviewMessage" column="review_message" />
+            <result property="reviewerId" column="reviewer_id" />
+            <result property="reviewTime" column="review_time" />
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        id,url,name,introduction,category,tags,
+        picSize,picWidth,picHeight,picScale,picFormat,
+        userId,createTime,editTime,updateTime,isDelete,
+        reviewStatus,reviewMessage,reviewerId,reviewTime
+    </sql>
+</mapper>

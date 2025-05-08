@@ -6,7 +6,6 @@
 
     <resultMap id="BaseResultMap" type="com.itegg.yougravitybackend.model.entity.BusLocation">
             <id property="id" column="id" />
-            <result property="eventId" column="event_id" />
             <result property="longitude" column="longitude" />
             <result property="latitude" column="latitude" />
             <result property="locationName" column="location_name" />
