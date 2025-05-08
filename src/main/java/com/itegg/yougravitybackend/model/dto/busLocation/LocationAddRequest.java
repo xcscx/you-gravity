@@ -11,16 +11,6 @@ public class LocationAddRequest implements Serializable {
     private static final long serialVersionUID = 1L;
 
     /**
-     * 活动id
-     */
-    private Long eventId;
-
-    /**
-     * 图片url
-     */
-    private String url;
-
-    /**
      * 简介
      */
     private String introduction;

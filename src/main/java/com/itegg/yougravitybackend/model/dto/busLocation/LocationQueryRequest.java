@@ -11,11 +11,6 @@ public class LocationQueryRequest extends PageRequest implements Serializable {
     private static final long serialVersionUID = 1L;
 
     /**
-     * 活动id
-     */
-    private Long eventId;
-
-    /**
      * 经度
      */
     private String longitude;

@@ -16,16 +16,6 @@ public class LocationUpdateRequest implements Serializable {
     private Long id;
 
     /**
-     * 活动id
-     */
-    private Long eventId;
-
-    /**
-     * 图片url
-     */
-    private String url;
-
-    /**
      * 简介
      */
     private String introduction;

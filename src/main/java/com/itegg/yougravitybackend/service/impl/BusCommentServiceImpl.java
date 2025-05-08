@@ -53,7 +53,7 @@ public class BusCommentServiceImpl extends ServiceImpl<BusCommentMapper, BusComm
     @Override
     public long addComment(CommentAddRequest req) {
         // 校验数据
-        if(ObjectUtil.isNull(req.getLocationId()) || ObjectUtil.isNull(req.getMessage())) {
+        if(ObjectUtil.isNull(req.getEventLocationLd()) || ObjectUtil.isNull(req.getMessage())) {
             throw new BusinessException(ErrorCode.PARAMS_ERROR, "评论信息不完整");
         }
         // 添加数据
@@ -69,7 +69,7 @@ public class BusCommentServiceImpl extends ServiceImpl<BusCommentMapper, BusComm
     @Override
     public long replyComment(CommentReplyRequest req) {
         // 校验数据
-        if(ObjectUtil.isNull(req.getLocationId()) || ObjectUtil.isNull(req.getMessage())) {
+        if(ObjectUtil.isNull(req.getEventLocationLd()) || ObjectUtil.isNull(req.getMessage())) {
             throw new BusinessException(ErrorCode.PARAMS_ERROR, "评论信息不完整");
         }
         // 校验父评论
@@ -93,13 +93,13 @@ public class BusCommentServiceImpl extends ServiceImpl<BusCommentMapper, BusComm
     @Override
     public Page<BusCommentVO> getCommentList(CommentQueryRequest comReq, HttpServletRequest req) {
         // 校验数据
-        if(ObjectUtil.isNull(comReq.getLocationId()) || comReq.getLocationId() < 0) {
+        if(ObjectUtil.isNull(comReq.getEventLocationLd()) || comReq.getEventLocationLd() < 0) {
             throw new BusinessException(ErrorCode.PARAMS_ERROR, "无法找到评论地址");
         }
         User loginUser = userService.getLoginUser(req);
         // 构建查询
         QueryWrapper<BusComment> queryWrapper = new QueryWrapper<>();
-        queryWrapper.eq("location_id", comReq.getLocationId());
+        queryWrapper.eq("location_id", comReq.getEventLocationLd());
         queryWrapper.orderBy(StrUtil.isNotEmpty(comReq.getSortField()), comReq.getSortOrder().equals("asc"), comReq.getSortField());
 
         long current = comReq.getCurrent();
@@ -108,7 +108,7 @@ public class BusCommentServiceImpl extends ServiceImpl<BusCommentMapper, BusComm
         List<BusCommentVO> commentVOList = this.getCommentVOList(commentPage.getRecords(), loginUser);
         Page<BusCommentVO> commentVOPage = new Page<>(current, pageSize, commentPage.getTotal());
         commentVOPage.setRecords(commentVOList);
-        log.info("Querying comments for locationId: {}, page: {}, size:{}", comReq.getLocationId(), current, pageSize);
+        log.info("Querying comments for locationId: {}, page: {}, size:{}", comReq.getEventLocationLd(), current, pageSize);
         return commentVOPage;
     }
 

@@ -17,8 +17,8 @@ public class BusComment extends superModel {
     /**
      * 地点id
      */
-    @TableField("location_id")
-    private Long locationId;
+    @TableField("event_location_id")
+    private Long eventLocationLd;
 
     /**
      * 评论信息

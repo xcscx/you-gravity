@@ -13,8 +13,8 @@ public class CommentQueryRequest  extends PageRequest implements Serializable {
     private static final long serialVersionUID = 1L;
 
     /**
-     * 地点id
+     * 活动地点id
      */
-    private long locationId;
+    private long eventLocationLd;
 
 }

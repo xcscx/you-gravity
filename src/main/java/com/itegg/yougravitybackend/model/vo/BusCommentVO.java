@@ -6,9 +6,9 @@ import lombok.Data;
 public class BusCommentVO {
 
     /**
-     * 地点id
+     * 活动地点id
      */
-    private Long locationId;
+    private Long eventLocationLd;
 
     /**
      * 评论信息

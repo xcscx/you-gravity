@@ -33,21 +33,15 @@ public class BusLocationServiceImpl extends ServiceImpl<BusLocationMapper, BusLo
     @Override
     public long addLocation(LocationAddRequest req) {
         // 校验参数是否异常
-        if(StrUtil.hasBlank(req.getEventId().toString(), req.getLocationName(), req.getLongitude(), req.getLatitude(), req.getIntroduction())) {
+        if(StrUtil.hasBlank(req.getLocationName(), req.getLongitude(), req.getLatitude(), req.getIntroduction())) {
             throw new BusinessException(ErrorCode.PARAMS_ERROR, "地点信息不完整");
         }
         // 校验数据是否重复
         QueryWrapper<BusLocation> queryWrapper = new QueryWrapper<>();
         queryWrapper.eq("location_name", req.getLocationName());
-        queryWrapper.eq("event_id",req.getEventId());
         long count = this.baseMapper.selectCount(queryWrapper);
         if(count > 0) {
             throw new BusinessException(ErrorCode.PARAMS_ERROR, "地点重复");
-        }
-        // TODO: 保存图片
-        if(ObjectUtil.isNotNull(req.getUrl())) {
-            String uploadPathPrefix = String.format("location/%s",  req.getEventId());
-//            UploadPictureResult uploadPictureResult = fileManager.uploadPictureResult(req.getUrl(), uploadPathPrefix);
         }
         // 添加数据
         BusLocation location = new BusLocation();
@@ -65,11 +59,6 @@ public class BusLocationServiceImpl extends ServiceImpl<BusLocationMapper, BusLo
         if(ObjectUtil.isNull(req.getId())) {
             throw new BusinessException(ErrorCode.PARAMS_ERROR, "请明确需要修改的地点");
         }
-        // TODO: 保存图片
-        if(ObjectUtil.isNotNull(req.getUrl())) {
-            String uploadPathPrefix = String.format("location/%s",  req.getEventId());
-//            UploadPictureResult uploadPictureResult = fileManager.uploadPictureResult(req.getUrl(), uploadPathPrefix);
-        }
         // 修改数据
         BusLocation location = new BusLocation();
         BeanUtils.copyProperties(req, location);
@@ -79,7 +68,6 @@ public class BusLocationServiceImpl extends ServiceImpl<BusLocationMapper, BusLo
     @Override
     public QueryWrapper<BusLocation> getLocationList(LocationQueryRequest req) {
         QueryWrapper<BusLocation> queryWrapper = new QueryWrapper<>();
-        queryWrapper.eq(ObjectUtil.isNotNull(req.getEventId()), "event_id", req.getEventId());
         queryWrapper.like(ObjectUtil.isNotEmpty(req.getLocationName()), "location_name", req.getLocationName());
         queryWrapper.eq(ObjectUtil.isNotEmpty(req.getLongitude()), "longitude", req.getLongitude());
         queryWrapper.eq(ObjectUtil.isNotEmpty(req.getLatitude()), "latitude", req.getLatitude());

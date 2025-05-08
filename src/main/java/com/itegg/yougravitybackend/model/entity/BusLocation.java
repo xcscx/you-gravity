@@ -14,18 +14,6 @@ import lombok.Data;
 public class BusLocation extends superModel {
 
     /**
-     * 活动id
-     */
-    @TableField("event_id")
-    private Long eventId;
-
-    /**
-     * 图片url
-     */
-    @TableField("url")
-    private String url;
-
-    /**
      * 简介
      */
     @TableField("introduction")
