@@ -32,6 +32,7 @@ create table if not exists user_tag
     UNIQUE KEY `uk_tagName` (`tag_name`)
     ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci COMMENT='用户标签表';
 
+
 -- 图片表
 CREATE TABLE IF NOT EXISTS `picture` (
     `id` bigint NOT NULL AUTO_INCREMENT COMMENT 'id',
@@ -45,6 +46,7 @@ CREATE TABLE IF NOT EXISTS `picture` (
     `pic_height` int DEFAULT NULL COMMENT '图片高度',
     `pic_scale` double DEFAULT NULL COMMENT '图片宽高比',
     `pic_format` varchar(32) COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT '图片格式',
+    `space_id` bigint NOT NULL COMMENT '空间id',
     `create_by` bigint NOT NULL COMMENT '创建用户 id',
     `create_time` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
     `update_time` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间',
@@ -59,8 +61,11 @@ CREATE TABLE IF NOT EXISTS `picture` (
     KEY `idx_category` (`category`),
     KEY `idx_tags` (`tags`),
     KEY `idx_userId` (`create_by`),
-    KEY `idx_reviewStatus` (`review_status`)
-    ) ENGINE=InnoDB AUTO_INCREMENT=1888056294691676163 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci COMMENT='图片表';
+    KEY `idx_reviewStatus` (`review_status`),
+    KEY `idx_spaceId` (`space_id`)
+) ENGINE=InnoDB AUTO_INCREMENT=1888056294691676163 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci COMMENT='图片表';
+
+
 -- 图库空间表
 create table if not exists image_space
 (
@@ -78,7 +83,7 @@ create table if not exists image_space
     `remove_flag` tinyint NOT NULL DEFAULT '0' COMMENT '是否删除 0-否 1-是',
     PRIMARY KEY (`id`),
     KEY `idx_spaceName` (`space_name`),
-    KEY `idx_spaceLevel` (`space_level`)
+    KEY `idx_spaceLevel` (`space_level`),
     KEY `idx_createBy` (`create_by`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci COMMENT='图库空间表';
 

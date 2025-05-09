@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.itegg.yougravitybackend.mapper.ImageSpaceMapper">
+
+    <resultMap id="BaseResultMap" type="com.itegg.yougravitybackend.model.entity.ImageSpace">
+            <id property="id" column="id" />
+            <result property="space_name" column="space_name" />
+            <result property="space_desc" column="space_desc" />
+            <result property="space_level" column="space_level" />
+            <result property="max_size" column="max_size" />
+            <result property="max_count" column="max_count" />
+            <result property="total_size" column="total_size" />
+            <result property="total_count" column="total_count" />
+            <result property="create_by" column="create_by" />
+            <result property="create_time" column="create_time" />
+            <result property="update_time" column="update_time" />
+            <result property="remove_flag" column="remove_flag" />
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        id,space_name,space_desc,space_level,max_size,max_count,
+        total_size,total_count,create_by,create_time,update_time,
+        remove_flag
+    </sql>
+</mapper>
