@@ -67,7 +67,7 @@ CREATE TABLE IF NOT EXISTS `picture` (
 
 
 -- 图库空间表
-create table if not exists image_space
+create table if not exists `space`
 (
     `id` bigint NOT NULL AUTO_INCREMENT COMMENT 'id',
     `space_name` varchar(64) COLLATE utf8mb4_unicode_ci NOT NULL COMMENT '空间名称',

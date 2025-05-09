@@ -2,9 +2,9 @@
 <!DOCTYPE mapper
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.itegg.yougravitybackend.mapper.ImageSpaceMapper">
+<mapper namespace="com.itegg.yougravitybackend.mapper.SpaceMapper">
 
-    <resultMap id="BaseResultMap" type="com.itegg.yougravitybackend.model.entity.ImageSpace">
+    <resultMap id="BaseResultMap" type="com.itegg.yougravitybackend.model.entity.Space">
             <id property="id" column="id" />
             <result property="space_name" column="space_name" />
             <result property="space_desc" column="space_desc" />

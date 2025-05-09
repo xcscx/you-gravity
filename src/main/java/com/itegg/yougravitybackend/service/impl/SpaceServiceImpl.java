@@ -1,9 +1,9 @@
 package com.itegg.yougravitybackend.service.impl;
 
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
-import com.itegg.yougravitybackend.model.entity.ImageSpace;
-import com.itegg.yougravitybackend.service.ImageSpaceService;
-import com.itegg.yougravitybackend.mapper.ImageSpaceMapper;
+import com.itegg.yougravitybackend.model.entity.Space;
+import com.itegg.yougravitybackend.service.SpaceService;
+import com.itegg.yougravitybackend.mapper.SpaceMapper;
 import org.springframework.stereotype.Service;
 
 /**
@@ -12,8 +12,8 @@ import org.springframework.stereotype.Service;
 * @createDate 2025-05-09 13:53:00
 */
 @Service
-public class ImageSpaceServiceImpl extends ServiceImpl<ImageSpaceMapper, ImageSpace>
-    implements ImageSpaceService{
+public class SpaceServiceImpl extends ServiceImpl<SpaceMapper, Space>
+    implements SpaceService {
 
 }
 

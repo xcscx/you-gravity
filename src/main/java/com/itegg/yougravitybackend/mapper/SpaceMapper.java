@@ -1,6 +1,6 @@
 package com.itegg.yougravitybackend.mapper;
 
-import com.itegg.yougravitybackend.model.entity.ImageSpace;
+import com.itegg.yougravitybackend.model.entity.Space;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 
 /**
@@ -9,7 +9,7 @@ import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 * @createDate 2025-05-09 13:53:00
 * @Entity com.itegg.yougravitybackend.model.entity.ImageSpace
 */
-public interface ImageSpaceMapper extends BaseMapper<ImageSpace> {
+public interface SpaceMapper extends BaseMapper<Space> {
 
 }
 
