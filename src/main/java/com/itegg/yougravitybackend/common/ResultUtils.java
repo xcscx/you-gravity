@@ -13,7 +13,7 @@ public class ResultUtils {
      * @param data 返回参数
      */
     public static <T> Result<T> ok(T data) {
-        return new Result<>(0, data, "ok");
+        return new Result<>(200, data, "ok");
     }
 
     /**

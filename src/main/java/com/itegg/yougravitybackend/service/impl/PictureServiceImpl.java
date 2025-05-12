@@ -165,21 +165,21 @@ public class PictureServiceImpl extends ServiceImpl<PictureMapper, Picture>
                     .like("introduction", searchText)
             );
         }
-        // 搜素条件拼接
+        // 搜素条件拼接S
         queryWrapper.eq(ObjectUtil.isNotEmpty(req.getId()), "id", req.getId());
-        queryWrapper.eq(ObjectUtil.isNotEmpty(req.getCreateBy()), "userId", req.getCreateBy());
+        queryWrapper.eq(ObjectUtil.isNotEmpty(req.getCreateBy()), "create_by", req.getCreateBy());
         queryWrapper.like(StrUtil.isNotBlank(req.getName()), "name", req.getName());
         queryWrapper.like(StrUtil.isNotBlank(req.getIntroduction()), "introduction", req.getIntroduction());
-        queryWrapper.like(StrUtil.isNotBlank(req.getPicFormat()), "picFormat", req.getPicFormat());
-        queryWrapper.like(ObjectUtil.isNotEmpty(req.getReviewMessage()), "reviewMessage", req.getReviewMessage());
+        queryWrapper.like(StrUtil.isNotBlank(req.getPicFormat()), "pic_format", req.getPicFormat());
+        queryWrapper.like(ObjectUtil.isNotEmpty(req.getReviewMessage()), "review_message", req.getReviewMessage());
         queryWrapper.eq(StrUtil.isNotBlank(req.getCategory()), "category", req.getCategory());
-        queryWrapper.eq(ObjectUtil.isNotEmpty(req.getPicWidth()), "picWidth", req.getPicWidth());
-        queryWrapper.eq(ObjectUtil.isNotEmpty(req.getPicHeight()), "picHeight", req.getPicHeight());
-        queryWrapper.eq(ObjectUtil.isNotEmpty(req.getPicSize()), "picSize", req.getPicSize());
-        queryWrapper.eq(ObjectUtil.isNotEmpty(req.getPicScale()), "picScale", req.getPicScale());
+        queryWrapper.eq(ObjectUtil.isNotEmpty(req.getPicWidth()), "pic_midth", req.getPicWidth());
+        queryWrapper.eq(ObjectUtil.isNotEmpty(req.getPicHeight()), "pic_height", req.getPicHeight());
+        queryWrapper.eq(ObjectUtil.isNotEmpty(req.getPicSize()), "pic_size", req.getPicSize());
+        queryWrapper.eq(ObjectUtil.isNotEmpty(req.getPicScale()), "pic_scale", req.getPicScale());
         // 审核状态条件
-        queryWrapper.eq(ObjectUtil.isNotEmpty(req.getReviewStatus()), "reviewStatus", req.getReviewStatus());
-        queryWrapper.eq(ObjectUtil.isNotEmpty(req.getReviewerId()), "reviewerId", req.getReviewerId());
+        queryWrapper.eq(ObjectUtil.isNotEmpty(req.getReviewStatus()), "review_status", req.getReviewStatus());
+        queryWrapper.eq(ObjectUtil.isNotEmpty(req.getReviewerId()), "reviewer_id", req.getReviewerId());
         // JSON数组查询
         if(CollUtil.isNotEmpty(tags)) {
             for(String tag : tags) {

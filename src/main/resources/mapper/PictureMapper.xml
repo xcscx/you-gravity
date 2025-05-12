@@ -16,9 +16,8 @@
             <result property="picHeight" column="pic_height" />
             <result property="picScale" column="pic_scale" />
             <result property="picFormat" column="pic_format" />
-            <result property="userId" column="user_id" />
+            <result property="createBy" column="create_by" />
             <result property="createTime" column="create_time" />
-            <result property="editTime" column="edit_time" />
             <result property="updateTime" column="update_time" />
             <result property="removeFlag" column="remove_flag" />
             <result property="reviewStatus" column="review_status" />
