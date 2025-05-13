@@ -54,6 +54,13 @@
             <scope>runtime</scope>
             <optional>true</optional>
         </dependency>
+        <!--  junit  -->
+        <dependency>
+            <groupId>org.junit.platform</groupId>
+            <artifactId>junit-platform-launcher</artifactId>
+            <version>1.11.4</version>
+            <scope>test</scope>
+        </dependency>
         <!-- hutool 工具包 -->
         <dependency>
             <groupId>cn.hutool</groupId>
