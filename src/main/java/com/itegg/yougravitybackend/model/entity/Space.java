@@ -7,9 +7,9 @@ import lombok.Data;
 
 /**
  * 图库空间表
- * @TableName image_space
+ * @TableName space
  */
-@TableName(value ="image_space")
+@TableName(value ="space")
 @Data
 public class Space extends superModel {
 
