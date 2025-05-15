@@ -21,6 +21,11 @@ public class SpaceVO implements Serializable {
     private String spaceName;
 
     /**
+     * 空间描述
+     */
+    private String spaceDesc;
+
+    /**
      * 空间级别：0-普通版 1-专业版 2-旗舰版
      */
     private Integer spaceLevel;
@@ -48,17 +53,12 @@ public class SpaceVO implements Serializable {
     /**
      * 创建用户 id
      */
-    private Long userId;
+    private Long createBy;
 
     /**
      * 创建时间
      */
     private LocalDateTime createTime;
-
-    /**
-     * 编辑时间
-     */
-    private LocalDateTime editTime;
 
     /**
      * 更新时间

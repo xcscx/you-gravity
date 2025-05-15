@@ -1,6 +1,7 @@
 package com.itegg.yougravitybackend.controller;
 
 import cn.hutool.core.util.ObjectUtil;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.itegg.yougravitybackend.aop.annotation.AuthCheck;
 import com.itegg.yougravitybackend.common.IdCondition;
 import com.itegg.yougravitybackend.common.Result;
@@ -11,19 +12,18 @@ import com.itegg.yougravitybackend.exception.ErrorCode;
 import com.itegg.yougravitybackend.exception.ThrowUtils;
 import com.itegg.yougravitybackend.model.dto.space.SpaceAddRequest;
 import com.itegg.yougravitybackend.model.dto.space.SpaceEditRequest;
+import com.itegg.yougravitybackend.model.dto.space.SpaceQueryRequest;
 import com.itegg.yougravitybackend.model.dto.space.SpaceUpdateRequest;
 import com.itegg.yougravitybackend.model.entity.Space;
 import com.itegg.yougravitybackend.model.entity.User;
+import com.itegg.yougravitybackend.model.vo.SpaceVO;
 import com.itegg.yougravitybackend.service.SpaceService;
 import com.itegg.yougravitybackend.service.UserService;
 import jakarta.annotation.Resource;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.BeanUtils;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @Slf4j
 @RestController
@@ -130,5 +130,63 @@ public class SpaceController {
         return ResultUtils.ok(true);
     }
 
+    /**
+     * 依据id获取空间 - 仅管理员使用
+     * @param id 空间id
+     * @param request 请求
+     * @return 空间信息
+     */
+    @GetMapping("/get")
+    @AuthCheck(mustRole = UserConstant.ADMIN_ROLE)
+    public Result<Space> getSpaceById(long id, HttpServletRequest request) {
+        ThrowUtils.throwIf(id <= 0, ErrorCode.PARAMS_ERROR);
+        Space space = spaceService.getById(id);
+        ThrowUtils.throwIf(ObjectUtil.isNull(space), ErrorCode.NOT_FOUND_ERROR);
+        return ResultUtils.ok(space);
+    }
+
+    /**
+     * 获取空间vo信息
+     * @param id 空间id
+     * @param request 请求
+     * @return vo空间信息
+     */
+    @GetMapping("/get/vo")
+    public Result<SpaceVO> getSpaceVOById(long id, HttpServletRequest request) {
+        ThrowUtils.throwIf(id <= 0, ErrorCode.PARAMS_ERROR);
+        Space space = spaceService.getById(id);
+        ThrowUtils.throwIf(ObjectUtil.isNull(space), ErrorCode.NOT_FOUND_ERROR);
+        return ResultUtils.ok(SpaceVO.objToVo(space));
+    }
+
+    /**
+     * 分页查询空间信息
+     * @param request 查询请求参数
+     * @return 分页结果
+     */
+    @PostMapping("/list/page")
+    @AuthCheck(mustRole = UserConstant.ADMIN_ROLE)
+    public Result<Page<Space>> listSpaceByPage(@RequestBody SpaceQueryRequest request) {
+        long current = request.getCurrent();
+        long size = request.getPageSize();
+        // 查询
+        Page<Space> spacePage = spaceService.page(new Page<>(current, size),
+                spaceService.getSpaceQueryWrapper(request));
+        return ResultUtils.ok(spacePage);
+    }
+
+    @PostMapping("/list/page/vo")
+    public Result<Page<SpaceVO>> listSpaceVOByPage(@RequestBody SpaceQueryRequest request, HttpServletRequest httpServletRequest) {
+        if (request == null) {
+            throw new BusinessException(ErrorCode.PARAMS_ERROR);
+        }
+        long current = request.getCurrent();
+        long size = request.getPageSize();
+        // 限制爬虫
+        ThrowUtils.throwIf(size > 20, ErrorCode.PARAMS_ERROR);
+        Page<Space> spacePage = spaceService.page(new Page<>(current, size),
+                spaceService.getSpaceQueryWrapper(request));
+        return ResultUtils.ok(spaceService.getSpaceVOPage(spacePage));
+     }
 
 }

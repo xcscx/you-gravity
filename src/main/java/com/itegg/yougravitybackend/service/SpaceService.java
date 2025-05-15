@@ -1,9 +1,13 @@
 package com.itegg.yougravitybackend.service;
 
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.itegg.yougravitybackend.model.dto.space.SpaceAddRequest;
+import com.itegg.yougravitybackend.model.dto.space.SpaceQueryRequest;
 import com.itegg.yougravitybackend.model.entity.Space;
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.itegg.yougravitybackend.model.entity.User;
+import com.itegg.yougravitybackend.model.vo.SpaceVO;
 
 /**
 * @author ITegg
@@ -19,6 +23,20 @@ public interface SpaceService extends IService<Space> {
      * @return 空间id
      */
     long addSpace(SpaceAddRequest request, User loginUser);
+
+    /***
+     * 获取空间查询条件
+     * @param request 请求
+     * @return 列表参数
+     */
+    QueryWrapper<Space> getSpaceQueryWrapper(SpaceQueryRequest request);
+
+    /**
+     * 获取空间vo列表
+     * @param spacePage 空间分页
+     * @return 空间vo分页
+     */
+    Page<SpaceVO> getSpaceVOPage(Page<Space> spacePage);
 
     /**
      * 校验空间信息

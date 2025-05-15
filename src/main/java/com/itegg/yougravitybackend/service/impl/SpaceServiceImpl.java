@@ -1,14 +1,20 @@
 package com.itegg.yougravitybackend.service.impl;
 
+import cn.hutool.core.collection.CollUtil;
+import cn.hutool.core.util.ObjectUtil;
 import cn.hutool.core.util.StrUtil;
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.itegg.yougravitybackend.exception.BusinessException;
 import com.itegg.yougravitybackend.exception.ErrorCode;
 import com.itegg.yougravitybackend.exception.ThrowUtils;
 import com.itegg.yougravitybackend.model.dto.space.SpaceAddRequest;
+import com.itegg.yougravitybackend.model.dto.space.SpaceQueryRequest;
 import com.itegg.yougravitybackend.model.entity.Space;
 import com.itegg.yougravitybackend.model.entity.User;
 import com.itegg.yougravitybackend.model.enums.SpaceLevelEnum;
+import com.itegg.yougravitybackend.model.vo.SpaceVO;
 import com.itegg.yougravitybackend.service.SpaceService;
 import com.itegg.yougravitybackend.mapper.SpaceMapper;
 import com.itegg.yougravitybackend.service.UserService;
@@ -17,7 +23,11 @@ import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.support.TransactionTemplate;
 
+import java.util.List;
+import java.util.Map;
 import java.util.Optional;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 /**
 * @author ITegg
@@ -66,6 +76,51 @@ public class SpaceServiceImpl extends ServiceImpl<SpaceMapper, Space>
             });
             return Optional.ofNullable(newSpaceId).orElse(-1L);
         }
+    }
+
+    @Override
+    public QueryWrapper<Space> getSpaceQueryWrapper(SpaceQueryRequest req) {
+        QueryWrapper<Space> queryWrapper = new QueryWrapper<>();
+        if(ObjectUtil.isNull(req)) {
+            return queryWrapper;
+        }
+        // 请求参数中取值
+        String sortField = req.getSortField();
+        String sortOrder = req.getSortOrder();
+        // 搜素条件拼接S
+        queryWrapper.eq(ObjectUtil.isNotEmpty(req.getId()), "id", req.getId());
+        queryWrapper.eq(ObjectUtil.isNotEmpty(req.getCreateBy()), "create_by", req.getCreateBy());
+        queryWrapper.like(StrUtil.isNotBlank(req.getSpaceName()), "space_name", req.getSpaceName());
+        queryWrapper.eq(ObjectUtil.isNotEmpty(req.getSpaceLevel()), "space_level", req.getSpaceLevel());
+        // 排序
+        queryWrapper.orderBy(StrUtil.isNotEmpty(sortField), sortOrder.equals("ascend"), sortField);
+        return queryWrapper;
+    }
+
+    @Override
+    public Page<SpaceVO> getSpaceVOPage(Page<Space> spacePage) {
+        List<Space> spaceList = spacePage.getRecords();
+        Page<SpaceVO> spaceVOPage = new Page<>(spacePage.getCurrent(), spacePage.getSize(), spacePage.getTotal());
+        if(CollUtil.isEmpty(spaceList)) {
+            return spaceVOPage;
+        }
+        List<SpaceVO> spaceVOList = spaceList.stream().map(SpaceVO::objToVo).collect(Collectors.toList());
+        // 关联插叙用户信息
+        Set<Long> userIdset = spaceList.stream().map(Space::getCreateBy).collect(Collectors.toSet());
+        Map<Long, List<User>> userIdUserListMap = userService.listByIds(userIdset).stream()
+                .collect(Collectors.groupingBy(User::getId));
+        // 填充信息
+        spaceVOList.forEach(spaceVO -> {
+            Long userId = spaceVO.getCreateBy();
+            User user = null;
+            if(userIdUserListMap.containsKey(userId)) {
+                user = userIdUserListMap.get(userId).get(0);
+            }
+            spaceVO.setUser(userService.getUserVO(user));
+        });
+        spaceVOPage.setRecords(spaceVOList);
+
+        return spaceVOPage;
     }
 
     @Override
