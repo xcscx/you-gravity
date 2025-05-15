@@ -16,41 +16,41 @@ public class Space extends superModel {
     /**
      * 空间名称
      */
-    private String space_name;
+    private String spaceName;
 
     /**
      * 空间描述
      */
-    private String space_desc;
+    private String spaceDesc;
 
     /**
      * 空间等级 0-普通 1-专业 2-旗舰
      */
-    private Integer space_level;
+    private Integer spaceLevel;
 
     /**
      * 最大容量
      */
-    private Long max_size;
+    private Long maxSize;
 
     /**
      * 最大数量
      */
-    private Long max_count;
+    private Long maxCount;
 
     /**
      * 已使用容量
      */
-    private Long total_size;
+    private Long totalSize;
 
     /**
      * 已使用数量
      */
-    private Long total_count;
+    private Long totalCount;
 
     /**
      * 创建人id
      */
-    private Long create_by;
+    private Long createBy;
 
 }
