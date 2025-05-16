@@ -44,6 +44,8 @@ public class SpaceController {
      */
     @PostMapping("/add")
     public Result<Long> addSpace(@RequestBody SpaceAddRequest add, HttpServletRequest request) {
+        System.out.println("lecvel:" + add.getSpaceLevel());
+        System.out.println("name:" + add.getSpaceName());
         User loginUser = userService.getLoginUser(request);
         return ResultUtils.ok(spaceService.addSpace(add, loginUser));
     }

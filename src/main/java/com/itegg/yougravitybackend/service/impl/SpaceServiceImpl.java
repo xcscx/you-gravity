@@ -140,7 +140,7 @@ public class SpaceServiceImpl extends ServiceImpl<SpaceMapper, Space>
             }
         }
         // 判断数据合理性
-        if(spaceLevel != null && spaceLevelEnum != null) {
+        if(spaceLevel != null && spaceLevelEnum == null) {
             throw new BusinessException(ErrorCode.PARAMS_ERROR, "空间等级不存在");
         }
         if(StrUtil.isNotBlank(spaceName) && spaceName.length() > 30) {
