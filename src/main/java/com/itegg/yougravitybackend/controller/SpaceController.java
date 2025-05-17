@@ -10,12 +10,10 @@ import com.itegg.yougravitybackend.constant.UserConstant;
 import com.itegg.yougravitybackend.exception.BusinessException;
 import com.itegg.yougravitybackend.exception.ErrorCode;
 import com.itegg.yougravitybackend.exception.ThrowUtils;
-import com.itegg.yougravitybackend.model.dto.space.SpaceAddRequest;
-import com.itegg.yougravitybackend.model.dto.space.SpaceEditRequest;
-import com.itegg.yougravitybackend.model.dto.space.SpaceQueryRequest;
-import com.itegg.yougravitybackend.model.dto.space.SpaceUpdateRequest;
+import com.itegg.yougravitybackend.model.dto.space.*;
 import com.itegg.yougravitybackend.model.entity.Space;
 import com.itegg.yougravitybackend.model.entity.User;
+import com.itegg.yougravitybackend.model.enums.SpaceLevelEnum;
 import com.itegg.yougravitybackend.model.vo.SpaceVO;
 import com.itegg.yougravitybackend.service.SpaceService;
 import com.itegg.yougravitybackend.service.UserService;
@@ -24,6 +22,10 @@ import jakarta.servlet.http.HttpServletRequest;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.BeanUtils;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.Arrays;
+import java.util.List;
+import java.util.stream.Collectors;
 
 @Slf4j
 @RestController
@@ -57,7 +59,7 @@ public class SpaceController {
      */
     @PostMapping("/update")
     @AuthCheck(mustRole = UserConstant.ADMIN_ROLE)
-    public Result<Boolean> udpateSpace(@RequestBody SpaceUpdateRequest request) {
+    public Result<Boolean> updateSpace(@RequestBody SpaceUpdateRequest request) {
         if(request == null || request.getId() == null || request.getId() < 0) {
             throw new BusinessException(ErrorCode.PARAMS_ERROR);
         }
@@ -190,5 +192,18 @@ public class SpaceController {
                 spaceService.getSpaceQueryWrapper(request));
         return ResultUtils.ok(spaceService.getSpaceVOPage(spacePage));
      }
+
+    @PostMapping("/list/space/level")
+    public Result<List<SpaceLevel>> listSpaceLevel() {
+        List<SpaceLevel> spaceLevelVOList = Arrays.stream(SpaceLevelEnum.values())
+                .map(spaceLevelEnum -> new SpaceLevel(
+                        spaceLevelEnum.getValue(),
+                        spaceLevelEnum.getText(),
+                        spaceLevelEnum.getMaxCount(),
+                        spaceLevelEnum.getMaxSize()
+                ))
+                .collect(Collectors.toList());
+        return  ResultUtils.ok(spaceLevelVOList);
+    }
 
 }
