@@ -1,3 +1,58 @@
+-- 地点表
+CREATE TABLE `bus_location` (
+    `id` bigint NOT NULL AUTO_INCREMENT COMMENT 'id',
+    `introduction` varchar(512) COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT '简介',
+    `longitude` varchar(128) COLLATE utf8mb4_unicode_ci NOT NULL COMMENT '经度',
+    `latitude` varchar(128) COLLATE utf8mb4_unicode_ci NOT NULL COMMENT '纬度',
+    `location_name` varchar(128) COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT '地点名称',
+    `create_time` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
+    `update_time` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '最后更新时间',
+    `remove_flag` tinyint NOT NULL DEFAULT '0' COMMENT '是否删除 0-否 1-是',
+    PRIMARY KEY (`id`),
+    KEY `idx_locationName` (`location_name`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci COMMENT='地点表';
+
+ALTER TABLE bus_location
+    ADD COLUMN want_go_count int default 0 not null comment '想去人数';
+
+-- 想去地点表
+CREATE TABLE IF NOT EXISTS `bus_location_want_go` (
+    `id` bigint NOT NULL AUTO_INCREMENT COMMENT 'id',
+    `user_id` bigint NOT NULL COMMENT '用户id',
+    `location_id` bigint NOT NULL COMMENT '地点id',
+    `create_time` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
+    PRIMARY KEY (`id`),
+    UNIQUE KEY `uk_locationId_userId` (`location_id`, `user_id`),
+    INDEX `idx_location_id` (`location_id`),
+    INDEX `idx_user_id` (`user_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci COMMENT='想去地点表';
+
+-- 打卡表
+CREATE TABLE IF NOT EXISTS `bus_location_check_in` (
+    `id` bigint NOT NULL AUTO_INCREMENT COMMENT 'id',
+    `user_id` bigint NOT NULL COMMENT '用户id',
+    `location_id` bigint NOT NULL COMMENT '地点id',
+    `message` varchar(512) COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT '打卡信息',
+    `create_time` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
+    `remove_flag` tinyint NOT NULL DEFAULT '0' COMMENT '是否删除 0-否 1-是',
+    PRIMARY KEY (`id`),
+    INDEX `idx_location_id` (`location_id`),
+    INDEX `idx_user_id` (`user_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci COMMENT='打卡表';
+
+
+
+
+
+
+
+
+
+
+
+
+-- 聚会表
+
 -- 活动表
 CREATE TABLE `bus_event` (
     `id` bigint NOT NULL AUTO_INCREMENT COMMENT 'id',
@@ -27,34 +82,6 @@ create table if not exists bus_event_join_user
 ) comment '活动参与表' collate = utf8mb4_unicode_ci;
 
 
--- 地点表
-CREATE TABLE `bus_location` (
-    `id` bigint NOT NULL AUTO_INCREMENT COMMENT 'id',
-    `introduction` varchar(512) COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT '简介',
-    `longitude` varchar(128) COLLATE utf8mb4_unicode_ci NOT NULL COMMENT '经度',
-    `latitude` varchar(128) COLLATE utf8mb4_unicode_ci NOT NULL COMMENT '纬度',
-    `location_name` varchar(128) COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT '地点名称',
-    `create_time` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
-    `update_time` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '最后更新时间',
-    `remove_flag` tinyint NOT NULL DEFAULT '0' COMMENT '是否删除 0-否 1-是',
-    PRIMARY KEY (`id`),
-    KEY `idx_locationName` (`location_name`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci COMMENT='地点表';
-
-
--- 活动地点关联表
-CREATE TABLE `bus_event_location` (
-    `id` bigint NOT NULL AUTO_INCREMENT COMMENT 'id',
-    `event_id` bigint NOT NULL COMMENT '活动id',
-    `location_id` bigint NOT NULL COMMENT '地点id',
-    `create_time` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
-    `update_time` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '最后更新时间',
-    `remove_flag` tinyint NOT NULL DEFAULT '0' COMMENT '是否删除0-否 1-是',
-    PRIMARY KEY (`id`),
-    UNIQUE KEY `uk_event_location` (`event_id`, `location_id`)
- ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci COMMENT='活动地点关联表';
-
-
 -- 评论表
 create table if not exists bus_comment
 (
@@ -82,7 +109,6 @@ create table if not exists bus_comment_like
     INDEX idx_commentId(comment_id)
     ) comment '点赞表' collate = utf8mb4_unicode_ci;
 
--- 聚会表
 
 
 

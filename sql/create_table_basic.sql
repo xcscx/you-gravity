@@ -87,5 +87,26 @@ create table if not exists `space`
     KEY `idx_createBy` (`create_by`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci COMMENT='图库空间表';
 
+ALTER TABLE space
+    ADD COLUMN space_type int default 0 not null comment '空间类型 0-个人 1-团队 2-聚会';
+
+CREATE INDEX idx_space_type ON space(space_type);
+
+-- 空间成员表
+CREATE TABLE IF NOT EXISTS 'space_user'
+(
+    `id` bigint NOT NULL AUTO_INCREMENT COMMENT 'id',
+    `space_id` bigint NOT NULL COMMENT '空间id',
+    `user_id` bigint NOT NULL COMMENT '用户id',
+    `space_role` varchar(128) default 'viewer' null COMMENT '空间角色：viewer/admin',
+    `create_time` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
+    `update_time` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '最后更新时间',
+    `remove_flag` tinyint NOT NULL DEFAULT '0' COMMENT '是否删除 0-否 1-是',
+    PRIMARY KEY (`id`),
+    UNIQUE KEY `uk_spaceId_userId` (`space_id`, `user_id`, `remove_flag`),
+    INDEX `idx_space_id` (`space_id`),
+    INDEX `idx_user_id` (`user_id`)
+)
+
 
 
