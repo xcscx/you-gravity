@@ -2,18 +2,18 @@
 <!DOCTYPE mapper
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.itegg.yougravitybackend.mapper.BusEventJoinUserMapper">
+<mapper namespace="com.itegg.yougravitybackend.mapper.BusLocationCheckInMapper">
 
-    <resultMap id="BaseResultMap" type="com.itegg.yougravitybackend.model.entity.BusEventJoinUser">
+    <resultMap id="BaseResultMap" type="com.itegg.yougravitybackend.model.entity.BusLocationCheckIn">
             <id property="id" column="id" />
-            <result property="eventId" column="event_id" />
             <result property="userId" column="user_id" />
+            <result property="locationId" column="location_id" />
+            <result property="message" column="message" />
             <result property="createTime" column="create_time" />
-            <result property="updateTime" column="update_time" />
             <result property="removeFlag" column="remove_flag" />
     </resultMap>
 
     <sql id="Base_Column_List">
-        id,event_id,user_id,create_time,update_time,remove_flag
+        id,user_id,location_id,message,create_time,remove_flag
     </sql>
 </mapper>

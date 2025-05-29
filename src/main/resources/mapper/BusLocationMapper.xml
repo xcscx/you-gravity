@@ -9,13 +9,14 @@
             <result property="longitude" column="longitude" />
             <result property="latitude" column="latitude" />
             <result property="locationName" column="location_name" />
+            <result property="wantGoCount" column="want_go_count"/>
             <result property="createTime" column="create_time" />
             <result property="updateTime" column="update_time" />
             <result property="removeFlag" column="remove_flag" />
     </resultMap>
 
     <sql id="Base_Column_List">
-        id,event_id,longitude,latitude,location_name,create_time,
+        id,event_id,longitude,latitude,location_name,want_go_count,create_time,
         update_time,remove_flag
     </sql>
 </mapper>

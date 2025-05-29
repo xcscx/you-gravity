@@ -10,13 +10,19 @@ import com.itegg.yougravitybackend.manager.FileManager;
 import com.itegg.yougravitybackend.model.dto.busLocation.LocationAddRequest;
 import com.itegg.yougravitybackend.model.dto.busLocation.LocationQueryRequest;
 import com.itegg.yougravitybackend.model.dto.busLocation.LocationUpdateRequest;
-import com.itegg.yougravitybackend.model.dto.file.UploadPictureResult;
 import com.itegg.yougravitybackend.model.entity.BusLocation;
+import com.itegg.yougravitybackend.model.entity.BusLocationWantGo;
+import com.itegg.yougravitybackend.model.entity.User;
 import com.itegg.yougravitybackend.service.BusLocationService;
 import com.itegg.yougravitybackend.mapper.BusLocationMapper;
+import com.itegg.yougravitybackend.service.BusLocationWantGoService;
+import com.itegg.yougravitybackend.service.UserService;
 import jakarta.annotation.Resource;
+import jakarta.servlet.http.HttpServletRequest;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.support.TransactionTemplate;
 
 /**
 * @author ITegg
@@ -24,11 +30,20 @@ import org.springframework.stereotype.Service;
 * @createDate 2025-04-21 15:05:10
 */
 @Service
+@RequiredArgsConstructor
 public class BusLocationServiceImpl extends ServiceImpl<BusLocationMapper, BusLocation>
     implements BusLocationService{
 
     @Resource
     private FileManager fileManager;
+
+    @Resource
+    private UserService userService;
+
+    @Resource
+    private BusLocationWantGoService busLocationWantGoService;
+
+    private final TransactionTemplate transactionTemplate;
 
     @Override
     public long addLocation(LocationAddRequest req) {
@@ -72,6 +87,54 @@ public class BusLocationServiceImpl extends ServiceImpl<BusLocationMapper, BusLo
         queryWrapper.eq(ObjectUtil.isNotEmpty(req.getLongitude()), "longitude", req.getLongitude());
         queryWrapper.eq(ObjectUtil.isNotEmpty(req.getLatitude()), "latitude", req.getLatitude());
         return queryWrapper;
+    }
+
+    @Override
+    public Long wantGo(Long id, HttpServletRequest request) {
+        User loginUser = userService.getLoginUser(request);
+        BusLocationWantGo wantGo = new BusLocationWantGo();
+        wantGo.setLocationId(id);
+        wantGo.setUserId(loginUser.getId());
+
+        synchronized (loginUser.getId().toString().intern()) {
+            return transactionTemplate.execute(status -> {
+                BusLocation busLocation = this.getById(id);
+                boolean exists = busLocationWantGoService.lambdaQuery()
+                                .eq(BusLocationWantGo::getLocationId, id)
+                                    .eq(BusLocationWantGo::getUserId, loginUser.getId())
+                                        .exists();
+                if(exists) {
+                    throw new RuntimeException("你已经添加想去了");
+                }
+
+                busLocationWantGoService.save(wantGo);
+                busLocation.setWantGoCount(busLocation.getWantGoCount() + 1);
+                this.updateById(busLocation);
+                return wantGo.getId();
+            });
+        }
+    }
+
+    @Override
+    public Boolean notWantGo(Long id, HttpServletRequest request) {
+        User loginUser = userService.getLoginUser(request);
+        // 加锁删除想去 同时 想去数目-1
+        synchronized (loginUser.getId().toString().intern()) {
+            return transactionTemplate.execute(status -> {
+                BusLocationWantGo wantGo = busLocationWantGoService.lambdaQuery()
+                        .eq(BusLocationWantGo::getUserId, loginUser.getId())
+                        .eq(BusLocationWantGo::getLocationId, id)
+                        .one();
+                if(ObjectUtil.isNull(wantGo)) {
+                    throw new RuntimeException("该地点目前不在你的想去地点中");
+                }
+                boolean update = this.lambdaUpdate()
+                        .eq(BusLocation::getId, id)
+                        .setSql("want_go_count = want_go_count - 1")
+                        .update();
+                return update && busLocationWantGoService.removeById(wantGo.getId());
+            });
+        }
     }
 
 }

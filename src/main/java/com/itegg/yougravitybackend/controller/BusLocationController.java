@@ -3,6 +3,7 @@ package com.itegg.yougravitybackend.controller;
 import cn.hutool.core.util.ObjectUtil;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.itegg.yougravitybackend.aop.annotation.AuthCheck;
+import com.itegg.yougravitybackend.common.AESUtil;
 import com.itegg.yougravitybackend.common.IdCondition;
 import com.itegg.yougravitybackend.common.Result;
 import com.itegg.yougravitybackend.common.ResultUtils;
@@ -14,8 +15,11 @@ import com.itegg.yougravitybackend.model.dto.busLocation.LocationAddRequest;
 import com.itegg.yougravitybackend.model.dto.busLocation.LocationQueryRequest;
 import com.itegg.yougravitybackend.model.dto.busLocation.LocationUpdateRequest;
 import com.itegg.yougravitybackend.model.entity.BusLocation;
+import com.itegg.yougravitybackend.model.vo.AmapVO;
 import com.itegg.yougravitybackend.service.BusLocationService;
 import jakarta.annotation.Resource;
+import jakarta.servlet.http.HttpServletRequest;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.bind.annotation.*;
 
 /**
@@ -26,8 +30,26 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("/location")
 public class BusLocationController {
 
+    @Value("${amap.js.key}")
+    private String amapKey;
+
+    @Value("${amap.js.security-code}")
+    private String securityCode;
+
     @Resource
     private BusLocationService busLocationService;
+
+    /***
+     * 获取高德地图token
+     * @return token信息
+     */
+    @GetMapping("/amap-token")
+    public Result<AmapVO> getAmapToken() throws Exception {
+        AmapVO amapVO = new AmapVO();
+        amapVO.setKey(AESUtil.encrypt(amapKey));
+        amapVO.setSecurityCode(AESUtil.encrypt(securityCode));
+        return ResultUtils.ok(amapVO);
+    }
 
     /**
      * 添加地点
@@ -46,7 +68,6 @@ public class BusLocationController {
      * @return 更新结果
      */
     @PostMapping("/update")
-    @AuthCheck(mustRole = UserConstant.ADMIN_ROLE)
     public Result<Boolean> updateLocation(@RequestBody LocationUpdateRequest request) {
         ThrowUtils.throwIf(ObjectUtil.isNull(request) || ObjectUtil.isNull(request.getId()), ErrorCode.PARAMS_ERROR);
         return ResultUtils.ok(busLocationService.updateLocation(request));
@@ -91,5 +112,50 @@ public class BusLocationController {
         }
         return ResultUtils.ok(busLocationService.removeById(id));
     }
+
+    /**
+     * 想去地点
+     * @param id 地点id
+     * @param request 请求
+     * @return 想去id
+     */
+    @PostMapping("/want-go")
+    public Result<Long> wantGo(@RequestBody IdCondition id, HttpServletRequest request) {
+        if (ObjectUtil.isNull(id) || id.getId() < 0) {
+            throw new BusinessException(ErrorCode.PARAMS_ERROR);
+        }
+        return ResultUtils.ok(busLocationService.wantGo(id.getId(), request));
+    }
+
+    /**
+     * 取消想去地点
+     */
+    @PostMapping("/not-want-go")
+    public Result<Boolean> notWantGo(@RequestBody IdCondition id, HttpServletRequest request) {
+        if (ObjectUtil.isNull(id) || id.getId() < 0) {
+            throw new BusinessException(ErrorCode.PARAMS_ERROR);
+        }
+        return ResultUtils.ok(busLocationService.notWantGo(id.getId(), request));
+    }
+
+    /**
+     * 想去地点列表
+     */
+
+
+    /**
+     * 打卡地点
+     */
+
+
+    /**
+     * 删除打卡
+     */
+
+
+    /**
+     * 打卡地点列表
+     */
+
 
 }

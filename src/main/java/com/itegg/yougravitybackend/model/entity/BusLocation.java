@@ -36,4 +36,11 @@ public class BusLocation extends superModel {
      */
     @TableField("location_name")
     private String locationName;
+
+    /**
+     * 想去人数
+     */
+    @TableField("want_go_count")
+    private Long wantGoCount;
+
 }

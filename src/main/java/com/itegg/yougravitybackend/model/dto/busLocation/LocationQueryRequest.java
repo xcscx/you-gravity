@@ -25,4 +25,6 @@ public class LocationQueryRequest extends PageRequest implements Serializable {
      */
     private String locationName;
 
+    // TODO 想去的 - 打卡的
+
 }

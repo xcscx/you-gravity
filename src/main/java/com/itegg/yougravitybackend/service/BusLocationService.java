@@ -6,6 +6,7 @@ import com.itegg.yougravitybackend.model.dto.busLocation.LocationQueryRequest;
 import com.itegg.yougravitybackend.model.dto.busLocation.LocationUpdateRequest;
 import com.itegg.yougravitybackend.model.entity.BusLocation;
 import com.baomidou.mybatisplus.extension.service.IService;
+import jakarta.servlet.http.HttpServletRequest;
 
 /**
 * @author ITegg
@@ -34,5 +35,21 @@ public interface BusLocationService extends IService<BusLocation> {
      * @return 查询地点列表
      */
     QueryWrapper<BusLocation> getLocationList(LocationQueryRequest locationQueryRequest);
+
+    /**
+     * 用户想去地点
+     * @param id 地点id
+     * @param request 请求
+     * @return 想去id
+     */
+    Long wantGo(Long id, HttpServletRequest request);
+
+    /**
+     * 用户取消想去
+     * @param id 地点id
+     * @param request 请求
+     * @return 取消结果
+     */
+    Boolean notWantGo(Long id, HttpServletRequest request);
 
 }
