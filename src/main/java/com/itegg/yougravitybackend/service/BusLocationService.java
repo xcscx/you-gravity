@@ -4,9 +4,13 @@ import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.itegg.yougravitybackend.model.dto.busLocation.LocationAddRequest;
 import com.itegg.yougravitybackend.model.dto.busLocation.LocationQueryRequest;
 import com.itegg.yougravitybackend.model.dto.busLocation.LocationUpdateRequest;
+import com.itegg.yougravitybackend.model.dto.busLocation.WantGoQueryRequest;
 import com.itegg.yougravitybackend.model.entity.BusLocation;
 import com.baomidou.mybatisplus.extension.service.IService;
+import com.itegg.yougravitybackend.model.vo.BusLocationVO;
 import jakarta.servlet.http.HttpServletRequest;
+
+import java.util.List;
 
 /**
 * @author ITegg
@@ -51,5 +55,13 @@ public interface BusLocationService extends IService<BusLocation> {
      * @return 取消结果
      */
     Boolean notWantGo(Long id, HttpServletRequest request);
+
+    /**
+     * 获取用户想去地点列表
+     * @param wantGoQueryRequest 搜索条件
+     * @param request 请求
+     * @return 用户想去地点列表
+     */
+    List<BusLocationVO> wantGoList(WantGoQueryRequest wantGoQueryRequest, HttpServletRequest request);
 
 }

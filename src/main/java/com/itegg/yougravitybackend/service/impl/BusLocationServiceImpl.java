@@ -10,9 +10,11 @@ import com.itegg.yougravitybackend.manager.FileManager;
 import com.itegg.yougravitybackend.model.dto.busLocation.LocationAddRequest;
 import com.itegg.yougravitybackend.model.dto.busLocation.LocationQueryRequest;
 import com.itegg.yougravitybackend.model.dto.busLocation.LocationUpdateRequest;
+import com.itegg.yougravitybackend.model.dto.busLocation.WantGoQueryRequest;
 import com.itegg.yougravitybackend.model.entity.BusLocation;
 import com.itegg.yougravitybackend.model.entity.BusLocationWantGo;
 import com.itegg.yougravitybackend.model.entity.User;
+import com.itegg.yougravitybackend.model.vo.BusLocationVO;
 import com.itegg.yougravitybackend.service.BusLocationService;
 import com.itegg.yougravitybackend.mapper.BusLocationMapper;
 import com.itegg.yougravitybackend.service.BusLocationWantGoService;
@@ -23,6 +25,8 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.support.TransactionTemplate;
+
+import java.util.List;
 
 /**
 * @author ITegg
@@ -135,6 +139,12 @@ public class BusLocationServiceImpl extends ServiceImpl<BusLocationMapper, BusLo
                 return update && busLocationWantGoService.removeById(wantGo.getId());
             });
         }
+    }
+
+    @Override
+    public List<BusLocationVO> wantGoList(WantGoQueryRequest wantGoQueryRequest, HttpServletRequest request) {
+        User loginUser = userService.getLoginUser(request);
+        return this.baseMapper.wantGoList(wantGoQueryRequest, loginUser.getId());
     }
 
 }

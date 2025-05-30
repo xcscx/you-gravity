@@ -35,7 +35,6 @@ import java.util.stream.Collectors;
 * @description 针对表【bus_comment(评论表)】的数据库操作Service实现
 * @createDate 2025-04-21 15:04:59
 */
-@Slf4j
 @Service
 @RequiredArgsConstructor
 public class BusCommentServiceImpl extends ServiceImpl<BusCommentMapper, BusComment>
@@ -108,7 +107,6 @@ public class BusCommentServiceImpl extends ServiceImpl<BusCommentMapper, BusComm
         List<BusCommentVO> commentVOList = this.getCommentVOList(commentPage.getRecords(), loginUser);
         Page<BusCommentVO> commentVOPage = new Page<>(current, pageSize, commentPage.getTotal());
         commentVOPage.setRecords(commentVOList);
-        log.info("Querying comments for locationId: {}, page: {}, size:{}", comReq.getEventLocationLd(), current, pageSize);
         return commentVOPage;
     }
 

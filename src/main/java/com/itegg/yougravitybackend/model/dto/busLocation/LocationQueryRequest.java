@@ -11,6 +11,18 @@ public class LocationQueryRequest extends PageRequest implements Serializable {
     private static final long serialVersionUID = 1L;
 
     /**
+     * 地点名称
+     */
+    private String locationName;
+
+    /**
+     * 最少想去人数
+     */
+    private Integer wantGoCountMin;
+
+    // --- 坐标参数 ---
+
+    /**
      * 经度
      */
     private String longitude;
@@ -20,11 +32,16 @@ public class LocationQueryRequest extends PageRequest implements Serializable {
      */
     private String latitude;
 
-    /**
-     * 地点名称
-     */
-    private String locationName;
+    // --- 标识参数 ---
 
-    // TODO 想去的 - 打卡的
+    /**
+     * 是否是想去地点
+     */
+    private Boolean wantGo;
+
+    /**
+     * 是否是打卡过的地点
+     */
+    private Boolean checkIn;
 
 }

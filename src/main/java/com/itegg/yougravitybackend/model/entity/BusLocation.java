@@ -41,6 +41,6 @@ public class BusLocation extends superModel {
      * 想去人数
      */
     @TableField("want_go_count")
-    private Long wantGoCount;
+    private Integer wantGoCount;
 
 }

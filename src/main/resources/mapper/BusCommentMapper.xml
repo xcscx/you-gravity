@@ -6,7 +6,7 @@
 
     <resultMap id="BaseResultMap" type="com.itegg.yougravitybackend.model.entity.BusComment">
             <id property="id" column="id" />
-            <result property="locationId" column="location_id" />
+            <result property="eventLocationLd" column="location_id" />
             <result property="message" column="message" />
             <result property="likeCount" column="like_count" />
             <result property="parentId" column="parent_id" />

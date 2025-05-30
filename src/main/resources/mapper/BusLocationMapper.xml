@@ -19,4 +19,28 @@
         id,event_id,longitude,latitude,location_name,want_go_count,create_time,
         update_time,remove_flag
     </sql>
+
+    <select id="wantGoList" resultType="com.itegg.yougravitybackend.model.vo.BusLocationVO">
+        SELECT bl.id as id,
+               bl.location_name as locationName,
+               bl.longitude as longitude,
+               bl.latitude as latitude,
+               bl.want_go_count as wantGoCount,
+               bl.introduction as introduction,
+               blw.user_id as userId,
+               1 as isWantGo,
+               EXISTS(SELECT 1
+                      FROM bus_location_check_in blc
+                      WHERE blc.location_id = bl.id
+                        AND blc.user_id = #{userId}
+                        AND blc.remove_flag = 0) as isCheckIn
+        FROM bus_location bl
+        LEFT JOIN bus_location_want_go blw ON bl.id = blw.location_id
+        WHERE bl.remove_flag = 0
+          AND blw.user_id = #{userId}
+        <if test="condition.locationName != null and condition.locationName != ''">
+          AND bl.location_name LIKE CONCAT('%',#{condition.locationName},'%')
+        </if>
+    </select>
+
 </mapper>

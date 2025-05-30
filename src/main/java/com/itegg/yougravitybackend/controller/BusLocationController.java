@@ -14,8 +14,10 @@ import com.itegg.yougravitybackend.exception.ThrowUtils;
 import com.itegg.yougravitybackend.model.dto.busLocation.LocationAddRequest;
 import com.itegg.yougravitybackend.model.dto.busLocation.LocationQueryRequest;
 import com.itegg.yougravitybackend.model.dto.busLocation.LocationUpdateRequest;
+import com.itegg.yougravitybackend.model.dto.busLocation.WantGoQueryRequest;
 import com.itegg.yougravitybackend.model.entity.BusLocation;
 import com.itegg.yougravitybackend.model.vo.AmapVO;
+import com.itegg.yougravitybackend.model.vo.BusLocationVO;
 import com.itegg.yougravitybackend.service.BusLocationService;
 import jakarta.annotation.Resource;
 import jakarta.servlet.http.HttpServletRequest;
@@ -129,6 +131,9 @@ public class BusLocationController {
 
     /**
      * 取消想去地点
+     * @param id 地点id
+     * @param request 请求
+     * @return 取消结果
      */
     @PostMapping("/not-want-go")
     public Result<Boolean> notWantGo(@RequestBody IdCondition id, HttpServletRequest request) {
@@ -140,7 +145,19 @@ public class BusLocationController {
 
     /**
      * 想去地点列表
+     * @param wantGoQueryRequest 查询参数
+     * @param request 请求
+     * @return 地点列表结果
      */
+    @PostMapping("/want-go-list")
+    public Result<Page<BusLocationVO>> wantGoList(@RequestBody WantGoQueryRequest wantGoQueryRequest, HttpServletRequest request) {
+        ThrowUtils.throwIf(ObjectUtil.isNull(wantGoQueryRequest), ErrorCode.PARAMS_ERROR);
+        long current = wantGoQueryRequest.getCurrent();
+        long pageSize = wantGoQueryRequest.getPageSize();
+        Page<BusLocationVO> vo = new Page<>(current, pageSize);
+        vo.setRecords(busLocationService.wantGoList(wantGoQueryRequest, request));
+        return ResultUtils.ok(vo);
+    }
 
 
     /**
