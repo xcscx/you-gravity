@@ -4,6 +4,7 @@ import com.baomidou.mybatisplus.annotation.TableField;
 import lombok.Data;
 
 import java.io.Serializable;
+import java.util.List;
 
 @Data
 public class BusLocationVO  implements Serializable {
@@ -45,5 +46,10 @@ public class BusLocationVO  implements Serializable {
      * 是否打卡
      */
     private  Boolean isCheckIn;
+
+    /**
+     * 图片
+     */
+    private List<AttachmentVO> pictures;
 
 }

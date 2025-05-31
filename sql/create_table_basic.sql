@@ -92,6 +92,7 @@ ALTER TABLE space
 
 CREATE INDEX idx_space_type ON space(space_type);
 
+
 -- 空间成员表
 CREATE TABLE IF NOT EXISTS 'space_user'
 (
@@ -106,7 +107,22 @@ CREATE TABLE IF NOT EXISTS 'space_user'
     UNIQUE KEY `uk_spaceId_userId` (`space_id`, `user_id`, `remove_flag`),
     INDEX `idx_space_id` (`space_id`),
     INDEX `idx_user_id` (`user_id`)
-)
+);
 
 
-
+-- 附件表
+create table if not exists attachment
+(
+    `id` bigint NOT NULL AUTO_INCREMENT COMMENT 'id',
+    `business_id` bigint NOT NULL COMMENT '业务id',
+    `business_type` varchar(32) COLLATE utf8mb4_unicode_ci NOT NULL COMMENT '业务类型',
+    `name` varchar(64) DEFAULT NULL COMMENT '附件名称',
+    `doc_url` varchar(512) COLLATE utf8mb4_unicode_ci NOT NULL COMMENT '文件url',
+    `doc_type` varchar(32) COLLATE utf8mb4_unicode_ci NOT NULL COMMENT '文件类型',
+    `create_by` bigint NOT NULL COMMENT '创建人名称',
+    `create_time` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
+    `update_time` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '最后更新时间',
+    `remove_flag` tinyint NOT NULL DEFAULT '0' COMMENT '是否删除 0-否 1-是',
+    PRIMARY KEY (`id`),
+    INDEX `idx_business` (`business_id`, `business_type`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci COMMENT='附件表';
