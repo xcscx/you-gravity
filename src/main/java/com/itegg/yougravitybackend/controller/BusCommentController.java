@@ -28,6 +28,8 @@ public class BusCommentController {
     @Resource
     private BusCommentService busCommentService;
 
+    // TODO: 调整为话题 - 评论，和其他表解耦
+
     /**
      * 新增评论
      * @param request 新增评论请求参数
