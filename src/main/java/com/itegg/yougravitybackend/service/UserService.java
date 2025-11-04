@@ -2,6 +2,7 @@ package com.itegg.yougravitybackend.service;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.itegg.yougravitybackend.model.dto.user.UserLoginRequest;
+import com.itegg.yougravitybackend.model.dto.user.UserRegisterRequest;
 import com.itegg.yougravitybackend.model.entity.User;
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.itegg.yougravitybackend.model.vo.LoginUserVO;
@@ -22,7 +23,13 @@ public interface UserService extends IService<User> {
      * @param userRegisterRequest 用户注册参数
      * @return 用户id
      */
-//    long userRegister(UserRegisterRequest userRegisterRequest);
+    long userRegister(UserRegisterRequest userRegisterRequest);
+
+
+
+
+
+
 
     /**
      * 用户登录
@@ -41,9 +48,10 @@ public interface UserService extends IService<User> {
     /**
      * 密码加密
      * @param userPassword 用户密码
+     * @param salt         加密盐
      * @return
      */
-    String getEncryptPassword(String userPassword);
+    String getEncryptPassword(String userPassword, String salt);
 
     /**
      * 获取当前登录用户

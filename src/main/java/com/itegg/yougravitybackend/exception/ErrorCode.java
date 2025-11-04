@@ -10,7 +10,7 @@ import lombok.Getter;
 public enum ErrorCode {
 
     // 成功
-    SECCESS(200, "ok"),
+    SUCCESS(200, "ok"),
     // 客户端异常
     PARAMS_ERROR(400, "请求参数错误"),
     NOT_LOGIN_ERROR(401, "未登录"),

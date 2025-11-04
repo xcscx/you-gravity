@@ -32,26 +32,22 @@ public class UserController {
     @Resource
     private UserService userService;
 
-
-
-
+    /**
+     * 用户注册接口
+     * @param request 注册请求参数
+     * @return 注册用户的id
+     */
+    @PostMapping("/register")
+    public Result<Long> userRegister(@RequestBody UserRegisterRequest request) {
+        ThrowUtils.throwIf(ObjectUtil.isNull(request), ErrorCode.PARAMS_ERROR);
+        return ResultUtils.ok(userService.userRegister(request));
+    }
 
 
 
 
 
     // -------------------------------------------------------
-
-    /**
-     * 用户注册接口
-     * @param userRegisterRequest 注册请求参数
-     * @return 注册用户的id
-     */
-//    @PostMapping("/register")
-//    public Result<Long> userRegister(@RequestBody UserRegisterRequest userRegisterRequest) {
-//        ThrowUtils.throwIf(userRegisterRequest == null, ErrorCode.PARAMS_ERROR);
-//        return ResultUtils.ok(userService.userRegister(userRegisterRequest));
-//    }
 
     /**
      * 用户登录接口
