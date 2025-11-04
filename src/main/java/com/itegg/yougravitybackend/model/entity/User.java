@@ -4,55 +4,63 @@ import com.baomidou.mybatisplus.annotation.*;
 
 import com.itegg.yougravitybackend.common.model.superModel;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 
 /**
- * 用户表
- * @TableName user
+ * 用户表 basic_user
+ * @author ITegg
  */
-@TableName(value ="user")
+@EqualsAndHashCode(callSuper = true)
+@TableName(value ="basic_user")
 @Data
 public class User extends superModel {
 
     /**
-     * 用户账号
+     * 用户名称
      */
-    @TableField("user_account")
-    private String userAccount;
+    @TableField("name")
+    private String name;
 
     /**
-     * 密文密码
+     * 手机
      */
-    @TableField("user_password")
-    private String userPassword;
+    @TableField("mobile")
+    private String mobile;
 
     /**
-     * 用户昵称
+     * 账号密码
      */
-    @TableField("user_name")
-    private String userName;
+    @TableField("password")
+    private String password;
+
+    /**
+     * 密码盐值
+     */
+    @TableField("salt")
+    private String salt;
+
+    /**
+     * 邮箱
+     */
+    @TableField("email")
+    private String email;
 
     /**
      * 用户头像
      */
-    @TableField("user_avatar")
-    private String userAvatar;
+    @TableField("avatar")
+    private String avatar;
 
     /**
-     * 用户简介
+     * 个性签名
      */
-    @TableField("user_profile")
-    private String userProfile;
+    @TableField("signature")
+    private String signature;
 
     /**
-     * 用户标签
+     * 账号状态
      */
-    @TableField("tags")
-    private String tags;
-
-    /**
-     * 用户角色 user/admin
-     */
-    @TableField("user_role")
-    private String userRole;
+    @TableField("state")
+    private Integer state;
 
 }

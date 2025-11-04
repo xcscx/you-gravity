@@ -2,8 +2,6 @@ package com.itegg.yougravitybackend.service;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.itegg.yougravitybackend.model.dto.user.UserLoginRequest;
-import com.itegg.yougravitybackend.model.dto.user.UserQueryRequest;
-import com.itegg.yougravitybackend.model.dto.user.UserRegisterRequest;
 import com.itegg.yougravitybackend.model.entity.User;
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.itegg.yougravitybackend.model.vo.LoginUserVO;
@@ -24,7 +22,7 @@ public interface UserService extends IService<User> {
      * @param userRegisterRequest 用户注册参数
      * @return 用户id
      */
-    long userRegister(UserRegisterRequest userRegisterRequest);
+//    long userRegister(UserRegisterRequest userRegisterRequest);
 
     /**
      * 用户登录
@@ -73,20 +71,20 @@ public interface UserService extends IService<User> {
      * @param userList 用户列表信息
      * @return 脱敏用户列表信息
      */
-    List<UserVO> getUserVOList(List<User> userList);
+//    List<UserVO> getUserVOList(List<User> userList);
 
     /**
      * 分页查询用户信息接口
      * @param userQueryRequest 分页查询参数
      * @return 符合条件的用户列表信息
      */
-    QueryWrapper<User> getQueryWrapper(UserQueryRequest userQueryRequest);
+//    QueryWrapper<User> getQueryWrapper(UserQueryRequest userQueryRequest);
 
     /**
      * 是否为管理员
      * @param user 待校验用户
      * @return 结论
      */
-    boolean isAdmin(User user);
+//    boolean isAdmin(User user);
 
 }

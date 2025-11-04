@@ -32,16 +32,26 @@ public class UserController {
     @Resource
     private UserService userService;
 
+
+
+
+
+
+
+
+
+    // -------------------------------------------------------
+
     /**
      * 用户注册接口
      * @param userRegisterRequest 注册请求参数
      * @return 注册用户的id
      */
-    @PostMapping("/register")
-    public Result<Long> userRegister(@RequestBody UserRegisterRequest userRegisterRequest) {
-        ThrowUtils.throwIf(userRegisterRequest == null, ErrorCode.PARAMS_ERROR);
-        return ResultUtils.ok(userService.userRegister(userRegisterRequest));
-    }
+//    @PostMapping("/register")
+//    public Result<Long> userRegister(@RequestBody UserRegisterRequest userRegisterRequest) {
+//        ThrowUtils.throwIf(userRegisterRequest == null, ErrorCode.PARAMS_ERROR);
+//        return ResultUtils.ok(userService.userRegister(userRegisterRequest));
+//    }
 
     /**
      * 用户登录接口
@@ -86,20 +96,20 @@ public class UserController {
      * @param userAddRequest 创建用户数据信息
      * @return 用户id
      */
-    @PostMapping("/add")
-    @AuthCheck(mustRole = UserConstant.ADMIN_ROLE)
-    public Result<Long> addUser(@RequestBody UserAddRequest userAddRequest) {
-        ThrowUtils.throwIf(ObjectUtil.isNull(userAddRequest), ErrorCode.PARAMS_ERROR);
-        User user = new User();
-        BeanUtils.copyProperties(userAddRequest, user);
-        // 默认密码 123456
-        final String DEFAULT_PASSWORD = "123456";
-        String encryptPassword = userService.getEncryptPassword(DEFAULT_PASSWORD);
-        user.setUserPassword(encryptPassword);
-        boolean result = userService.save(user);
-        ThrowUtils.throwIf(!result, ErrorCode.OPERATION_ERROR);
-        return ResultUtils.ok(user.getId());
-    }
+//    @PostMapping("/add")
+//    @AuthCheck(mustRole = UserConstant.ADMIN_ROLE)
+//    public Result<Long> addUser(@RequestBody UserAddRequest userAddRequest) {
+//        ThrowUtils.throwIf(ObjectUtil.isNull(userAddRequest), ErrorCode.PARAMS_ERROR);
+//        User user = new User();
+//        BeanUtils.copyProperties(userAddRequest, user);
+//        // 默认密码 123456
+//        final String DEFAULT_PASSWORD = "123456";
+//        String encryptPassword = userService.getEncryptPassword(DEFAULT_PASSWORD);
+//        user.setUserPassword(encryptPassword);
+//        boolean result = userService.save(user);
+//        ThrowUtils.throwIf(!result, ErrorCode.OPERATION_ERROR);
+//        return ResultUtils.ok(user.getId());
+//    }
 
     /**
      * 依据id获取用户 - 仅管理员可调用
@@ -147,36 +157,36 @@ public class UserController {
      * @param userUpdateRequest 更新用户请求
      * @return 返回是否更新成功
      */
-    @PostMapping("/update")
-    @AuthCheck(mustRole = UserConstant.ADMIN_ROLE)
-    public Result<Boolean> updateUser(@RequestBody UserUpdateRequest userUpdateRequest) {
-        if(ObjectUtil.isNull(userUpdateRequest) || ObjectUtil.isNull(userUpdateRequest.getId())) {
-            throw new BusinessException(ErrorCode.PARAMS_ERROR);
-        }
-        User user = new User();
-        BeanUtils.copyProperties(userUpdateRequest, user);
-        boolean result = userService.updateById(user);
-        ThrowUtils.throwIf(!result, ErrorCode.OPERATION_ERROR);
-        return ResultUtils.ok(true);
-    }
+//    @PostMapping("/update")
+//    @AuthCheck(mustRole = UserConstant.ADMIN_ROLE)
+//    public Result<Boolean> updateUser(@RequestBody UserUpdateRequest userUpdateRequest) {
+//        if(ObjectUtil.isNull(userUpdateRequest) || ObjectUtil.isNull(userUpdateRequest.getId())) {
+//            throw new BusinessException(ErrorCode.PARAMS_ERROR);
+//        }
+//        User user = new User();
+//        BeanUtils.copyProperties(userUpdateRequest, user);
+//        boolean result = userService.updateById(user);
+//        ThrowUtils.throwIf(!result, ErrorCode.OPERATION_ERROR);
+//        return ResultUtils.ok(true);
+//    }
 
     /**
      * 分页获取用户封装 - 仅管理员可调用
      * @param userQueryRequest 用户搜素参数
      * @return 分页搜素
      */
-    @PostMapping("/list/page/vo")
-    @AuthCheck(mustRole = UserConstant.ADMIN_ROLE)
-    public Result<Page<UserVO>> listUserVOByPage(@RequestBody UserQueryRequest userQueryRequest) {
-        ThrowUtils.throwIf(ObjectUtil.isNull(userQueryRequest), ErrorCode.PARAMS_ERROR);
-        long current = userQueryRequest.getCurrent();
-        long pageSize = userQueryRequest.getPageSize();
-        Page<User> userPage = userService.page(new Page<>(current, pageSize),
-                userService.getQueryWrapper(userQueryRequest));
-        Page<UserVO> userVOPage = new Page<>(current, pageSize, userPage.getTotal());
-        List<UserVO> userVOList = userService.getUserVOList(userPage.getRecords());
-        userVOPage.setRecords(userVOList);
-        return ResultUtils.ok(userVOPage);
-    }
+//    @PostMapping("/list/page/vo")
+//    @AuthCheck(mustRole = UserConstant.ADMIN_ROLE)
+//    public Result<Page<UserVO>> listUserVOByPage(@RequestBody UserQueryRequest userQueryRequest) {
+//        ThrowUtils.throwIf(ObjectUtil.isNull(userQueryRequest), ErrorCode.PARAMS_ERROR);
+//        long current = userQueryRequest.getCurrent();
+//        long pageSize = userQueryRequest.getPageSize();
+//        Page<User> userPage = userService.page(new Page<>(current, pageSize),
+//                userService.getQueryWrapper(userQueryRequest));
+//        Page<UserVO> userVOPage = new Page<>(current, pageSize, userPage.getTotal());
+//        List<UserVO> userVOList = userService.getUserVOList(userPage.getRecords());
+//        userVOPage.setRecords(userVOList);
+//        return ResultUtils.ok(userVOPage);
+//    }
 
 }

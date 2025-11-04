@@ -8,10 +8,7 @@ import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.itegg.yougravitybackend.exception.BusinessException;
 import com.itegg.yougravitybackend.exception.ErrorCode;
 import com.itegg.yougravitybackend.model.dto.user.UserLoginRequest;
-import com.itegg.yougravitybackend.model.dto.user.UserQueryRequest;
-import com.itegg.yougravitybackend.model.dto.user.UserRegisterRequest;
 import com.itegg.yougravitybackend.model.entity.User;
-import com.itegg.yougravitybackend.model.enums.UserRoleEnum;
 import com.itegg.yougravitybackend.model.vo.LoginUserVO;
 import com.itegg.yougravitybackend.model.vo.UserVO;
 import com.itegg.yougravitybackend.service.UserService;
@@ -39,40 +36,40 @@ import static com.itegg.yougravitybackend.constant.UserConstant.USER_LOGIN_STATE
 public class UserServiceImpl extends ServiceImpl<UserMapper, User>
     implements UserService{
 
-    @Override
-    public long userRegister(UserRegisterRequest req) {
-        // 校验数据是否合理
-        if(StrUtil.hasBlank(req.getUserAccount(), req.getUserPassword(), req.getCheckPassword())) {
-            throw new BusinessException(ErrorCode.PARAMS_ERROR, "参数为空");
-        }
-        if(ObjectUtil.notEqual(req.getUserPassword(), req.getCheckPassword())) {
-            throw new BusinessException(ErrorCode.PARAMS_ERROR, "两次密码输入不一致");
-        }
-        // 校验数据是否重复
-        QueryWrapper<User> queryWrapper = new QueryWrapper<>();
-        queryWrapper.eq("user_account", req.getUserAccount());
-        long count = this.baseMapper.selectCount(queryWrapper);
-        if(count > 0) {
-            throw new BusinessException(ErrorCode.PARAMS_ERROR, "账号重复");
-        }
-        // 数据加密 + 默认用户名称设置（年后两位 + 月 + 六位随机数）
-        String encryptPassword = getEncryptPassword(req.getUserPassword());
-        LocalDate currentDate = LocalDate.now();
-        String year = String.valueOf(currentDate.getYear()).substring(2);
-        String month = String.format("%02d", currentDate.getMonthValue());
-        String randomPart = RandomUtil.randomNumbers(6);
-        // 插入数据
-        User user = new User();
-        user.setUserAccount(req.getUserAccount());
-        user.setUserPassword(encryptPassword);
-        user.setUserName("默认用户" + year + month + randomPart);
-        user.setUserRole(UserRoleEnum.USER.getCode());
-        boolean saveResult = this.save(user);
-        if(!saveResult) {
-            throw new BusinessException(ErrorCode.SYSTEM_ERROR, "系统异常，数据注册失败");
-        }
-        return user.getId();
-    }
+//    @Override
+//    public long userRegister(UserRegisterRequest req) {
+//        // 校验数据是否合理
+//        if(StrUtil.hasBlank(req.getUserAccount(), req.getUserPassword(), req.getCheckPassword())) {
+//            throw new BusinessException(ErrorCode.PARAMS_ERROR, "参数为空");
+//        }
+//        if(ObjectUtil.notEqual(req.getUserPassword(), req.getCheckPassword())) {
+//            throw new BusinessException(ErrorCode.PARAMS_ERROR, "两次密码输入不一致");
+//        }
+//        // 校验数据是否重复
+//        QueryWrapper<User> queryWrapper = new QueryWrapper<>();
+//        queryWrapper.eq("user_account", req.getUserAccount());
+//        long count = this.baseMapper.selectCount(queryWrapper);
+//        if(count > 0) {
+//            throw new BusinessException(ErrorCode.PARAMS_ERROR, "账号重复");
+//        }
+//        // 数据加密 + 默认用户名称设置（年后两位 + 月 + 六位随机数）
+//        String encryptPassword = getEncryptPassword(req.getUserPassword());
+//        LocalDate currentDate = LocalDate.now();
+//        String year = String.valueOf(currentDate.getYear()).substring(2);
+//        String month = String.format("%02d", currentDate.getMonthValue());
+//        String randomPart = RandomUtil.randomNumbers(6);
+//        // 插入数据
+//        User user = new User();
+//        user.setUserAccount(req.getUserAccount());
+//        user.setUserPassword(encryptPassword);
+//        user.setUserName("默认用户" + year + month + randomPart);
+////        user.setUserRole(UserRoleEnum.USER.getCode());
+//        boolean saveResult = this.save(user);
+//        if(!saveResult) {
+//            throw new BusinessException(ErrorCode.SYSTEM_ERROR, "系统异常，数据注册失败");
+//        }
+//        return user.getId();
+//    }
 
     @Override
     public LoginUserVO userLogin(UserLoginRequest req, HttpServletRequest request) {
@@ -145,33 +142,34 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User>
         return userVO;
     }
 
-    @Override
-    public List<UserVO> getUserVOList(List<User> userList) {
-        if(ObjectUtil.isNull(userList)) {
-            return new ArrayList<>();
-        }
-        return userList.stream().map(this::getUserVO).collect(Collectors.toList());
-    }
+//    @Override
+//    public List<UserVO> getUserVOList(List<User> userList) {
+//        if(ObjectUtil.isNull(userList)) {
+//            return new ArrayList<>();
+//        }
+//        return userList.stream().map(this::getUserVO).collect(Collectors.toList());
+//    }
 
-    @Override
-    public QueryWrapper<User> getQueryWrapper(UserQueryRequest userQueryRequest) {
-        if(ObjectUtil.isNull(userQueryRequest)) {
-            throw new BusinessException(ErrorCode.PARAMS_ERROR, "请求参数为空");
-        }
-        QueryWrapper<User> queryWrapper = new QueryWrapper<>();
-        queryWrapper.eq(ObjectUtil.isNotNull(userQueryRequest.getId()), "id", userQueryRequest.getId());
-        queryWrapper.eq(StrUtil.isNotBlank(userQueryRequest.getUserRole()), "user_role", userQueryRequest.getUserRole());
-        queryWrapper.like(StrUtil.isNotBlank(userQueryRequest.getUserAccount()), "user_account", userQueryRequest.getUserAccount());
-        queryWrapper.like(StrUtil.isNotBlank(userQueryRequest.getUserName()), "user_name", userQueryRequest.getUserName());
-        queryWrapper.like(StrUtil.isNotBlank(userQueryRequest.getUserProfile()), "user_profile", userQueryRequest.getUserProfile());
-        queryWrapper.orderBy(StrUtil.isNotEmpty(userQueryRequest.getSortOrder()), userQueryRequest.getSortOrder().equals("asc"), userQueryRequest.getSortField());
-        return queryWrapper;
-    }
+//    @Override
+//    public QueryWrapper<User> getQueryWrapper(UserQueryRequest userQueryRequest) {
+//        if(ObjectUtil.isNull(userQueryRequest)) {
+//            throw new BusinessException(ErrorCode.PARAMS_ERROR, "请求参数为空");
+//        }
+//        QueryWrapper<User> queryWrapper = new QueryWrapper<>();
+//        queryWrapper.eq(ObjectUtil.isNotNull(userQueryRequest.getId()), "id", userQueryRequest.getId());
+//        queryWrapper.eq(StrUtil.isNotBlank(userQueryRequest.getUserRole()), "user_role", userQueryRequest.getUserRole());
+//        queryWrapper.like(StrUtil.isNotBlank(userQueryRequest.getUserAccount()), "user_account", userQueryRequest.getUserAccount());
+//        queryWrapper.like(StrUtil.isNotBlank(userQueryRequest.getUserName()), "user_name", userQueryRequest.getUserName());
+//        queryWrapper.like(StrUtil.isNotBlank(userQueryRequest.getUserProfile()), "user_profile", userQueryRequest.getUserProfile());
+//        queryWrapper.orderBy(StrUtil.isNotEmpty(userQueryRequest.getSortOrder()), userQueryRequest.getSortOrder().equals("asc"), userQueryRequest.getSortField());
+//        return queryWrapper;
+//    }
 
-    @Override
-    public boolean isAdmin(User user) {
-        return ObjectUtil.isNotNull(user) && UserRoleEnum.ADMIN.getCode().equals(user.getUserRole());
-    }
+//    @Override
+//    public boolean isAdmin(User user) {
+////        return ObjectUtil.isNotNull(user) && UserRoleEnum.ADMIN.getCode().equals(user.getUserRole());
+//    return true;
+//    }
 
 }
 
