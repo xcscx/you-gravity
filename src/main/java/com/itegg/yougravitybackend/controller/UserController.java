@@ -1,7 +1,6 @@
 package com.itegg.yougravitybackend.controller;
 
 import cn.hutool.core.util.ObjectUtil;
-import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.itegg.yougravitybackend.aop.annotation.AuthCheck;
 import com.itegg.yougravitybackend.common.IdCondition;
 import com.itegg.yougravitybackend.common.Result;
@@ -11,16 +10,13 @@ import com.itegg.yougravitybackend.exception.BusinessException;
 import com.itegg.yougravitybackend.exception.ErrorCode;
 import com.itegg.yougravitybackend.exception.ThrowUtils;
 import com.itegg.yougravitybackend.model.dto.user.*;
-import com.itegg.yougravitybackend.model.entity.User;
+import com.itegg.yougravitybackend.model.entity.basic.User;
 import com.itegg.yougravitybackend.model.vo.LoginUserVO;
 import com.itegg.yougravitybackend.model.vo.UserVO;
 import com.itegg.yougravitybackend.service.UserService;
 import jakarta.annotation.Resource;
 import jakarta.servlet.http.HttpServletRequest;
-import org.springframework.beans.BeanUtils;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
 
 /**
  * 用户 控制器

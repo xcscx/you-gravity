@@ -1,4 +1,4 @@
-package com.itegg.yougravitybackend.model.entity;
+package com.itegg.yougravitybackend.model.entity.basic;
 
 import com.baomidou.mybatisplus.annotation.*;
 

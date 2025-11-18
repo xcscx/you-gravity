@@ -4,7 +4,7 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.itegg.yougravitybackend.mapper.UserMapper">
 
-    <resultMap id="BaseResultMap" type="com.itegg.yougravitybackend.model.entity.User">
+    <resultMap id="BaseResultMap" type="com.itegg.yougravitybackend.model.entity.basic.User">
             <id property="id" column="id" />
             <result property="userAccount" column="user_account" />
             <result property="userPassword" column="user_password" />

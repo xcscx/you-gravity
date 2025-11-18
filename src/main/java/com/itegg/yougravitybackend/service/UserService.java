@@ -1,15 +1,12 @@
 package com.itegg.yougravitybackend.service;
 
-import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.itegg.yougravitybackend.model.dto.user.UserLoginRequest;
 import com.itegg.yougravitybackend.model.dto.user.UserRegisterRequest;
-import com.itegg.yougravitybackend.model.entity.User;
+import com.itegg.yougravitybackend.model.entity.basic.User;
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.itegg.yougravitybackend.model.vo.LoginUserVO;
 import com.itegg.yougravitybackend.model.vo.UserVO;
 import jakarta.servlet.http.HttpServletRequest;
-
-import java.util.List;
 
 /**
 * @author ITegg

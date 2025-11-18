@@ -9,7 +9,7 @@ import com.itegg.yougravitybackend.exception.BusinessException;
 import com.itegg.yougravitybackend.exception.ErrorCode;
 import com.itegg.yougravitybackend.model.dto.user.UserLoginRequest;
 import com.itegg.yougravitybackend.model.dto.user.UserRegisterRequest;
-import com.itegg.yougravitybackend.model.entity.User;
+import com.itegg.yougravitybackend.model.entity.basic.User;
 import com.itegg.yougravitybackend.model.vo.LoginUserVO;
 import com.itegg.yougravitybackend.model.vo.UserVO;
 import com.itegg.yougravitybackend.service.UserService;
@@ -21,9 +21,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.util.DigestUtils;
 
 import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.stream.Collectors;
 
 import static com.itegg.yougravitybackend.constant.UserConstant.USER_LOGIN_STATE;
 
