@@ -71,7 +71,7 @@ CREATE TABLE `basic_permission` (
 
 
 -- 角色-权限表
-CREATE TABLE `basic_role_permissions` (
+CREATE TABLE `basic_role_permission` (
                                           `id` BIGINT(20) NOT NULL COMMENT '主键',
                                           `role_id` BIGINT(20) NOT NULL COMMENT '角色id',
                                           `permission_id` BIGINT(20) NOT NULL COMMENT '权限id',
