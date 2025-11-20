@@ -6,20 +6,21 @@
 
     <resultMap id="BaseResultMap" type="com.itegg.yougravitybackend.model.entity.basic.User">
             <id property="id" column="id" />
-            <result property="userAccount" column="user_account" />
-            <result property="userPassword" column="user_password" />
-            <result property="userName" column="user_name" />
-            <result property="userAvatar" column="user_avatar" />
-            <result property="userProfile" column="user_profile" />
-            <result property="tags" column="tags" />
-            <result property="userRole" column="user_role" />
+            <result property="name" column="name" />
+            <result property="mobile" column="mobile" />
+            <result property="password" column="password" />
+            <result property="salt" column="salt" />
+            <result property="email" column="email" />
+            <result property="avatar" column="avatar" />
+            <result property="signature" column="signature" />
+            <result property="state" column="state" />
             <result property="createTime" column="create_time" />
             <result property="updateTime" column="update_time" />
             <result property="removeFlag" column="remove_flag" />
     </resultMap>
 
     <sql id="Base_Column_List">
-        id,user_account,user_password,user_name,user_avatar,user_profile,
-        tags,user_role,create_time,update_time,remove_flag
+        id,`name`,`mobile`,password,salt,email,avatar,signature,
+        `state`,create_time,update_time,remove_flag
     </sql>
 </mapper>

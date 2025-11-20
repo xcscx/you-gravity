@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.itegg.yougravitybackend.mapper.PermissionMapper">
+
+    <resultMap id="BaseResultMap" type="com.itegg.yougravitybackend.model.entity.basic.Permission">
+        <id property="id" column="id" />
+        <result property="permissionCode" column="permission_code" />
+        <result property="permissionName" column="permission_name" />
+        <result property="permissionType" column="permission_type" />
+        <result property="href" column="href" />
+        <result property="icon" column="icon" />
+        <result property="description" column="description" />
+        <result property="parentId" column="parent_id" />
+        <result property="depth" column="depth" />
+        <result property="path" column="path" />
+        <result property="sorting" column="sorting" />
+        <result property="createTime" column="create_time" />
+        <result property="updateTime" column="update_time" />
+        <result property="removeFlag" column="remove_flag" />
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        id,`permission_code`,`permission_name`,`permission_type`,`href`,`icon`,
+        description,`parent_id`,`depth`,`path`,`sorting`,
+        create_time,update_time,remove_flag
+    </sql>
+</mapper>
