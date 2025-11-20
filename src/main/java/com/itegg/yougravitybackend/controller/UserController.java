@@ -19,7 +19,8 @@ import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.web.bind.annotation.*;
 
 /**
- * 用户 控制器
+ * 用户 Controller层
+ * @author ITegg
  */
 @RestController
 @RequestMapping("/user")

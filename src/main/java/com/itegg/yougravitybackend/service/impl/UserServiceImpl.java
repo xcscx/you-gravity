@@ -25,10 +25,9 @@ import java.time.LocalDate;
 import static com.itegg.yougravitybackend.constant.UserConstant.USER_LOGIN_STATE;
 
 /**
-* @author ITegg
-* @description 针对表【user(用户表)】的数据库操作Service实现
-* @createDate 2025-04-21 15:05:13
-*/
+ * 用户Service 实现类
+ * @author ITegg
+ */
 @Service
 @Slf4j
 public class UserServiceImpl extends ServiceImpl<UserMapper, User>
