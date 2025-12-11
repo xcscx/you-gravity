@@ -10,7 +10,7 @@
     </parent>
     <groupId>com.itegg</groupId>
     <artifactId>you-gravity-backend</artifactId>
-    <version>0.0.1-SNAPSHOT</version>
+    <version>0.1-Test</version>
     <name>you-gravity-backend</name>
     <description>you-gravity-backend</description>
     <properties>
@@ -136,6 +136,7 @@
         </repository>
     </repositories>
 
+    <!-- 打包用：mvn clean package -DskipTests -->
     <build>
         <plugins>
             <plugin>

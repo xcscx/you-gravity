@@ -2,7 +2,7 @@ package com.itegg.yougravitybackend.model.entity.basic;
 
 import com.baomidou.mybatisplus.annotation.*;
 
-import com.itegg.yougravitybackend.common.model.superModel;
+import com.itegg.yougravitybackend.common.model.SuperModel;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
@@ -13,7 +13,7 @@ import lombok.EqualsAndHashCode;
 @EqualsAndHashCode(callSuper = true)
 @TableName(value ="basic_user")
 @Data
-public class User extends superModel {
+public class User extends SuperModel {
 
     /**
      * 用户名称

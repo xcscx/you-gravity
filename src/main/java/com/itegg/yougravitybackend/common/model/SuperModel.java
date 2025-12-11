@@ -12,7 +12,7 @@ import java.time.LocalDateTime;
  */
 @EqualsAndHashCode(callSuper = true)
 @Data
-public class superModel extends IdModel {
+public class SuperModel extends IdModel {
 
     @Serial
     private static final long serialVersionUID = 1L;
