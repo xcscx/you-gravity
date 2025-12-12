@@ -1,6 +1,6 @@
 package com.itegg.yougravitybackend.controller;
 
-import com.itegg.yougravitybackend.service.RolePermissionService;
+import com.itegg.yougravitybackend.service.basic.RolePermissionService;
 import jakarta.annotation.Resource;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;

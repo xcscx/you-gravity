@@ -1,4 +1,4 @@
-package com.itegg.yougravitybackend.service;
+package com.itegg.yougravitybackend.service.basic;
 
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.itegg.yougravitybackend.model.entity.basic.UserRole;

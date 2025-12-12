@@ -1,4 +1,4 @@
-package com.itegg.yougravitybackend.service.impl;
+package com.itegg.yougravitybackend.service.basic.impl;
 
 import cn.hutool.core.util.ObjectUtil;
 import cn.hutool.core.util.RandomUtil;
@@ -12,7 +12,7 @@ import com.itegg.yougravitybackend.model.dto.user.UserRegisterRequest;
 import com.itegg.yougravitybackend.model.entity.basic.User;
 import com.itegg.yougravitybackend.model.vo.LoginUserVO;
 import com.itegg.yougravitybackend.model.vo.UserVO;
-import com.itegg.yougravitybackend.service.UserService;
+import com.itegg.yougravitybackend.service.basic.UserService;
 import com.itegg.yougravitybackend.mapper.UserMapper;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.extern.slf4j.Slf4j;

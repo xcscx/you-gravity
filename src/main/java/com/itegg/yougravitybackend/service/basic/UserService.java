@@ -1,4 +1,4 @@
-package com.itegg.yougravitybackend.service;
+package com.itegg.yougravitybackend.service.basic;
 
 import com.itegg.yougravitybackend.model.dto.user.UserLoginRequest;
 import com.itegg.yougravitybackend.model.dto.user.UserRegisterRequest;

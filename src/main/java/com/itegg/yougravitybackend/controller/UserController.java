@@ -13,7 +13,7 @@ import com.itegg.yougravitybackend.model.dto.user.*;
 import com.itegg.yougravitybackend.model.entity.basic.User;
 import com.itegg.yougravitybackend.model.vo.LoginUserVO;
 import com.itegg.yougravitybackend.model.vo.UserVO;
-import com.itegg.yougravitybackend.service.UserService;
+import com.itegg.yougravitybackend.service.basic.UserService;
 import jakarta.annotation.Resource;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.web.bind.annotation.*;
