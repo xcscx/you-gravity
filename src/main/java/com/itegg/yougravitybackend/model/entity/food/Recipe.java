@@ -7,36 +7,42 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 
 /**
- * 菜谱步骤表 food_recipe_step
+ * 菜谱表 food_recipe
  * @author ITegg
  */
 @EqualsAndHashCode(callSuper = true)
-@TableName(value ="food_recipe_step")
+@TableName(value ="food_recipe")
 @Data
-public class FoodRecipeStep extends SuperModel {
+public class Recipe extends SuperModel {
 
     /**
-     * 菜谱ID
+     * 创建人ID
      */
-    @TableField("recipe_id")
-    private Long recipeId;
+    @TableField("user_id")
+    private Long userId;
 
     /**
-     * 步骤顺序（从1开始）
+     * 菜谱名称
      */
-    @TableField("step_number")
-    private Integer stepNumber;
+    @TableField("title")
+    private String title;
 
     /**
-     * 步骤描述
+     * 描述
      */
     @TableField("description")
     private String description;
 
     /**
-     * 动作类型
+     * 封面
      */
-    @TableField("action_type")
-    private String actionType;
+    @TableField("url")
+    private String url;
+
+    /**
+     * 是否公开 0-否 1-是
+     */
+    @TableField("is_public")
+    private Integer isPublic;
 
 }

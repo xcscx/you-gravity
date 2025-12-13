@@ -1,13 +1,13 @@
 package com.itegg.yougravitybackend.mapper.food;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
-import com.itegg.yougravitybackend.model.entity.food.FoodRecipe;
+import com.itegg.yougravitybackend.model.entity.food.Recipe;
 
 /**
  * 菜谱 mapper类
  * @author ITegg
  */
-public interface FoodRecipeMapper extends BaseMapper<FoodRecipe> {
+public interface RecipeMapper extends BaseMapper<Recipe> {
 
 }
 
