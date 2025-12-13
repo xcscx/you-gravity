@@ -102,7 +102,7 @@ public class FileManager {
      * 删除临时文件
      * @param file 临时文件
      */
-    private static void deleteTemplateFile(File file) {
+    private void deleteTemplateFile(File file) {
         if(file != null) {
             // 删除临时文件
             boolean deleteResult = file.delete();

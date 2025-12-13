@@ -1,8 +1,7 @@
 package com.itegg.yougravitybackend.aop.aspect;
 
-
 import com.itegg.yougravitybackend.aop.annotation.AuthCheck;
-import com.itegg.yougravitybackend.service.UserService;
+import com.itegg.yougravitybackend.service.basic.UserService;
 import jakarta.annotation.Resource;
 import org.aspectj.lang.ProceedingJoinPoint;
 

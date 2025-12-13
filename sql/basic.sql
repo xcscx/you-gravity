@@ -1,3 +1,4 @@
+-- 基础模块
 -- 用户表
 CREATE TABLE `basic_user` (
                               `id` BIGINT NOT NULL AUTO_INCREMENT COMMENT 'id',
@@ -14,7 +15,7 @@ CREATE TABLE `basic_user` (
                               `remove_flag` TINYINT DEFAULT 0 COMMENT '删除标识',
                               PRIMARY KEY(`id`),
                               INDEX idx_mobile(mobile)
-)ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci COMMENT='用户表'
+)ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci COMMENT='用户表';
 
 
 -- 角色表
@@ -29,7 +30,7 @@ CREATE TABLE `basic_role` (
                               `remove_flag` TINYINT DEFAULT 0 COMMENT '删除标识',
                               PRIMARY KEY(`id`),
                               INDEX idx_role_code(role_code)
-)ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci COMMENT='用户表'
+)ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci COMMENT='用户表';
 
 
 -- 用户-角色表
@@ -43,7 +44,7 @@ CREATE TABLE `basic_user_role` (
                                    PRIMARY KEY(`id`),
                                    INDEX idx_user_id(user_id),
                                    INDEX idx_role_id(role_id)
-)ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci COMMENT='用户角色表'
+)ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci COMMENT='用户角色表';
 
 
 -- 权限表
@@ -67,20 +68,43 @@ CREATE TABLE `basic_permission` (
                                     KEY `INX_PARENT_ID` (`parent_id`) USING BTREE,
                                     KEY `INX_PATH` (`path`) USING BTREE,
                                     INDEX idx_permission_type(permission_type)
-)ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci COMMENT='权限表'
+)ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci COMMENT='权限表';
 
 
 -- 角色-权限表
 CREATE TABLE `basic_role_permission` (
-                                          `id` BIGINT(20) NOT NULL COMMENT '主键',
-                                          `role_id` BIGINT(20) NOT NULL COMMENT '角色id',
-                                          `permission_id` BIGINT(20) NOT NULL COMMENT '权限id',
-                                          `create_time` DATETIME NOT NULL COMMENT '创建时间',
-                                          `update_time` DATETIME NOT NULL COMMENT '最后更新时间',
-                                          `remove_flag` TINYINT(1) NOT NULL COMMENT '逻辑删除标记，0 - 未删除，1 - 已删除',
-                                          PRIMARY KEY (`id`),
-                                          INDEX idx_role_id(role_id),
-                                          INDEX idx_permission_id(permission_id)
+                                         `id` BIGINT(20) NOT NULL COMMENT '主键',
+                                         `role_id` BIGINT(20) NOT NULL COMMENT '角色id',
+                                         `permission_id` BIGINT(20) NOT NULL COMMENT '权限id',
+                                         `create_time` DATETIME NOT NULL COMMENT '创建时间',
+                                         `update_time` DATETIME NOT NULL COMMENT '最后更新时间',
+                                         `remove_flag` TINYINT(1) NOT NULL COMMENT '逻辑删除标记，0 - 未删除，1 - 已删除',
+                                         PRIMARY KEY (`id`),
+                                         INDEX idx_role_id(role_id),
+                                         INDEX idx_permission_id(permission_id)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='系统角色权限信息';
+
+
+-- 公共附件表 basic_attachment
+CREATE TABLE basic_attachment (
+                                  `id` BIGINT NOT NULL AUTO_INCREMENT COMMENT 'id',
+                                  `biz_type` VARCHAR(25) NOT NULL COMMENT '关联模块',
+                                  `biz_id` BIGINT NOT NULL COMMENT '关联业务id',
+                                  `original_name` VARCHAR(50) COMMENT '原始文件名',
+                                  `file_url` VARCHAR(512) DEFAULT NULL COMMENT '完整url',
+                                  `file_path` VARCHAR(512) DEFAULT NULL COMMENT '存储路径',
+                                  `file_type` VARCHAR(50) COMMENT '文件类型',
+                                  `file_size` BIGINT DEFAULT 0 COMMENT '文件大小',
+                                  `file_ext`VARCHAR(20) COMMENT '文件扩展名',
+                                  `user_id` BIGINT NOT NULL COMMENT '创建人id',
+                                  `status` TINYINT DEFAULT 1 COMMENT '状态 1-启用 0-禁用',
+                                  `message` VARCHAR(100) DEFAULT NULL COMMENT '信息',
+                                  `create_time` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
+                                  `update_time` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '最后更新时间',
+                                  `remove_flag` TINYINT DEFAULT 0 COMMENT '删除标识',
+                                  PRIMARY KEY(`id`),
+                                  INDEX idx_user_id(user_id),
+                                  INDEX idx_biz(biz_type, biz_id)
+)ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci COMMENT='公共附件表';
 
 

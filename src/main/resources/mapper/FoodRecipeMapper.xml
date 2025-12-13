@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.itegg.yougravitybackend.mapper.food.FoodRecipeMapper">
+
+    <resultMap id="BaseResultMap" type="com.itegg.yougravitybackend.model.entity.food.FoodRecipe">
+        <id property="id" column="id" />
+        <result property="userId" column="user_id" />
+        <result property="title" column="title" />
+        <result property="description" column="description" />
+        <result property="url" column="url" />
+        <result property="isPublic" column="is_public" />
+        <result property="createTime" column="create_time" />
+        <result property="updateTime" column="update_time" />
+        <result property="removeFlag" column="remove_flag" />
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        id, user_id, title, description, url, is_public, create_time, update_time, remove_flag
+    </sql>
+</mapper>
