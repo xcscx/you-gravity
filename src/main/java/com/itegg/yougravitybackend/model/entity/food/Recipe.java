@@ -45,4 +45,10 @@ public class Recipe extends SuperModel {
     @TableField("is_public")
     private Integer isPublic;
 
+    /**
+     * 状态
+     */
+    @TableField("status")
+    private String status;
+
 }
