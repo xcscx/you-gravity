@@ -16,6 +16,11 @@ public class RecipeAddRequest implements Serializable {
     private static final long serialVersionUID = 1L;
 
     /**
+     * 菜谱id
+     */
+    private Long id;
+
+    /**
      * 创建人ID
      */
     private Long userId;
@@ -39,5 +44,10 @@ public class RecipeAddRequest implements Serializable {
      * 是否公开 0-否 1-是
      */
     private Integer isPublic;
+
+    /**
+     * 状态
+     */
+    private String status;
 
 }

@@ -19,6 +19,13 @@ public interface RecipeService extends IService<Recipe> {
     Long addRecipe(RecipeAddRequest param);
 
     /**
+     * 保存菜谱
+     * @param param 菜谱信息
+     * @return 菜谱id
+     */
+    Long saveRecipe(RecipeAddRequest param);
+
+    /**
      * 更新菜谱
      * @param param 菜谱信息
      * @return 更新关联数据行数

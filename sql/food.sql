@@ -7,7 +7,7 @@ CREATE TABLE food_recipe (
                              `description` VARCHAR(100) DEFAULT NULL COMMENT '描述',
                              `url` VARCHAR(512) DEFAULT NULL COMMENT '封面',
                              `is_public` TINYINT(2) DEFAULT 0 COMMENT '是否公开（0-私有 1-公开）',
-                             `status` VARCHAR(25) NOT NULL COMMENT '数据状态 草稿、审核中、审核通过、审核未通过）',
+                             `status` VARCHAR(25) NOT NULL COMMENT '数据状态 （草稿、审核中、审核通过、审核未通过）',
                              `create_time` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
                              `update_time` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '最后更新时间',
                              `remove_flag` TINYINT DEFAULT 0 COMMENT '删除标识',

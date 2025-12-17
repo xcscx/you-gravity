@@ -30,6 +30,13 @@ public class RecipeServiceImpl extends ServiceImpl<RecipeMapper, Recipe>
     }
 
     @Override
+    public Long saveRecipe(RecipeAddRequest param) {
+        Recipe bean = BeanUtil.toBean(param, Recipe.class);
+        save(bean);
+        return bean.getId();
+    }
+
+    @Override
     public boolean updateRecipe(RecipeUpdateRequest param) {
         Recipe bean = BeanUtil.toBean(param, Recipe.class);
         return updateById(bean);

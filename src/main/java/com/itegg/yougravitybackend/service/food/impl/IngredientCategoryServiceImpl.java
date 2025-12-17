@@ -17,4 +17,5 @@ public class IngredientCategoryServiceImpl extends ServiceImpl<IngredientCategor
         implements IngredientCategoryService {
 
 
+
 }

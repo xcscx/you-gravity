@@ -14,6 +14,10 @@ import jakarta.annotation.Resource;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.*;
 
+/**
+ * 菜谱 Controller层
+ * @author ITegg
+ */
 @RestController
 @RequestMapping("/food/recipe")
 @Slf4j
@@ -29,6 +33,15 @@ public class RecipeController {
     public Result<Long> addRecipe(@RequestBody RecipeAddRequest param) {
         log.info("=========> /food/recipe/add param={}", JSONUtil.toJsonStr(param));
         return ResultUtils.ok(recipeService.addRecipe(param));
+    }
+
+    /**
+     * 保存菜谱草稿
+     */
+    @PostMapping("/save")
+    public Result<Long> saveRecipe(@RequestBody RecipeAddRequest param) {
+        log.info("=========> /food/recipe/save param={}", JSONUtil.toJsonStr(param));
+        return ResultUtils.ok(recipeService.saveRecipe(param));
     }
 
     /**
