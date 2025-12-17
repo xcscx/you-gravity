@@ -26,10 +26,17 @@ public interface IngredientService extends IService<Ingredient> {
     boolean updateIngredient(IngredientUpdateRequest param);
 
     /**
-     * 审核食材
+     * 食材审核通过
      * @param id 食材ID
      * @return 审核结果
      */
-    boolean reviewIngredient(Long id);
+    boolean reviewApprove(Long id);
+
+    /**
+     * 食材审核拒绝
+     * @param id 食材ID
+     * @return 审核结果
+     */
+    boolean reviewReject(Long id);
 
 }

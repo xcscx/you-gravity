@@ -48,16 +48,29 @@ public class IngredientController {
     }
 
     /**
-     * 审核食材
+     * 食材审核通过
      */
-    @PostMapping("/review")
-    public Result<Boolean> review(@RequestBody IdCondition idCondition) {
-        log.info("=========> /food/ingredient/review param={}", JSONUtil.toJsonStr(idCondition));
+    @PostMapping("/review-approve")
+    public Result<Boolean> reviewApprove(@RequestBody IdCondition idCondition) {
+        log.info("=========> /food/ingredient/review-approve param={}", JSONUtil.toJsonStr(idCondition));
         if(ObjectUtil.isNull(idCondition) || idCondition.getId() <= 0) {
             throw new BusinessException(ErrorCode.PARAMS_ERROR);
         }
-        return ResultUtils.ok(ingredientService.reviewIngredient(idCondition.getId()));
+        return ResultUtils.ok(ingredientService.reviewApprove(idCondition.getId()));
     }
+
+    /**
+     * 食材审核拒绝
+     */
+    @PostMapping("/review-reject")
+    public Result<Boolean> reviewReject(@RequestBody IdCondition idCondition) {
+        log.info("=========> /food/ingredient/review-reject param={}", JSONUtil.toJsonStr(idCondition));
+        if(ObjectUtil.isNull(idCondition) || idCondition.getId() <= 0) {
+            throw new BusinessException(ErrorCode.PARAMS_ERROR);
+        }
+        return ResultUtils.ok(ingredientService.reviewReject(idCondition.getId()));
+    }
+
 
     /**
      * 查询食材

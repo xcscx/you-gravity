@@ -61,6 +61,6 @@ public class Ingredient extends SuperModel {
      * 状态
      */
     @TableField("status")
-    private Integer status;
+    private String status;
 
 }
