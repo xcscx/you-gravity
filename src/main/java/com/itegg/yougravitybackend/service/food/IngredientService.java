@@ -1,8 +1,8 @@
 package com.itegg.yougravitybackend.service.food;
 
 import com.baomidou.mybatisplus.extension.service.IService;
-import com.itegg.yougravitybackend.model.dto.food.IngredientAddRequest;
-import com.itegg.yougravitybackend.model.dto.food.IngredientUpdateRequest;
+import com.itegg.yougravitybackend.model.vo.food.IngredientAddParam;
+import com.itegg.yougravitybackend.model.vo.food.IngredientUpdateParam;
 import com.itegg.yougravitybackend.model.entity.food.Ingredient;
 
 /**
@@ -16,14 +16,14 @@ public interface IngredientService extends IService<Ingredient> {
      * @param param 食材信息
      * @return 新增的食材ID
      */
-    Long addIngredient(IngredientAddRequest param);
+    Long addIngredient(IngredientAddParam param);
 
     /**
      * 修改食材信息
      * @param param 食材信息
      * @return 修改成功的行数
      */
-    boolean updateIngredient(IngredientUpdateRequest param);
+    boolean updateIngredient(IngredientUpdateParam param);
 
     /**
      * 食材审核通过

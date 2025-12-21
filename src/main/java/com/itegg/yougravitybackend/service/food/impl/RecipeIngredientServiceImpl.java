@@ -6,8 +6,8 @@ import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.itegg.yougravitybackend.exception.BusinessException;
 import com.itegg.yougravitybackend.exception.ErrorCode;
 import com.itegg.yougravitybackend.mapper.food.RecipeIngredientMapper;
-import com.itegg.yougravitybackend.model.dto.food.RecIngAddRequest;
-import com.itegg.yougravitybackend.model.dto.food.RecIngUpdateRequest;
+import com.itegg.yougravitybackend.model.vo.food.RecIngAddParam;
+import com.itegg.yougravitybackend.model.vo.food.RecIngUpdateParam;
 import com.itegg.yougravitybackend.model.entity.food.RecipeIngredient;
 import com.itegg.yougravitybackend.service.food.RecipeIngredientService;
 import lombok.extern.slf4j.Slf4j;
@@ -23,7 +23,7 @@ public class RecipeIngredientServiceImpl extends ServiceImpl<RecipeIngredientMap
         implements RecipeIngredientService {
 
     @Override
-    public Long insert(RecIngAddRequest param) {
+    public Long insert(RecIngAddParam param) {
         // 校验参数
         if (param == null || param.getRecipeId() == null || param.getIngredientId() == null) {
             throw new BusinessException(ErrorCode.PARAMS_ERROR, "参数不能为空");
@@ -39,7 +39,7 @@ public class RecipeIngredientServiceImpl extends ServiceImpl<RecipeIngredientMap
     }
 
     @Override
-    public boolean update(RecIngUpdateRequest param) {
+    public boolean update(RecIngUpdateParam param) {
         // 校验参数
         if (param == null || param.getId() == null) {
             throw new BusinessException(ErrorCode.PARAMS_ERROR, "参数不能为空");

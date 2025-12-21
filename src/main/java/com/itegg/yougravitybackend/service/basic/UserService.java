@@ -1,11 +1,11 @@
 package com.itegg.yougravitybackend.service.basic;
 
-import com.itegg.yougravitybackend.model.dto.user.UserLoginRequest;
-import com.itegg.yougravitybackend.model.dto.user.UserRegisterRequest;
+import com.itegg.yougravitybackend.model.vo.user.UserLoginRequest;
+import com.itegg.yougravitybackend.model.vo.user.UserRegisterRequest;
 import com.itegg.yougravitybackend.model.entity.basic.User;
 import com.baomidou.mybatisplus.extension.service.IService;
-import com.itegg.yougravitybackend.model.vo.LoginUserVO;
-import com.itegg.yougravitybackend.model.vo.UserVO;
+import com.itegg.yougravitybackend.model.vo.user.LoginUserVO;
+import com.itegg.yougravitybackend.model.vo.user.UserVO;
 import jakarta.servlet.http.HttpServletRequest;
 
 /**

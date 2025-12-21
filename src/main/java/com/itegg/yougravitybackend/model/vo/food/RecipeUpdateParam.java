@@ -1,4 +1,4 @@
-package com.itegg.yougravitybackend.model.dto.food;
+package com.itegg.yougravitybackend.model.vo.food;
 
 import lombok.Data;
 
@@ -6,11 +6,11 @@ import java.io.Serial;
 import java.io.Serializable;
 
 /**
- * 菜谱添加请求
+ * 菜谱更新请求
  * @author ITegg
  */
 @Data
-public class RecipeAddRequest implements Serializable {
+public class RecipeUpdateParam implements Serializable {
 
     @Serial
     private static final long serialVersionUID = 1L;
@@ -19,11 +19,6 @@ public class RecipeAddRequest implements Serializable {
      * 菜谱id
      */
     private Long id;
-
-    /**
-     * 创建人ID
-     */
-    private Long userId;
 
     /**
      * 菜谱名称
@@ -44,10 +39,4 @@ public class RecipeAddRequest implements Serializable {
      * 是否公开 0-否 1-是
      */
     private Integer isPublic;
-
-    /**
-     * 状态
-     */
-    private String status;
-
 }

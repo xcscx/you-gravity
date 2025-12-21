@@ -1,8 +1,8 @@
 package com.itegg.yougravitybackend.service.food;
 
 import com.baomidou.mybatisplus.extension.service.IService;
-import com.itegg.yougravitybackend.model.dto.food.RecipeAddRequest;
-import com.itegg.yougravitybackend.model.dto.food.RecipeUpdateRequest;
+import com.itegg.yougravitybackend.model.vo.food.RecipeAddParam;
+import com.itegg.yougravitybackend.model.vo.food.RecipeUpdateParam;
 import com.itegg.yougravitybackend.model.entity.food.Recipe;
 
 /**
@@ -16,21 +16,21 @@ public interface RecipeService extends IService<Recipe> {
      * @param param 菜谱信息
      * @return 菜谱id
      */
-    Long addRecipe(RecipeAddRequest param);
+    Long addRecipe(RecipeAddParam param);
 
     /**
      * 保存菜谱
      * @param param 菜谱信息
      * @return 菜谱id
      */
-    Long saveRecipe(RecipeAddRequest param);
+    Long saveRecipe(RecipeAddParam param);
 
     /**
      * 更新菜谱
      * @param param 菜谱信息
      * @return 更新关联数据行数
      */
-    boolean updateRecipe(RecipeUpdateRequest param);
+    boolean updateRecipe(RecipeUpdateParam param);
 
     /**
      * 将菜谱设置为公开状态

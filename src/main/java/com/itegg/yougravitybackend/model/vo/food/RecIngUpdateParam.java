@@ -1,4 +1,4 @@
-package com.itegg.yougravitybackend.model.dto.food;
+package com.itegg.yougravitybackend.model.vo.food;
 
 import lombok.Data;
 
@@ -10,10 +10,15 @@ import java.io.Serializable;
  * @author ITegg
  */
 @Data
-public class RecIngAddRequest implements Serializable {
+public class RecIngUpdateParam implements Serializable {
 
     @Serial
     private static final long serialVersionUID = 1L;
+
+    /**
+     * id
+     */
+    private Long id;
 
     /**
      * 菜谱id

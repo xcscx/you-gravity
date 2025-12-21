@@ -7,8 +7,8 @@ import com.itegg.yougravitybackend.common.Result;
 import com.itegg.yougravitybackend.common.ResultUtils;
 import com.itegg.yougravitybackend.exception.BusinessException;
 import com.itegg.yougravitybackend.exception.ErrorCode;
-import com.itegg.yougravitybackend.model.dto.food.IngredientAddRequest;
-import com.itegg.yougravitybackend.model.dto.food.IngredientUpdateRequest;
+import com.itegg.yougravitybackend.model.vo.food.IngredientAddParam;
+import com.itegg.yougravitybackend.model.vo.food.IngredientUpdateParam;
 import com.itegg.yougravitybackend.service.food.IngredientService;
 import jakarta.annotation.Resource;
 import lombok.extern.slf4j.Slf4j;
@@ -33,7 +33,7 @@ public class IngredientController {
      * 新增食材
      */
     @PostMapping("/add")
-    public Result<Long> add(@RequestBody IngredientAddRequest param) {
+    public Result<Long> add(@RequestBody IngredientAddParam param) {
         log.info("=========> /food/ingredient/add param={}", JSONUtil.toJsonStr(param));
         return ResultUtils.ok(ingredientService.addIngredient(param));
     }
@@ -42,7 +42,7 @@ public class IngredientController {
      * 更新食材
      */
     @PostMapping("/update")
-    public Result<Boolean> update(@RequestBody IngredientUpdateRequest param) {
+    public Result<Boolean> update(@RequestBody IngredientUpdateParam param) {
         log.info("=========> /food/ingredient/update param={}", JSONUtil.toJsonStr(param));
         return ResultUtils.ok(ingredientService.updateIngredient(param));
     }

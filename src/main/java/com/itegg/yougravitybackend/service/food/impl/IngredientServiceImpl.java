@@ -6,8 +6,8 @@ import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.itegg.yougravitybackend.exception.BusinessException;
 import com.itegg.yougravitybackend.exception.ErrorCode;
 import com.itegg.yougravitybackend.mapper.food.IngredientMapper;
-import com.itegg.yougravitybackend.model.dto.food.IngredientAddRequest;
-import com.itegg.yougravitybackend.model.dto.food.IngredientUpdateRequest;
+import com.itegg.yougravitybackend.model.vo.food.IngredientAddParam;
+import com.itegg.yougravitybackend.model.vo.food.IngredientUpdateParam;
 import com.itegg.yougravitybackend.model.entity.food.Ingredient;
 import com.itegg.yougravitybackend.model.enums.StatusEnum;
 import com.itegg.yougravitybackend.service.food.IngredientService;
@@ -24,7 +24,7 @@ public class IngredientServiceImpl extends ServiceImpl<IngredientMapper, Ingredi
         implements IngredientService {
 
     @Override
-    public Long addIngredient(IngredientAddRequest param) {
+    public Long addIngredient(IngredientAddParam param) {
         // 参数校验
         if (param == null) {
             throw new BusinessException(ErrorCode.PARAMS_ERROR, "参数不能为空");
@@ -42,7 +42,7 @@ public class IngredientServiceImpl extends ServiceImpl<IngredientMapper, Ingredi
     }
 
     @Override
-    public boolean updateIngredient(IngredientUpdateRequest param) {
+    public boolean updateIngredient(IngredientUpdateParam param) {
         // 参数校验
         if (param == null || param.getId() == null) {
             throw new BusinessException(ErrorCode.PARAMS_ERROR, "参数不能为空");

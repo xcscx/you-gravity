@@ -7,8 +7,8 @@ import com.itegg.yougravitybackend.common.Result;
 import com.itegg.yougravitybackend.common.ResultUtils;
 import com.itegg.yougravitybackend.exception.BusinessException;
 import com.itegg.yougravitybackend.exception.ErrorCode;
-import com.itegg.yougravitybackend.model.dto.food.RecipeAddRequest;
-import com.itegg.yougravitybackend.model.dto.food.RecipeUpdateRequest;
+import com.itegg.yougravitybackend.model.vo.food.RecipeAddParam;
+import com.itegg.yougravitybackend.model.vo.food.RecipeUpdateParam;
 import com.itegg.yougravitybackend.service.food.RecipeService;
 import jakarta.annotation.Resource;
 import lombok.extern.slf4j.Slf4j;
@@ -30,7 +30,7 @@ public class RecipeController {
      * 新增菜谱
      */
     @PostMapping("/add")
-    public Result<Long> addRecipe(@RequestBody RecipeAddRequest param) {
+    public Result<Long> addRecipe(@RequestBody RecipeAddParam param) {
         log.info("=========> /food/recipe/add param={}", JSONUtil.toJsonStr(param));
         return ResultUtils.ok(recipeService.addRecipe(param));
     }
@@ -39,7 +39,7 @@ public class RecipeController {
      * 保存菜谱草稿
      */
     @PostMapping("/save")
-    public Result<Long> saveRecipe(@RequestBody RecipeAddRequest param) {
+    public Result<Long> saveRecipe(@RequestBody RecipeAddParam param) {
         log.info("=========> /food/recipe/save param={}", JSONUtil.toJsonStr(param));
         return ResultUtils.ok(recipeService.saveRecipe(param));
     }
@@ -48,7 +48,7 @@ public class RecipeController {
      * 更新菜谱
      */
     @PostMapping("/update")
-    public Result<Boolean> updateRecipe(@RequestBody RecipeUpdateRequest param) {
+    public Result<Boolean> updateRecipe(@RequestBody RecipeUpdateParam param) {
         log.info("=========> /food/recipe/update param={}", JSONUtil.toJsonStr(param));
         return ResultUtils.ok(recipeService.updateRecipe(param));
     }

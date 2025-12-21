@@ -1,4 +1,4 @@
-package com.itegg.yougravitybackend.model.dto.user;
+package com.itegg.yougravitybackend.model.vo.user;
 
 import lombok.Data;
 

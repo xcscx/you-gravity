@@ -10,7 +10,7 @@ import com.itegg.yougravitybackend.config.CosClientConfig;
 import com.itegg.yougravitybackend.exception.BusinessException;
 import com.itegg.yougravitybackend.exception.ErrorCode;
 import com.itegg.yougravitybackend.exception.ThrowUtils;
-import com.itegg.yougravitybackend.model.dto.file.UploadPictureResult;
+import com.itegg.yougravitybackend.model.vo.file.UploadPictureResult;
 import com.qcloud.cos.model.PutObjectResult;
 import com.qcloud.cos.model.ciModel.persistence.ImageInfo;
 import jakarta.annotation.Resource;
