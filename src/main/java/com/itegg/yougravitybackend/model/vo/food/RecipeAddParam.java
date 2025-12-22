@@ -59,5 +59,6 @@ public class RecipeAddParam implements Serializable {
     /**
      * 关联步骤列表
      */
+    private List<RecStepAddParam> recStepList;
 
 }
