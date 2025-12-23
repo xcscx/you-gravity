@@ -13,10 +13,14 @@ import com.itegg.yougravitybackend.model.vo.user.*;
 import com.itegg.yougravitybackend.model.entity.basic.User;
 import com.itegg.yougravitybackend.model.vo.user.LoginUserVO;
 import com.itegg.yougravitybackend.model.vo.user.UserVO;
+import com.itegg.yougravitybackend.service.basic.SignInService;
 import com.itegg.yougravitybackend.service.basic.UserService;
 import jakarta.annotation.Resource;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.web.bind.annotation.*;
+
+import java.time.LocalDate;
+import java.util.Date;
 
 /**
  * 用户 Controller层
@@ -28,6 +32,8 @@ public class UserController {
 
     @Resource
     private UserService userService;
+    @Resource
+    private SignInService signInService;
 
     /**
      * 用户注册接口
@@ -41,7 +47,14 @@ public class UserController {
     }
 
 
-
+    /**
+     * 用户签到
+     */
+    @PostMapping("/signIn")
+    public Result<SignInVO> signIn(@RequestBody IdCondition id) {
+        ThrowUtils.throwIf(ObjectUtil.isNull(id), ErrorCode.PARAMS_ERROR);
+        return ResultUtils.ok(signInService.signIn(id.getId(), LocalDate.now()));
+    }
 
 
     // -------------------------------------------------------
