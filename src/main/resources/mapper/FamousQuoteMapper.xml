@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.itegg.yougravitybackend.mapper.basic.FamousQuoteMapper">
+
+    <resultMap id="BaseResultMap" type="com.itegg.yougravitybackend.model.entity.basic.FamousQuote">
+        <id property="id" column="id" />
+        <result property="content" column="content" />
+        <result property="author" column="author" />
+        <result property="source" column="source" />
+        <result property="createTime" column="create_time" />
+        <result property="updateTime" column="update_time" />
+        <result property="removeFlag" column="remove_flag" />
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        id, content, author, `source`, create_time, update_time, remove_flag
+    </sql>
+
+    <select id="randomQuote" resultType="com.itegg.yougravitybackend.model.entity.basic.FamousQuote">
+        SELECT id,
+               content,
+               author,
+               `source`,
+               create_time,
+               update_time
+        FROM `basic_famous_quote`
+        ORDER BY RAND()
+        LIMIT 1;
+    </select>
+
+</mapper>

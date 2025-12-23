@@ -7,6 +7,7 @@ import java.time.LocalDateTime;
 
 /**
  * 用户脱敏数据
+ * @author ITegg
  */
 @Data
 public class LoginUserVO implements Serializable {
