@@ -8,7 +8,6 @@ import java.time.LocalDateTime;
 
 /**
  * 用户VO对象类
- *
  * @author ITegg
  */
 @Data

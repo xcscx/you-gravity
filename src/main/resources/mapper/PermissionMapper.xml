@@ -2,7 +2,7 @@
 <!DOCTYPE mapper
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.itegg.yougravitybackend.mapper.PermissionMapper">
+<mapper namespace="com.itegg.yougravitybackend.mapper.basic.PermissionMapper">
 
     <resultMap id="BaseResultMap" type="com.itegg.yougravitybackend.model.entity.basic.Permission">
         <id property="id" column="id" />

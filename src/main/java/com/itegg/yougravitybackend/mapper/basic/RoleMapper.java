@@ -1,4 +1,4 @@
-package com.itegg.yougravitybackend.mapper;
+package com.itegg.yougravitybackend.mapper.basic;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.itegg.yougravitybackend.model.entity.basic.Role;

@@ -1,7 +1,7 @@
 package com.itegg.yougravitybackend.service.basic.impl;
 
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
-import com.itegg.yougravitybackend.mapper.RoleMapper;
+import com.itegg.yougravitybackend.mapper.basic.RoleMapper;
 import com.itegg.yougravitybackend.model.entity.basic.Role;
 import com.itegg.yougravitybackend.service.basic.RoleService;
 import lombok.extern.slf4j.Slf4j;

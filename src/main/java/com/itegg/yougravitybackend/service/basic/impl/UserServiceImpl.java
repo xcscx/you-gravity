@@ -13,7 +13,7 @@ import com.itegg.yougravitybackend.model.entity.basic.User;
 import com.itegg.yougravitybackend.model.vo.user.LoginUserVO;
 import com.itegg.yougravitybackend.model.vo.user.UserVO;
 import com.itegg.yougravitybackend.service.basic.UserService;
-import com.itegg.yougravitybackend.mapper.UserMapper;
+import com.itegg.yougravitybackend.mapper.basic.UserMapper;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.BeanUtils;
