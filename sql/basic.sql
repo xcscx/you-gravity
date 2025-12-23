@@ -108,3 +108,33 @@ CREATE TABLE basic_attachment (
 )ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci COMMENT='公共附件表';
 
 
+-- 用户签到表
+CREATE TABLE `basic_sign_in` (
+                                 `id` BIGINT(20) NOT NULL COMMENT '主键',
+                                 `user_id` BIGINT(20) NOT NULL COMMENT '用户id',
+                                 `date` DATE NOT NULL COMMENT '签到日期 yyyy/MM/dd',
+                                 `luck` VARCHAR(10) COMMENT '气运',
+                                 `famous_quote_id` BIGINT(20) COMMENT '名句id',
+                                 `create_time` DATETIME NOT NULL COMMENT '创建时间',
+                                 `update_time` DATETIME NOT NULL COMMENT '最后更新时间',
+                                 `remove_flag` TINYINT(1) NOT NULL COMMENT '逻辑删除标记，0 - 未删除，1 - 已删除',
+                                 PRIMARY KEY (`id`),
+                                 INDEX idx_user_id(user_id),
+                                 INDEX idx_sign_in(user_id, `date`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='用户签到表';
+
+
+-- 名句表
+CREATE TABLE `basic_famous_quote` (
+                                      `id` BIGINT(20) NOT NULL COMMENT '主键',
+                                      `content` VARCHAR(100) NOT NULL COMMENT '内容',
+                                      `author` VARCHAR(20) NOT NULL COMMENT '作者',
+                                      `source` VARCHAR(50) NOT NULL COMMENT '出处',
+                                      `create_time` DATETIME NOT NULL COMMENT '创建时间',
+                                      `update_time` DATETIME NOT NULL COMMENT '最后更新时间',
+                                      `remove_flag` TINYINT(1) NOT NULL COMMENT '逻辑删除标记，0 - 未删除，1 - 已删除',
+                                      PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='名句表';
+
+-- 随机获取一条信息
+SELECT * FROM `basic_famous_quote` ORDER BY RAND() LIMIT 1;
