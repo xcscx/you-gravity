@@ -13,6 +13,10 @@ import static org.springframework.ai.chat.client.advisor.AbstractChatMemoryAdvis
 import static org.springframework.ai.chat.client.advisor.AbstractChatMemoryAdvisor.CHAT_MEMORY_RETRIEVE_SIZE_KEY;
 
 
+/**
+ * AI调用测试模块
+ * @author ITegg
+ */
 @Slf4j
 @Component
 public class NavigationApp {

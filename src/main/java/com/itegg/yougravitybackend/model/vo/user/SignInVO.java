@@ -34,6 +34,16 @@ public class SignInVO implements Serializable {
     private String luck;
 
     /**
+     * 背景色
+     */
+    private String backgroundColor;
+
+    /**
+     * 气运描述
+     */
+    private String description;
+
+    /**
      * 名句id
      */
     private Long famousQuoteId;

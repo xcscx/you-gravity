@@ -7,6 +7,10 @@ import lombok.Data;
 
 import java.io.Serializable;
 
+/**
+ * 公共id模型
+ * @author ITegg
+ */
 @Data
 public class IdModel implements Serializable {
 

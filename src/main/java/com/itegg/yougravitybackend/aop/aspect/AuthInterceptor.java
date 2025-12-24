@@ -9,6 +9,10 @@ import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
 import org.springframework.stereotype.Component;
 
+/**
+ * 权限校验切面
+ * @author ITegg
+ */
 @Aspect
 @Component
 public class AuthInterceptor {

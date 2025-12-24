@@ -8,6 +8,7 @@ import java.io.Serial;
 import java.time.LocalDateTime;
 
 /**
+ * 公共模型
  * @author ITegg
  */
 @EqualsAndHashCode(callSuper = true)
