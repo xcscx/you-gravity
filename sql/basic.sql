@@ -114,6 +114,8 @@ CREATE TABLE `basic_sign_in` (
                                  `user_id` BIGINT(20) NOT NULL COMMENT '用户id',
                                  `date` DATE NOT NULL COMMENT '签到日期 yyyy/MM/dd',
                                  `luck` VARCHAR(10) COMMENT '气运',
+                                 `background_color` VARCHAR(20) COMMENT '背景色',
+                                 `description` VARCHAR(20) COMMENT '气运描述',
                                  `famous_quote_id` BIGINT(20) COMMENT '名句id',
                                  `create_time` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
                                  `update_time` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '最后更新时间',

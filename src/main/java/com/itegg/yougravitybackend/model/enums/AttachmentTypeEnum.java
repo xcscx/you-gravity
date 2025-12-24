@@ -3,6 +3,10 @@ package com.itegg.yougravitybackend.model.enums;
 import cn.hutool.core.util.ObjectUtil;
 import lombok.Getter;
 
+/**
+ * 附件来源美剧
+ * @author ITegg
+ */
 @Getter
 public enum AttachmentTypeEnum {
 

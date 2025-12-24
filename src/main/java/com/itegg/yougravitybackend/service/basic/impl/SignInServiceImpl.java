@@ -8,6 +8,7 @@ import com.itegg.yougravitybackend.exception.ErrorCode;
 import com.itegg.yougravitybackend.mapper.basic.SignInMapper;
 import com.itegg.yougravitybackend.model.entity.basic.FamousQuote;
 import com.itegg.yougravitybackend.model.entity.basic.SignIn;
+import com.itegg.yougravitybackend.model.enums.LuckEnum;
 import com.itegg.yougravitybackend.model.vo.user.SignInVO;
 import com.itegg.yougravitybackend.service.basic.FamousQuoteService;
 import com.itegg.yougravitybackend.service.basic.SignInService;
@@ -42,11 +43,15 @@ public class SignInServiceImpl extends ServiceImpl<SignInMapper, SignIn>
 
         // 获取名句
         FamousQuote famousQuote = famousQuoteService.randomQuote();
+        // 获取幸运
+        LuckEnum luck = LuckEnum.getDailyFortune(userId);
         // 添加签到
         SignIn signIn = new SignIn();
         signIn.setUserId(userId);
         signIn.setDate(date);
-        signIn.setLuck("签到成功");
+        signIn.setLuck(luck.getName());
+        signIn.setBackgroundColor(luck.getColor());
+        signIn.setDescription(luck.getDescription());
         signIn.setFamousQuoteId(famousQuote.getId());
         boolean save = save(signIn);
         if (!save) {
@@ -57,12 +62,14 @@ public class SignInServiceImpl extends ServiceImpl<SignInMapper, SignIn>
         SignInVO signInVO = new SignInVO();
         signInVO.setUserId(userId);
         signInVO.setDate(date);
+        signInVO.setLuck(luck.getName());
+        signInVO.setBackgroundColor(luck.getColor());
+        signInVO.setDescription(luck.getDescription());
         signInVO.setFamousQuoteId(famousQuote.getId());
         signInVO.setContent(famousQuote.getContent());
         signInVO.setAuthor(famousQuote.getAuthor());
         signInVO.setSource(famousQuote.getSource());
 
-        signInVO.setLuck("签到成功");
         return signInVO;
     }
 

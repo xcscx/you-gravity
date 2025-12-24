@@ -7,7 +7,6 @@ import lombok.Getter;
  * 状态枚举
  * @author ITegg
  */
-
 @Getter
 public enum StateEnum {
 

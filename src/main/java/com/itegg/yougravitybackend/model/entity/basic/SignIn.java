@@ -38,6 +38,18 @@ public class SignIn extends SuperModel {
     private String luck;
 
     /**
+     * 背景色
+     */
+    @TableField("background_color")
+    private String backgroundColor;
+
+    /**
+     * 气运描述
+     */
+    @TableField("description")
+    private String description;
+
+    /**
      * 名句id
      */
     @TableField("famous_quote_id")
