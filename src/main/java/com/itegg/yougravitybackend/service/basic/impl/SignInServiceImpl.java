@@ -34,6 +34,11 @@ public class SignInServiceImpl extends ServiceImpl<SignInMapper, SignIn>
 
     @Override
     public SignInVO signIn(Long userId, LocalDate date) {
+        // 参数校验
+        if (userId == null || date == null) {
+            throw new BusinessException(ErrorCode.PARAMS_ERROR, "用户ID和日期不能为空");
+        }
+
         // 校验是否签到过
         QueryWrapper<SignIn> queryWrapper = new QueryWrapper<>();
         queryWrapper.eq("user_id", userId);
@@ -41,17 +46,27 @@ public class SignInServiceImpl extends ServiceImpl<SignInMapper, SignIn>
         SignIn info = this.getOne(queryWrapper);
         if (ObjectUtil.isNotNull(info)) {
             FamousQuote byId = famousQuoteService.getById(info.getFamousQuoteId());
-            SignInVO signInVO = BeanUtil.toBean(info, SignInVO.class);
-            signInVO.setContent(byId.getContent());
-            signInVO.setAuthor(byId.getAuthor());
-            signInVO.setSource(byId.getSource());
-            return signInVO;
+            if (byId == null) {
+                log.error("=========> 签到记录对应的名句不存在: quoteId={}", info.getFamousQuoteId());
+                throw new BusinessException(ErrorCode.OPERATION_ERROR, "数据异常");
+            }
+            return buildSignInVO(info, byId);
         }
 
         // 获取名句
         FamousQuote famousQuote = famousQuoteService.randomQuote();
+        if (famousQuote == null) {
+            log.error("=========> 随机名句获取失败");
+            throw new BusinessException(ErrorCode.OPERATION_ERROR, "获取名句失败");
+        }
+
         // 获取幸运
         LuckEnum luck = LuckEnum.getDailyFortune(userId);
+        if (luck == null) {
+            log.error("=========> 幸运值获取失败: userId={}", userId);
+            throw new BusinessException(ErrorCode.OPERATION_ERROR, "获取幸运值失败");
+        }
+
         // 添加签到
         SignIn signIn = new SignIn();
         signIn.setUserId(userId);
@@ -66,17 +81,17 @@ public class SignInServiceImpl extends ServiceImpl<SignInMapper, SignIn>
             throw new BusinessException(ErrorCode.OPERATION_ERROR, "签到失败");
         }
 
-        SignInVO signInVO = new SignInVO();
-        signInVO.setUserId(userId);
-        signInVO.setDate(date);
-        signInVO.setLuck(luck.getName());
-        signInVO.setBackgroundColor(luck.getColor());
-        signInVO.setDescription(luck.getDescription());
-        signInVO.setFamousQuoteId(famousQuote.getId());
+        return buildSignInVO(signIn, famousQuote);
+    }
+
+    /**
+     * 构建签到VO
+     */
+    private SignInVO buildSignInVO(SignIn signIn, FamousQuote famousQuote) {
+        SignInVO signInVO = BeanUtil.toBean(signIn, SignInVO.class);
         signInVO.setContent(famousQuote.getContent());
         signInVO.setAuthor(famousQuote.getAuthor());
         signInVO.setSource(famousQuote.getSource());
-
         return signInVO;
     }
 
