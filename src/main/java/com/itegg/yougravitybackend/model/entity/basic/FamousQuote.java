@@ -7,11 +7,11 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 
 /**
- * 名句 basic_famous_quoto
+ * 名句 basic_famous_quote
  * @author ITegg
  */
 @EqualsAndHashCode(callSuper = true)
-@TableName(value ="basic_famous_quoto")
+@TableName(value ="basic_famous_quote")
 @Data
 public class FamousQuote extends SuperModel {
 

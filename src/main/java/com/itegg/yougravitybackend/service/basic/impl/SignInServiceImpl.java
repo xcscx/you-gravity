@@ -1,5 +1,7 @@
 package com.itegg.yougravitybackend.service.basic.impl;
 
+import cn.hutool.core.bean.BeanUtil;
+import cn.hutool.core.util.ObjectUtil;
 import cn.hutool.json.JSONUtil;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
@@ -36,9 +38,14 @@ public class SignInServiceImpl extends ServiceImpl<SignInMapper, SignIn>
         QueryWrapper<SignIn> queryWrapper = new QueryWrapper<>();
         queryWrapper.eq("user_id", userId);
         queryWrapper.eq("date", date);
-        long count = this.count(queryWrapper);
-        if (count > 0) {
-            throw new BusinessException(ErrorCode.OPERATION_ERROR, "已签到");
+        SignIn info = this.getOne(queryWrapper);
+        if (ObjectUtil.isNotNull(info)) {
+            FamousQuote byId = famousQuoteService.getById(info.getFamousQuoteId());
+            SignInVO signInVO = BeanUtil.toBean(info, SignInVO.class);
+            signInVO.setContent(byId.getContent());
+            signInVO.setAuthor(byId.getAuthor());
+            signInVO.setSource(byId.getSource());
+            return signInVO;
         }
 
         // 获取名句
