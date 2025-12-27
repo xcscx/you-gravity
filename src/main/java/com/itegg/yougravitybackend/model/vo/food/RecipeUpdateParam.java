@@ -4,6 +4,7 @@ import lombok.Data;
 
 import java.io.Serial;
 import java.io.Serializable;
+import java.util.List;
 
 /**
  * 菜谱更新请求
@@ -39,4 +40,15 @@ public class RecipeUpdateParam implements Serializable {
      * 是否公开 0-否 1-是
      */
     private Integer isPublic;
+
+    /**
+     * 关联食材列表
+     */
+    private List<RecIngUpdateParam> recIngList;
+
+    /**
+     * 关联步骤列表
+     */
+    private List<RecStepUpdateParam> recStepList;
+
 }

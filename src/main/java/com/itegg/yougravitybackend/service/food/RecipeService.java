@@ -23,7 +23,7 @@ public interface RecipeService extends IService<Recipe> {
      * @param param 菜谱信息
      * @return 菜谱id
      */
-    Long saveRecipe(RecipeAddParam param);
+    Long saveRecipe(RecipeUpdateParam param);
 
     /**
      * 更新菜谱

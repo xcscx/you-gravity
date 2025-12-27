@@ -39,7 +39,7 @@ public class RecipeController {
      * 保存菜谱草稿
      */
     @PostMapping("/save")
-    public Result<Long> saveRecipe(@RequestBody RecipeAddParam param) {
+    public Result<Long> saveRecipe(@RequestBody RecipeUpdateParam param) {
         log.info("=========> /food/recipe/save param={}", JSONUtil.toJsonStr(param));
         return ResultUtils.ok(recipeService.saveRecipe(param));
     }

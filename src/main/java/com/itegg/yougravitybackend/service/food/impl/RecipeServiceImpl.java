@@ -7,8 +7,7 @@ import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.itegg.yougravitybackend.exception.BusinessException;
 import com.itegg.yougravitybackend.exception.ErrorCode;
 import com.itegg.yougravitybackend.mapper.food.RecipeMapper;
-import com.itegg.yougravitybackend.model.vo.food.RecipeAddParam;
-import com.itegg.yougravitybackend.model.vo.food.RecipeUpdateParam;
+import com.itegg.yougravitybackend.model.vo.food.*;
 import com.itegg.yougravitybackend.model.entity.food.Recipe;
 import com.itegg.yougravitybackend.service.food.RecipeIngredientService;
 import com.itegg.yougravitybackend.service.food.RecipeService;
@@ -16,6 +15,8 @@ import com.itegg.yougravitybackend.service.food.RecipeStepService;
 import jakarta.annotation.Resource;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 /**
  * 菜谱Service 实现类
@@ -34,17 +35,50 @@ public class RecipeServiceImpl extends ServiceImpl<RecipeMapper, Recipe>
     @Override
     public Long addRecipe(RecipeAddParam param) {
         log.info("=========> /food/recipe/add result={}", JSONUtil.toJsonStr(param));
+        // 保存菜谱基本信息
         Recipe bean = BeanUtil.toBean(param, Recipe.class);
         save(bean);
-
+        // 保存菜谱食材信息
+        List<RecIngAddParam> recIngList = param.getRecIngList();
+        if(ObjectUtil.isNotEmpty(recIngList)) {
+            Integer i = recipeIngredientService.batchAdd(bean.getId(), recIngList);
+            if(i != recIngList.size()) {
+                throw new BusinessException(ErrorCode.OPERATION_ERROR, "保存食材信息失败");
+            }
+        }
+        // 保存菜谱步骤信息
+        List<RecStepAddParam> recStepList = param.getRecStepList();
+        if(ObjectUtil.isNotEmpty(recStepList)) {
+            Integer i = recipeStepService.batchAddStep(bean.getId(), recStepList);
+            if(i != recStepList.size()) {
+                throw new BusinessException(ErrorCode.OPERATION_ERROR, "保存步骤信息失败");
+            }
+        }
         return bean.getId();
     }
 
     @Override
-    public Long saveRecipe(RecipeAddParam param) {
+    public Long saveRecipe(RecipeUpdateParam param) {
         log.info("=========> /food/recipe/save result={}", JSONUtil.toJsonStr(param));
+        // 修改菜谱基本信息
         Recipe bean = BeanUtil.toBean(param, Recipe.class);
         save(bean);
+        // 修改菜谱关联食材信息
+        List<RecIngUpdateParam> recIngList = param.getRecIngList();
+        if(ObjectUtil.isNotEmpty(recIngList)) {
+            Integer i = recipeIngredientService.batchUpdate(bean.getId(), recIngList);
+            if(i != recIngList.size()) {
+                throw new BusinessException(ErrorCode.OPERATION_ERROR, "保存食材信息失败");
+            }
+        }
+        // 修改菜谱步骤信息
+        List<RecStepUpdateParam> recStepList = param.getRecStepList();
+        if(ObjectUtil.isNotEmpty(recStepList)) {
+            Integer i = recipeStepService.batchUpdateStep(bean.getId(), recStepList);
+            if(i != recStepList.size()) {
+                throw new BusinessException(ErrorCode.OPERATION_ERROR, "保存步骤信息失败");
+            }
+        }
         return bean.getId();
     }
 
