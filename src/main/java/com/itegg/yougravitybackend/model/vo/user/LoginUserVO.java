@@ -27,17 +27,17 @@ public class LoginUserVO implements Serializable {
     /**
      * 用户昵称
      */
-    private String userName;
+    private String name;
 
     /**
      * 用户头像
      */
-    private String userAvatar;
+    private String avatar;
 
     /**
      * 用户简介
      */
-    private String userProfile;
+    private String signature;
 
     /**
      * 用户角色 user/admin

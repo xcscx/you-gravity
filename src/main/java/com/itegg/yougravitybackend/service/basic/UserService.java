@@ -1,11 +1,8 @@
 package com.itegg.yougravitybackend.service.basic;
 
-import com.itegg.yougravitybackend.model.vo.user.UserLoginRequest;
-import com.itegg.yougravitybackend.model.vo.user.UserRegisterRequest;
+import com.itegg.yougravitybackend.model.vo.user.*;
 import com.itegg.yougravitybackend.model.entity.basic.User;
 import com.baomidou.mybatisplus.extension.service.IService;
-import com.itegg.yougravitybackend.model.vo.user.LoginUserVO;
-import com.itegg.yougravitybackend.model.vo.user.UserVO;
 import jakarta.servlet.http.HttpServletRequest;
 
 /**
@@ -21,33 +18,12 @@ public interface UserService extends IService<User> {
      */
     long userRegister(UserRegisterRequest userRegisterRequest);
 
-
-
-
-
-
-
     /**
      * 用户登录
      * @param userLoginRequest 用户登录参数
      * @return 登录用户的脱敏数据
      */
     LoginUserVO userLogin(UserLoginRequest userLoginRequest, HttpServletRequest request);
-
-    /**
-     * 用户注销 - 退出登录
-     * @param request http请求
-     * @return 是否成功登出
-     */
-    boolean userLogout(HttpServletRequest request);
-
-    /**
-     * 密码加密
-     * @param userPassword 用户密码
-     * @param salt         加密盐
-     * @return
-     */
-    String getEncryptPassword(String userPassword, String salt);
 
     /**
      * 获取当前登录用户
@@ -62,6 +38,25 @@ public interface UserService extends IService<User> {
      * @return 脱敏处理后信息
      */
     LoginUserVO getLoginUserVO(User user);
+
+    /**
+     * 用户注销 - 退出登录
+     */
+    boolean userLogout(HttpServletRequest request);
+
+    /**
+     * 用户签到
+     * @param request http请求
+     * @return 签到信息
+     */
+    SignInVO signIn(HttpServletRequest request);
+
+    // ---------------------------------------
+
+
+
+
+
 
     /**
      * 获取用户详细脱敏信息

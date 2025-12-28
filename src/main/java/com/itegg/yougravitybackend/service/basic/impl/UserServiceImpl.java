@@ -7,13 +7,12 @@ import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.itegg.yougravitybackend.exception.BusinessException;
 import com.itegg.yougravitybackend.exception.ErrorCode;
-import com.itegg.yougravitybackend.model.vo.user.UserLoginRequest;
-import com.itegg.yougravitybackend.model.vo.user.UserRegisterRequest;
+import com.itegg.yougravitybackend.model.vo.user.*;
 import com.itegg.yougravitybackend.model.entity.basic.User;
-import com.itegg.yougravitybackend.model.vo.user.LoginUserVO;
-import com.itegg.yougravitybackend.model.vo.user.UserVO;
+import com.itegg.yougravitybackend.service.basic.SignInService;
 import com.itegg.yougravitybackend.service.basic.UserService;
 import com.itegg.yougravitybackend.mapper.basic.UserMapper;
+import jakarta.annotation.Resource;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.BeanUtils;
@@ -32,6 +31,9 @@ import static com.itegg.yougravitybackend.constant.UserConstant.USER_LOGIN_STATE
 @Slf4j
 public class UserServiceImpl extends ServiceImpl<UserMapper, User>
     implements UserService{
+
+    @Resource
+    private SignInService signInService;
 
     @Override
     public long userRegister(UserRegisterRequest req) {
@@ -66,20 +68,6 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User>
         return user.getId();
     }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
     @Override
     public LoginUserVO userLogin(UserLoginRequest req, HttpServletRequest request) {
         // 校验参数是否合理
@@ -88,31 +76,16 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User>
         }
         // 查询用户是否存在
         QueryWrapper<User> queryWrapper = new QueryWrapper<>();
-        queryWrapper.eq("user_account", req.getUserAccount());
+        queryWrapper.eq("mobile", req.getUserAccount());
         User user = this.baseMapper.selectOne(queryWrapper);
         if(ObjectUtil.isNull(user) || !user.getPassword().equals(getEncryptPassword(req.getUserPassword(), user.getSalt()))) {
+            log.info(getEncryptPassword(req.getUserPassword(), user.getSalt()));
             log.info("user login failed, userAccount cannot match userPassword");
             throw new BusinessException(ErrorCode.PARAMS_ERROR, "用户不存在或密码错误");
         }
         // 记录用户的登录态 TODO 修改为sa-token
         request.getSession().setAttribute(USER_LOGIN_STATE, user);
         return this.getLoginUserVO(user);
-    }
-
-    @Override
-    public boolean userLogout(HttpServletRequest request) {
-        Object userOjb = request.getSession().getAttribute(USER_LOGIN_STATE);
-        if(ObjectUtil.isNull(userOjb)) {
-            throw new BusinessException(ErrorCode.OPERATION_ERROR, "未登录");
-        }
-        // 移除登录态 TODO 修改为sa-token
-        request.getSession().removeAttribute(USER_LOGIN_STATE);
-        return true;
-    }
-
-    @Override
-    public String getEncryptPassword(String userPassword, String salt) {
-        return DigestUtils.md5DigestAsHex((salt + userPassword).getBytes());
     }
 
     @Override
@@ -135,6 +108,40 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User>
         BeanUtils.copyProperties(user, loginUserVO);
         return loginUserVO;
     }
+
+    @Override
+    public boolean userLogout(HttpServletRequest request) {
+        Object userOjb = request.getSession().getAttribute(USER_LOGIN_STATE);
+        if(ObjectUtil.isNull(userOjb)) {
+            throw new BusinessException(ErrorCode.OPERATION_ERROR, "未登录");
+        }
+        // 移除登录态 TODO 修改为sa-token
+        request.getSession().removeAttribute(USER_LOGIN_STATE);
+        return true;
+    }
+
+    @Override
+    public SignInVO signIn(HttpServletRequest request) {
+        Object userObj = request.getSession().getAttribute(USER_LOGIN_STATE);
+        User user = (User) userObj;
+        if(ObjectUtil.isNull(user) || ObjectUtil.isNull(user.getId())) {
+            throw new BusinessException(ErrorCode.NOT_LOGIN_ERROR, "未登录");
+        }
+        return signInService.signIn(user.getId(), LocalDate.now());
+    }
+
+
+    /**
+     * -----
+     */
+
+
+
+    private String getEncryptPassword(String userPassword, String salt) {
+        return DigestUtils.md5DigestAsHex((salt + userPassword).getBytes());
+    }
+
+
 
     @Override
     public UserVO getUserVO(User user) {

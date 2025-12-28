@@ -32,8 +32,6 @@ public class UserController {
 
     @Resource
     private UserService userService;
-    @Resource
-    private SignInService signInService;
 
     /**
      * 用户注册接口
@@ -45,19 +43,6 @@ public class UserController {
         ThrowUtils.throwIf(ObjectUtil.isNull(request), ErrorCode.PARAMS_ERROR);
         return ResultUtils.ok(userService.userRegister(request));
     }
-
-
-    /**
-     * 用户签到
-     */
-    @PostMapping("/signIn")
-    public Result<SignInVO> signIn(@RequestBody IdCondition id) {
-        ThrowUtils.throwIf(ObjectUtil.isNull(id), ErrorCode.PARAMS_ERROR);
-        return ResultUtils.ok(signInService.signIn(id.getId(), LocalDate.now()));
-    }
-
-
-    // -------------------------------------------------------
 
     /**
      * 用户登录接口
@@ -92,6 +77,20 @@ public class UserController {
         ThrowUtils.throwIf(ObjectUtil.isNull(request), ErrorCode.PARAMS_ERROR);
         return ResultUtils.ok(userService.userLogout(request));
     }
+
+    /**
+     * 用户签到
+     */
+    @PostMapping("/signIn")
+    public Result<SignInVO> signIn(HttpServletRequest request) {
+        ThrowUtils.throwIf(ObjectUtil.isNull(request), ErrorCode.PARAMS_ERROR);
+        return ResultUtils.ok(userService.signIn(request));
+    }
+
+
+    // -------------------------------------------------------
+
+
 
     /**
      * -----   管理员接口   -----
