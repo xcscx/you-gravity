@@ -132,14 +132,14 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User>
 
 
     /**
-     * -----
+     * --- 私有方法 ---
      */
-
-
-
     private String getEncryptPassword(String userPassword, String salt) {
         return DigestUtils.md5DigestAsHex((salt + userPassword).getBytes());
     }
+
+
+
 
 
 

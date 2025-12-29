@@ -140,3 +140,27 @@ CREATE TABLE `basic_famous_quote` (
 
 -- 随机获取一条信息
 SELECT * FROM `basic_famous_quote` ORDER BY RAND() LIMIT 1;
+
+CREATE TABLE `dict_region` (
+                               `id` bigint(20) NOT NULL COMMENT '主键',
+                               `region_code` varchar(50) NOT NULL COMMENT '区域编号',
+                               `region_name` varchar(100) NOT NULL COMMENT '区域名称',
+                               `region_name_py` varchar(255) DEFAULT NULL COMMENT '区域名称拼音',
+                               `short_name` varchar(45) DEFAULT NULL COMMENT '简称',
+                               `short_name_py` varchar(100) DEFAULT NULL COMMENT '短拼音',
+                               `longitude` decimal(10,6) DEFAULT NULL COMMENT '经度',
+                               `latitude` decimal(10,6) DEFAULT NULL COMMENT '纬度',
+                               `parent_id` bigint(20) DEFAULT NULL COMMENT '父级ID',
+                               `depth` int(11) DEFAULT NULL COMMENT '区域深度，记录字典的层级关系，1/省，2/市，3/区县，4/乡镇',
+                               `path` varchar(255) DEFAULT NULL COMMENT '区域路径，用来记录当前类别的id路径，用“.”分隔',
+                               `sorting` double(18,2) DEFAULT NULL COMMENT '区域排序',
+                               `create_by` bigint(20) NOT NULL COMMENT '创建人',
+                               `update_by` bigint(20) NOT NULL COMMENT '最后更新人',
+                               `create_time` datetime NOT NULL COMMENT '创建时间',
+                               `update_time` datetime NOT NULL COMMENT '最后更新时间',
+                               `remove_flag` int(11) NOT NULL COMMENT '逻辑删除标记',
+                               PRIMARY KEY (`id`) USING BTREE,
+                               KEY `IDX_REGION_CODE` (`region_code`) USING BTREE,
+                               KEY `IDX_PARENT_ID` (`parent_id`) USING BTREE,
+                               KEY `IDX_REGION_NAME` (`region_name`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='行政区域';
