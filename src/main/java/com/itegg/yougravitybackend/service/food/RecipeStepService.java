@@ -4,6 +4,7 @@ import com.baomidou.mybatisplus.extension.service.IService;
 import com.itegg.yougravitybackend.model.entity.food.RecipeStep;
 import com.itegg.yougravitybackend.model.vo.food.RecStepAddParam;
 import com.itegg.yougravitybackend.model.vo.food.RecStepUpdateParam;
+import com.itegg.yougravitybackend.model.vo.food.RecStepVO;
 
 import java.util.List;
 
@@ -42,5 +43,12 @@ public interface RecipeStepService extends IService<RecipeStep> {
      * @return 修改的菜谱步骤数量
      */
     Integer batchUpdateStep(Long recipeId, List<RecStepUpdateParam> params);
+
+    /**
+     * 根据菜谱id获取菜谱步骤
+     * @param recipeId 菜谱id
+     * @return 菜谱步骤VO列表
+     */
+    List<RecStepVO> getByRecipeId(Long recipeId);
 
 }

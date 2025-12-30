@@ -9,6 +9,7 @@ import com.itegg.yougravitybackend.exception.BusinessException;
 import com.itegg.yougravitybackend.exception.ErrorCode;
 import com.itegg.yougravitybackend.model.vo.food.RecipeAddParam;
 import com.itegg.yougravitybackend.model.vo.food.RecipeUpdateParam;
+import com.itegg.yougravitybackend.model.vo.food.RecipeVO;
 import com.itegg.yougravitybackend.service.food.RecipeService;
 import jakarta.annotation.Resource;
 import lombok.extern.slf4j.Slf4j;
@@ -87,6 +88,18 @@ public class RecipeController {
             throw new BusinessException(ErrorCode.PARAMS_ERROR);
         }
         return ResultUtils.ok(recipeService.privateRecipe(idCondition.getId()));
+    }
+
+    /**
+     * 查询菜谱
+     */
+    @PostMapping("/get")
+    public Result<RecipeVO> getRecipe(@RequestBody IdCondition idCondition) {
+        log.info("=========> /food/recipe/get idCondition={}", JSONUtil.toJsonStr(idCondition));
+        if(ObjectUtil.isNull(idCondition) || idCondition.getId() == null || idCondition.getId() <= 0) {
+            throw new BusinessException(ErrorCode.PARAMS_ERROR);
+        }
+        return ResultUtils.ok(recipeService.getRecipe(idCondition.getId()));
     }
 
     /**

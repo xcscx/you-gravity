@@ -9,10 +9,13 @@ import com.itegg.yougravitybackend.exception.BusinessException;
 import com.itegg.yougravitybackend.exception.ErrorCode;
 import com.itegg.yougravitybackend.model.vo.food.RecStepAddParam;
 import com.itegg.yougravitybackend.model.vo.food.RecStepUpdateParam;
+import com.itegg.yougravitybackend.model.vo.food.RecStepVO;
 import com.itegg.yougravitybackend.service.food.RecipeStepService;
 import jakarta.annotation.Resource;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 /**
  * 菜谱步骤 Controller层
@@ -55,5 +58,18 @@ public class RecipeStepController {
         }
         return ResultUtils.ok(recipeStepService.removeById(idCondition.getId()));
     }
+
+    /**
+     * 获取菜谱步骤
+     */
+    @PostMapping("/get")
+    public Result<List<RecStepVO>> getByRecipeId(@RequestParam("recipeId") IdCondition idCondition) {
+        log.info("=========> /food/recipe-step/get idCondition={}", JSONUtil.toJsonStr(idCondition));
+        if(ObjectUtil.isNull(idCondition) || idCondition.getId() == null || idCondition.getId() <= 0) {
+            throw new BusinessException(ErrorCode.PARAMS_ERROR);
+        }
+        return ResultUtils.ok(recipeStepService.getByRecipeId(idCondition.getId()));
+    }
+
 
 }

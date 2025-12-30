@@ -2,6 +2,7 @@ package com.itegg.yougravitybackend.service.food.impl;
 
 import cn.hutool.core.bean.BeanUtil;
 import cn.hutool.json.JSONUtil;
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.itegg.yougravitybackend.exception.BusinessException;
 import com.itegg.yougravitybackend.exception.ErrorCode;
@@ -9,6 +10,7 @@ import com.itegg.yougravitybackend.mapper.food.RecipeStepMapper;
 import com.itegg.yougravitybackend.model.entity.food.RecipeStep;
 import com.itegg.yougravitybackend.model.vo.food.RecStepAddParam;
 import com.itegg.yougravitybackend.model.vo.food.RecStepUpdateParam;
+import com.itegg.yougravitybackend.model.vo.food.RecStepVO;
 import com.itegg.yougravitybackend.service.food.RecipeStepService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -103,6 +105,16 @@ public class RecipeStepServiceImpl extends ServiceImpl<RecipeStepMapper, RecipeS
             }
         }
         return params.size();
+    }
+
+    @Override
+    public List<RecStepVO> getByRecipeId(Long recipeId) {
+        // 参数校验
+        if(recipeId == null) {
+            throw new BusinessException(ErrorCode.PARAMS_ERROR, "参数不能为空");
+        }
+        List<RecipeStep> list = list(new QueryWrapper<RecipeStep>().eq("recipe_id", recipeId));
+        return list.stream().map(item -> BeanUtil.copyProperties(item, RecStepVO.class)).toList();
     }
 
 }

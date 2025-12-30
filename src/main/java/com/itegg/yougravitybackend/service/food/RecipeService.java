@@ -4,6 +4,7 @@ import com.baomidou.mybatisplus.extension.service.IService;
 import com.itegg.yougravitybackend.model.vo.food.RecipeAddParam;
 import com.itegg.yougravitybackend.model.vo.food.RecipeUpdateParam;
 import com.itegg.yougravitybackend.model.entity.food.Recipe;
+import com.itegg.yougravitybackend.model.vo.food.RecipeVO;
 
 /**
  * 菜谱 Service层
@@ -45,5 +46,12 @@ public interface RecipeService extends IService<Recipe> {
      * @return 是否成功
      */
     boolean privateRecipe(Long id);
+
+    /**
+     * 获取菜谱
+     * @param id 菜谱id
+     * @return 菜谱信息
+     */
+    RecipeVO getRecipe(Long id);
 
 }

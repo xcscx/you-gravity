@@ -2,14 +2,19 @@ package com.itegg.yougravitybackend.service.food.impl;
 
 import cn.hutool.core.bean.BeanUtil;
 import cn.hutool.json.JSONUtil;
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.itegg.yougravitybackend.exception.BusinessException;
 import com.itegg.yougravitybackend.exception.ErrorCode;
 import com.itegg.yougravitybackend.mapper.food.RecipeIngredientMapper;
+import com.itegg.yougravitybackend.model.entity.food.Ingredient;
+import com.itegg.yougravitybackend.model.vo.food.IngredientVO;
 import com.itegg.yougravitybackend.model.vo.food.RecIngAddParam;
 import com.itegg.yougravitybackend.model.vo.food.RecIngUpdateParam;
 import com.itegg.yougravitybackend.model.entity.food.RecipeIngredient;
+import com.itegg.yougravitybackend.service.food.IngredientService;
 import com.itegg.yougravitybackend.service.food.RecipeIngredientService;
+import jakarta.annotation.Resource;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
@@ -23,6 +28,9 @@ import java.util.List;
 @Slf4j
 public class RecipeIngredientServiceImpl extends ServiceImpl<RecipeIngredientMapper, RecipeIngredient>
         implements RecipeIngredientService {
+
+    @Resource
+    private IngredientService ingredientService;
 
     @Override
     public Long insert(RecIngAddParam param) {
@@ -109,6 +117,17 @@ public class RecipeIngredientServiceImpl extends ServiceImpl<RecipeIngredientMap
         return params.size();
     }
 
+    @Override
+    public List<IngredientVO> getByRecipeId(Long recipeId) {
+        // 校验参数
+        if (recipeId == null) {
+            throw new BusinessException(ErrorCode.PARAMS_ERROR, "参数不能为空");
+        }
+        // 获取菜谱食材
+        List<RecipeIngredient> list = list(new QueryWrapper<RecipeIngredient>().eq("recipe_id", recipeId));
+        List<Ingredient> ingredients = ingredientService.listByIds(list.stream().map(RecipeIngredient::getIngredientId).toList());
+        return ingredients.stream().map(item -> BeanUtil.copyProperties(item, IngredientVO.class)).toList();
+    }
 
 
 }

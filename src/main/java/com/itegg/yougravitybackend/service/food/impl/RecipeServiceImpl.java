@@ -108,4 +108,18 @@ public class RecipeServiceImpl extends ServiceImpl<RecipeMapper, Recipe>
         return updateById(recipe);
     }
 
+    @Override
+    public RecipeVO getRecipe(Long id) {
+        Recipe recipe = getById(id);
+        if(ObjectUtil.isNull(recipe)) {
+            throw new BusinessException(ErrorCode.NOT_FOUND_ERROR, "未找到该菜谱");
+        }
+        RecipeVO vo = BeanUtil.toBean(recipe, RecipeVO.class);
+        List<RecStepVO> stepList = recipeStepService.getByRecipeId(id);
+        vo.setStepList(stepList);
+        List<IngredientVO> ingreList = recipeIngredientService.getByRecipeId(id);
+        vo.setIngredientList(ingreList);
+        return vo;
+    }
+
 }
