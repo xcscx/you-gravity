@@ -64,10 +64,10 @@ CREATE TABLE `basic_permission` (
                                     `update_time` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '最后更新时间',
                                     `remove_flag` TINYINT DEFAULT 0 COMMENT '删除标识',
                                     PRIMARY KEY(`id`),
-                                    INDEX idx_permission_code(permission_code) USING BTREE,
+                                    UNIQUE KEY idx_permission_code(permission_code) USING BTREE,
                                     KEY `INX_PARENT_ID` (`parent_id`) USING BTREE,
                                     KEY `INX_PATH` (`path`) USING BTREE,
-                                    INDEX idx_permission_type(permission_type)
+                                    KEY idx_permission_type(permission_type)
 )ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci COMMENT='权限表';
 
 
@@ -76,9 +76,9 @@ CREATE TABLE `basic_role_permission` (
                                          `id` BIGINT(20) NOT NULL COMMENT '主键',
                                          `role_id` BIGINT(20) NOT NULL COMMENT '角色id',
                                          `permission_id` BIGINT(20) NOT NULL COMMENT '权限id',
-                                         `create_time` DATETIME NOT NULL COMMENT '创建时间',
-                                         `update_time` DATETIME NOT NULL COMMENT '最后更新时间',
-                                         `remove_flag` TINYINT(1) NOT NULL COMMENT '逻辑删除标记，0 - 未删除，1 - 已删除',
+                                         `create_time` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
+                                         `update_time` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '最后更新时间',
+                                         `remove_flag` TINYINT DEFAULT '0' COMMENT '删除标识',
                                          PRIMARY KEY (`id`),
                                          INDEX idx_role_id(role_id),
                                          INDEX idx_permission_id(permission_id)

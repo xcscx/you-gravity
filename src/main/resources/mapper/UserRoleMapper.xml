@@ -17,4 +17,17 @@
         id,`user_id`,`role_id`,
         create_time,update_time,remove_flag
     </sql>
+
+    <select id="getUserRole" resultType="com.itegg.yougravitybackend.model.vo.user.UserRoleVO">
+        SELECT ur.user_id AS userId,
+               ur.role_id AS roleId,
+               r.role_code AS roleCode,
+               r.role_name AS roleName
+        FROM basic_user_role ur
+                 LEFT JOIN basic_role r ON ur.role_id = r.id
+        WHERE ur.remove_flag = 0
+          AND r.remove_flag = 0
+          AND ur.user_id = #{userId}
+    </select>
+
 </mapper>

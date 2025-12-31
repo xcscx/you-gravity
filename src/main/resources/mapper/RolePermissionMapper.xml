@@ -17,4 +17,18 @@
         id,`role_id`,`permission_id`,
         create_time,update_time,remove_flag
     </sql>
+
+    <select id="getRolePermission" resultType="com.itegg.yougravitybackend.model.vo.user.RolePermissionVO">
+        SELECT rp.role_id AS roleId,
+               rp.permission_id AS permissionId,
+               p.permission_code AS permissionCode,
+               p.permission_name AS permissionName,
+               p.permission_type AS permissionType
+        FROM `basic_role_permission` rp
+                 LEFT JOIN `basic_permission` p ON rp.permission_id = p.id
+        WHERE rp.remove_flag = 0
+          AND p.remove_flag = 0
+          AND rp.role_id = #{roleId}
+    </select>
+
 </mapper>
