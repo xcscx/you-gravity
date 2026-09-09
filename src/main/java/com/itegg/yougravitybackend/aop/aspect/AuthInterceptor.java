@@ -47,22 +47,22 @@ public class AuthInterceptor {
         RequestAttributes requestAttributes = RequestContextHolder.currentRequestAttributes();
         HttpServletRequest request = ((ServletRequestAttributes) requestAttributes).getRequest();
         // 当前登录用户
-        User loginUser = userService.getLoginUser(request);
-        UserRoleEnum mustRoleEnum = UserRoleEnum.getEnumByCode(mustRole);
-        // 不需要权限,放行
-        if(ObjectUtil.isNull(mustRoleEnum)) {
-            return joinPoint.proceed();
-        }
-        // 获取当前用户具有的权限
-        UserRoleEnum userRoleEnum = UserRoleEnum.getEnumByCode(loginUser.getUserRole());
-        // 没有权限,拒绝
-        if(ObjectUtil.isNull(userRoleEnum)) {
-            throw new BusinessException(ErrorCode.NO_AUTH_ERROR);
-        }
-        // 要求必须要管理员权限
-        if(UserRoleEnum.ADMIN.equals(mustRoleEnum) && !UserRoleEnum.ADMIN.equals(userRoleEnum)) {
-            throw new BusinessException(ErrorCode.NO_AUTH_ERROR);
-        }
+//        User loginUser = userService.getLoginUser(request);
+//        UserRoleEnum mustRoleEnum = UserRoleEnum.getEnumByCode(mustRole);
+//        // 不需要权限,放行
+//        if(ObjectUtil.isNull(mustRoleEnum)) {
+//            return joinPoint.proceed();
+//        }
+//        // 获取当前用户具有的权限
+//        UserRoleEnum userRoleEnum = UserRoleEnum.getEnumByCode(loginUser.getUserRole());
+//        // 没有权限,拒绝
+//        if(ObjectUtil.isNull(userRoleEnum)) {
+//            throw new BusinessException(ErrorCode.NO_AUTH_ERROR);
+//        }
+//        // 要求必须要管理员权限
+//        if(UserRoleEnum.ADMIN.equals(mustRoleEnum) && !UserRoleEnum.ADMIN.equals(userRoleEnum)) {
+//            throw new BusinessException(ErrorCode.NO_AUTH_ERROR);
+//        }
         // 通过权限校验
         return joinPoint.proceed();
     }
