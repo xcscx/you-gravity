@@ -11,8 +11,7 @@ import lombok.Getter;
 public enum AttachmentTypeEnum {
 
     LOCATION_ATTACHMENT("地点附件", "LOCATION_ATTACHMENT"),
-    CHECKIN_ATTACHMENT("打卡附件", "CHECKIN_ATTACHMENT"),
-    RECIPE_STEP_ATTACHMENT("菜谱步骤附件", "RECIPE_STEP_ATTACHMENT"),;
+    CHECKIN_ATTACHMENT("打卡附件", "CHECKIN_ATTACHMENT"),;
 
     private final String text;
 

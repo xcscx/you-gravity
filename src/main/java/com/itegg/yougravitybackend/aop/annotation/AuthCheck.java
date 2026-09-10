@@ -18,9 +18,4 @@ public @interface AuthCheck {
      */
     String mustRole() default "";
 
-    /**
-     * 必须有的权限
-     */
-    String mustPermission() default "";
-
 }

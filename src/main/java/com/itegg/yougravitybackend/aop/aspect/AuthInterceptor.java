@@ -5,6 +5,7 @@ import com.itegg.yougravitybackend.aop.annotation.AuthCheck;
 import com.itegg.yougravitybackend.exception.BusinessException;
 import com.itegg.yougravitybackend.exception.ErrorCode;
 import com.itegg.yougravitybackend.model.entity.basic.User;
+import com.itegg.yougravitybackend.model.enums.UserRoleEnum;
 import com.itegg.yougravitybackend.service.basic.*;
 import jakarta.annotation.Resource;
 import jakarta.servlet.http.HttpServletRequest;
@@ -27,14 +28,6 @@ public class AuthInterceptor {
 
     @Resource
     private UserService userService;
-    @Resource
-    private RoleService roleService;
-    @Resource
-    private UserRoleService userRoleService;
-    @Resource
-    private PermissionService permissionService;
-    @Resource
-    private RolePermissionService rolePermissionService;
 
     /**
      * 执行拦截

@@ -46,6 +46,12 @@ public class User extends SuperModel {
     private String email;
 
     /**
+     * 角色
+     */
+    @TableField("user_role")
+    private String userRole;
+
+    /**
      * 用户头像
      */
     @TableField("avatar")
