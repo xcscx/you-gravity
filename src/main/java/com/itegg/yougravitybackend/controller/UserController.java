@@ -22,6 +22,8 @@ import org.springframework.web.bind.annotation.*;
 import java.time.LocalDate;
 import java.util.Date;
 
+import static com.itegg.yougravitybackend.constant.UserConstant.USER_LOGIN_STATE;
+
 /**
  * 用户 Controller层
  * @author ITegg
@@ -76,6 +78,37 @@ public class UserController {
     public Result<Boolean> userLogout(HttpServletRequest request) {
         ThrowUtils.throwIf(ObjectUtil.isNull(request), ErrorCode.PARAMS_ERROR);
         return ResultUtils.ok(userService.userLogout(request));
+    }
+
+    /**
+     * 修改用户基本信息
+     * @param userUpdateRequest 修改用户信息
+     */
+    @PostMapping("/update")
+    public Result<Boolean> updateUser(@RequestBody UserUpdateRequest userUpdateRequest, HttpServletRequest request) {
+        ThrowUtils.throwIf(ObjectUtil.isNull(userUpdateRequest) || ObjectUtil.isNull(request) || ObjectUtil.isNull(userUpdateRequest.getUserId()), ErrorCode.PARAMS_ERROR);
+        // 校验是否有权限更改 普通用户-改自己  管理员-改全部
+        Object userObj = request.getSession().getAttribute(USER_LOGIN_STATE);
+        ThrowUtils.throwIf(ObjectUtil.isNull(userObj), ErrorCode.NOT_LOGIN_ERROR);
+        User user = (User) userObj;
+        if (!userService.isAdmin(user) || ObjectUtil.notEqual(userUpdateRequest.getUserId(),user.getId())) {
+            // 普通用户只能修改自己信息
+            throw new BusinessException(ErrorCode.NO_AUTH_ERROR, "暂无权限编辑");
+        }
+        return ResultUtils.ok(userService.updateUser(userUpdateRequest));
+    }
+
+    /**
+     * 用户重置自己密码
+     * @param request http请求
+     * @return 重置密码结果
+     */
+    @GetMapping("/reset-password")
+    public Result<Boolean> resetPassword(HttpServletRequest request) {
+        ThrowUtils.throwIf(ObjectUtil.isNull(request), ErrorCode.PARAMS_ERROR);
+        Object userObj = request.getSession().getAttribute(USER_LOGIN_STATE);
+        User user = (User) userObj;
+        return ResultUtils.ok(userService.resetPassword(user));
     }
 
     /**

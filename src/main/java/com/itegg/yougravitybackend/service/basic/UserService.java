@@ -45,6 +45,16 @@ public interface UserService extends IService<User> {
     boolean userLogout(HttpServletRequest request);
 
     /**
+     * 修改用户信息
+     */
+    boolean updateUser(UserUpdateRequest user);
+
+    /**
+     * 用户重置自己密码
+     */
+    boolean resetPassword(User user);
+
+    /**
      * 用户签到
      * @param request http请求
      * @return 签到信息
@@ -84,6 +94,6 @@ public interface UserService extends IService<User> {
      * @param user 待校验用户
      * @return 结论
      */
-//    boolean isAdmin(User user);
+    boolean isAdmin(User user);
 
 }

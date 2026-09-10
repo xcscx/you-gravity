@@ -7,11 +7,11 @@ import java.io.Serializable;
 import java.time.LocalDateTime;
 
 /**
- * 用户VO对象类
+ * 用户脱敏VO对象类
  * @author ITegg
  */
 @Data
-public class UserVO implements Serializable {
+public class UserDesVO implements Serializable {
 
     @Serial
     private static final long serialVersionUID = 1L;
@@ -30,16 +30,6 @@ public class UserVO implements Serializable {
      * 手机
      */
     private String mobile;
-
-    /**
-     * 账号密码
-     */
-    private String password;
-
-    /**
-     * 密码盐值
-     */
-    private String salt;
 
     /**
      * 邮箱

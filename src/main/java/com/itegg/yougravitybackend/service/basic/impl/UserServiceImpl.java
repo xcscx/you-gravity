@@ -7,6 +7,7 @@ import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.itegg.yougravitybackend.exception.BusinessException;
 import com.itegg.yougravitybackend.exception.ErrorCode;
+import com.itegg.yougravitybackend.model.enums.UserRoleEnum;
 import com.itegg.yougravitybackend.model.vo.user.*;
 import com.itegg.yougravitybackend.model.entity.basic.User;
 import com.itegg.yougravitybackend.service.basic.SignInService;
@@ -31,6 +32,8 @@ import static com.itegg.yougravitybackend.constant.UserConstant.USER_LOGIN_STATE
 @Slf4j
 public class UserServiceImpl extends ServiceImpl<UserMapper, User>
     implements UserService{
+
+    private static final String DEFUALT_PASSWORD = "123456";
 
     @Resource
     private SignInService signInService;
@@ -111,13 +114,37 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User>
 
     @Override
     public boolean userLogout(HttpServletRequest request) {
-        Object userOjb = request.getSession().getAttribute(USER_LOGIN_STATE);
-        if(ObjectUtil.isNull(userOjb)) {
+        Object userObj = request.getSession().getAttribute(USER_LOGIN_STATE);
+        if(ObjectUtil.isNull(userObj)) {
             throw new BusinessException(ErrorCode.OPERATION_ERROR, "未登录");
         }
         // 移除登录态 TODO 修改为sa-token
         request.getSession().removeAttribute(USER_LOGIN_STATE);
         return true;
+    }
+
+    @Override
+    public boolean updateUser(UserUpdateRequest updateUser) {
+        if(ObjectUtil.isNull(updateUser) || ObjectUtil.isNull(updateUser.getUserId())) {
+            throw new BusinessException(ErrorCode.PARAMS_ERROR, "参数为空");
+        }
+        // 维持手机-密码-盐值-角色不变
+        User user = this.getById(updateUser.getUserId());
+        BeanUtils.copyProperties(updateUser, user);
+        return this.updateById(user);
+    }
+
+    @Override
+    public boolean resetPassword(User user) {
+        if(ObjectUtil.isNull(user) || ObjectUtil.isNull(user.getId())) {
+            throw new BusinessException(ErrorCode.NOT_LOGIN_ERROR, "未登录");
+        }
+        String randomPart = RandomUtil.randomNumbers(6);
+        String encryptPassword = getEncryptPassword(DEFUALT_PASSWORD, randomPart);
+
+        user.setSalt(randomPart);
+        user.setPassword(encryptPassword);
+        return this.updateById(user);
     }
 
     @Override
@@ -129,6 +156,25 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User>
         }
         return signInService.signIn(user.getId(), LocalDate.now());
     }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
     /**
@@ -176,11 +222,10 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User>
 //        return queryWrapper;
 //    }
 
-//    @Override
-//    public boolean isAdmin(User user) {
-////        return ObjectUtil.isNotNull(user) && UserRoleEnum.ADMIN.getCode().equals(user.getUserRole());
-//    return true;
-//    }
+    @Override
+    public boolean isAdmin(User user) {
+        return ObjectUtil.isNotNull(user) && UserRoleEnum.ADMIN.getCode().equals(user.getUserRole());
+    }
 
 }
 
