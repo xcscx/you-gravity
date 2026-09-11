@@ -5,6 +5,7 @@ import cn.hutool.core.util.RandomUtil;
 import cn.hutool.core.util.StrUtil;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import com.itegg.yougravitybackend.common.util.BeanCopyUtils;
 import com.itegg.yougravitybackend.exception.BusinessException;
 import com.itegg.yougravitybackend.exception.ErrorCode;
 import com.itegg.yougravitybackend.model.enums.UserRoleEnum;
@@ -68,6 +69,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User>
         user.setMobile(req.getMobile());
         user.setPassword(encryptPassword);
         user.setSalt(randomPart);
+        user.setUserRole(UserRoleEnum.USER.getCode());
         user.setName("默认用户" + year + month + randomPart);
         // TODO 用户角色配置
         boolean saveResult = this.save(user);
@@ -134,9 +136,17 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User>
         if(ObjectUtil.isNull(updateUser) || ObjectUtil.isNull(updateUser.getUserId())) {
             throw new BusinessException(ErrorCode.PARAMS_ERROR, "参数为空");
         }
-        // 维持手机-密码-盐值-角色不变
+        // 维持手机-角色不变
         User user = this.getById(updateUser.getUserId());
-        BeanUtils.copyProperties(updateUser, user);
+        if(ObjectUtil.isNotEmpty(updateUser.getPassword()) && ObjectUtil.notEqual(user.getPassword(), updateUser.getPassword())) {
+            String randomPart = RandomUtil.randomNumbers(6);
+            String encryptPassword = getEncryptPassword(updateUser.getPassword(), randomPart);
+            user.setSalt(randomPart);
+            BeanCopyUtils.copyNonNullProperties(updateUser, user);
+            user.setPassword(encryptPassword);
+        }else {
+            BeanCopyUtils.copyNonNullProperties(updateUser, user);
+        }
         return this.updateById(user);
     }
 

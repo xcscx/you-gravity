@@ -5,24 +5,21 @@ import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.itegg.yougravitybackend.aop.annotation.AuthCheck;
 import com.itegg.yougravitybackend.common.IdCondition;
 import com.itegg.yougravitybackend.common.Result;
-import com.itegg.yougravitybackend.common.ResultUtils;
+import com.itegg.yougravitybackend.common.util.BeanCopyUtils;
+import com.itegg.yougravitybackend.common.util.ResultUtils;
 import com.itegg.yougravitybackend.constant.UserConstant;
 import com.itegg.yougravitybackend.exception.BusinessException;
 import com.itegg.yougravitybackend.exception.ErrorCode;
-import com.itegg.yougravitybackend.exception.ThrowUtils;
+import com.itegg.yougravitybackend.common.util.ThrowUtils;
 import com.itegg.yougravitybackend.model.vo.user.*;
 import com.itegg.yougravitybackend.model.entity.basic.User;
 import com.itegg.yougravitybackend.model.vo.user.LoginUserVO;
 import com.itegg.yougravitybackend.model.vo.user.UserVO;
-import com.itegg.yougravitybackend.service.basic.SignInService;
 import com.itegg.yougravitybackend.service.basic.UserService;
 import jakarta.annotation.Resource;
 import jakarta.servlet.http.HttpServletRequest;
-import org.springframework.beans.BeanUtils;
 import org.springframework.web.bind.annotation.*;
 
-import java.time.LocalDate;
-import java.util.Date;
 import java.util.List;
 
 import static com.itegg.yougravitybackend.constant.UserConstant.USER_LOGIN_STATE;
@@ -94,7 +91,7 @@ public class UserController {
         Object userObj = request.getSession().getAttribute(USER_LOGIN_STATE);
         ThrowUtils.throwIf(ObjectUtil.isNull(userObj), ErrorCode.NOT_LOGIN_ERROR);
         User user = (User) userObj;
-        if (!userService.isAdmin(user) || ObjectUtil.notEqual(userUpdateRequest.getUserId(),user.getId())) {
+        if (!userService.isAdmin(user) && ObjectUtil.notEqual(userUpdateRequest.getUserId(),user.getId())) {
             // 普通用户只能修改自己信息
             throw new BusinessException(ErrorCode.NO_AUTH_ERROR, "暂无权限编辑");
         }
@@ -115,6 +112,18 @@ public class UserController {
     }
 
     /**
+     * 依据id获取包装类
+     * @param id 用户id
+     * @return 用户vo信息
+     */
+    @GetMapping("/get/vo")
+    public Result<UserVO> getUserVOById(long id) {
+        Result<User> result = getUserById(id);
+        User user = result.getData();
+        return ResultUtils.ok(userService.getUserVO(user));
+    }
+
+    /**
      * 用户签到
      */
     @PostMapping("/signIn")
@@ -130,7 +139,7 @@ public class UserController {
 
 
     /**
-     * 创建用户 - 仅管理员可调用
+     * 创建用户 - 仅管理员可调用 - 扩展用接口
      * @param userRegisterRequest 创建用户数据信息
      * @return 用户id
      */
@@ -156,18 +165,6 @@ public class UserController {
     }
 
     /**
-     * 依据id获取包装类 - 仅管理员可调用
-     * @param id 用户id
-     * @return 用户vo信息
-     */
-    @GetMapping("/get/vo")
-    public Result<UserVO> getUserVOById(long id) {
-        Result<User> result = getUserById(id);
-        User user = result.getData();
-        return ResultUtils.ok(userService.getUserVO(user));
-    }
-
-    /**
      * 依据id删除用户 - 仅管理员可调用
      * @param idCondition id信息
      * @return 删除是否成功标识
@@ -180,25 +177,6 @@ public class UserController {
         }
         boolean b = userService.removeById(idCondition.getId());
         return ResultUtils.ok(b);
-    }
-
-    /**
-     * 更新用户 - 仅管理员可调用
-     * @param userUpdateRequest 更新用户请求
-     * @return 返回是否更新成功
-     */
-    @PostMapping("/update-user")
-    @AuthCheck(mustRole = UserConstant.ADMIN_ROLE)
-    public Result<Boolean> updateUserByAdmin(@RequestBody UserUpdateRequest userUpdateRequest) {
-        if(ObjectUtil.isNull(userUpdateRequest) || ObjectUtil.isNull(userUpdateRequest.getUserId())) {
-            throw new BusinessException(ErrorCode.PARAMS_ERROR);
-        }
-        User user = new User();
-        BeanUtils.copyProperties(userUpdateRequest, user);
-        user.setId(userUpdateRequest.getUserId());
-        boolean result = userService.updateById(user);
-        ThrowUtils.throwIf(!result, ErrorCode.OPERATION_ERROR);
-        return ResultUtils.ok(true);
     }
 
     /**

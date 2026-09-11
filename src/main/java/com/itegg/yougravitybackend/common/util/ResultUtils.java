@@ -1,5 +1,6 @@
-package com.itegg.yougravitybackend.common;
+package com.itegg.yougravitybackend.common.util;
 
+import com.itegg.yougravitybackend.common.Result;
 import com.itegg.yougravitybackend.exception.ErrorCode;
 
 /**

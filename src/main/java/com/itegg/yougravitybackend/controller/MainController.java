@@ -3,7 +3,7 @@ package com.itegg.yougravitybackend.controller;
 import cn.hutool.core.lang.UUID;
 import com.itegg.yougravitybackend.app.NavigationApp;
 import com.itegg.yougravitybackend.common.Result;
-import com.itegg.yougravitybackend.common.ResultUtils;
+import com.itegg.yougravitybackend.common.util.ResultUtils;
 import jakarta.annotation.Resource;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;

@@ -1,7 +1,7 @@
 package com.itegg.yougravitybackend.exception;
 
 import com.itegg.yougravitybackend.common.Result;
-import com.itegg.yougravitybackend.common.ResultUtils;
+import com.itegg.yougravitybackend.common.util.ResultUtils;
 import io.swagger.v3.oas.annotations.Hidden;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.ExceptionHandler;

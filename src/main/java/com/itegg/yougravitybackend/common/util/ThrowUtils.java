@@ -1,4 +1,7 @@
-package com.itegg.yougravitybackend.exception;
+package com.itegg.yougravitybackend.common.util;
+
+import com.itegg.yougravitybackend.exception.BusinessException;
+import com.itegg.yougravitybackend.exception.ErrorCode;
 
 /**
  * 异常处理工具类
