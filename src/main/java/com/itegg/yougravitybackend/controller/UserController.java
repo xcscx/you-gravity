@@ -1,6 +1,7 @@
 package com.itegg.yougravitybackend.controller;
 
 import cn.hutool.core.util.ObjectUtil;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.itegg.yougravitybackend.aop.annotation.AuthCheck;
 import com.itegg.yougravitybackend.common.IdCondition;
 import com.itegg.yougravitybackend.common.Result;
@@ -17,10 +18,12 @@ import com.itegg.yougravitybackend.service.basic.SignInService;
 import com.itegg.yougravitybackend.service.basic.UserService;
 import jakarta.annotation.Resource;
 import jakarta.servlet.http.HttpServletRequest;
+import org.springframework.beans.BeanUtils;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDate;
 import java.util.Date;
+import java.util.List;
 
 import static com.itegg.yougravitybackend.constant.UserConstant.USER_LOGIN_STATE;
 
@@ -121,33 +124,22 @@ public class UserController {
     }
 
 
-    // -------------------------------------------------------
-
-
-
     /**
      * -----   管理员接口   -----
      */
 
+
     /**
      * 创建用户 - 仅管理员可调用
-     * @param userAddRequest 创建用户数据信息
+     * @param userRegisterRequest 创建用户数据信息
      * @return 用户id
      */
-//    @PostMapping("/add")
-//    @AuthCheck(mustRole = UserConstant.ADMIN_ROLE)
-//    public Result<Long> addUser(@RequestBody UserAddRequest userAddRequest) {
-//        ThrowUtils.throwIf(ObjectUtil.isNull(userAddRequest), ErrorCode.PARAMS_ERROR);
-//        User user = new User();
-//        BeanUtils.copyProperties(userAddRequest, user);
-//        // 默认密码 123456
-//        final String DEFAULT_PASSWORD = "123456";
-//        String encryptPassword = userService.getEncryptPassword(DEFAULT_PASSWORD);
-//        user.setUserPassword(encryptPassword);
-//        boolean result = userService.save(user);
-//        ThrowUtils.throwIf(!result, ErrorCode.OPERATION_ERROR);
-//        return ResultUtils.ok(user.getId());
-//    }
+    @PostMapping("/add")
+    @AuthCheck(mustRole = UserConstant.ADMIN_ROLE)
+    public Result<Long> addUser(@RequestBody UserRegisterRequest userRegisterRequest) {
+        ThrowUtils.throwIf(ObjectUtil.isNull(userRegisterRequest), ErrorCode.PARAMS_ERROR);
+        return ResultUtils.ok(userService.userRegister(userRegisterRequest));
+    }
 
     /**
      * 依据id获取用户 - 仅管理员可调用
@@ -182,7 +174,7 @@ public class UserController {
      */
     @PostMapping("/delete")
     @AuthCheck(mustRole = UserConstant.ADMIN_ROLE)
-    public Result<Boolean> deleteUser(@RequestBody IdCondition idCondition) {
+    public Result<Boolean> deleteUserByAdmin(@RequestBody IdCondition idCondition) {
         if(ObjectUtil.isNull(idCondition) || idCondition.getId() <= 0) {
             throw new BusinessException(ErrorCode.PARAMS_ERROR);
         }
@@ -195,36 +187,37 @@ public class UserController {
      * @param userUpdateRequest 更新用户请求
      * @return 返回是否更新成功
      */
-//    @PostMapping("/update")
-//    @AuthCheck(mustRole = UserConstant.ADMIN_ROLE)
-//    public Result<Boolean> updateUser(@RequestBody UserUpdateRequest userUpdateRequest) {
-//        if(ObjectUtil.isNull(userUpdateRequest) || ObjectUtil.isNull(userUpdateRequest.getId())) {
-//            throw new BusinessException(ErrorCode.PARAMS_ERROR);
-//        }
-//        User user = new User();
-//        BeanUtils.copyProperties(userUpdateRequest, user);
-//        boolean result = userService.updateById(user);
-//        ThrowUtils.throwIf(!result, ErrorCode.OPERATION_ERROR);
-//        return ResultUtils.ok(true);
-//    }
+    @PostMapping("/update-user")
+    @AuthCheck(mustRole = UserConstant.ADMIN_ROLE)
+    public Result<Boolean> updateUserByAdmin(@RequestBody UserUpdateRequest userUpdateRequest) {
+        if(ObjectUtil.isNull(userUpdateRequest) || ObjectUtil.isNull(userUpdateRequest.getUserId())) {
+            throw new BusinessException(ErrorCode.PARAMS_ERROR);
+        }
+        User user = new User();
+        BeanUtils.copyProperties(userUpdateRequest, user);
+        user.setId(userUpdateRequest.getUserId());
+        boolean result = userService.updateById(user);
+        ThrowUtils.throwIf(!result, ErrorCode.OPERATION_ERROR);
+        return ResultUtils.ok(true);
+    }
 
     /**
      * 分页获取用户封装 - 仅管理员可调用
      * @param userQueryRequest 用户搜素参数
      * @return 分页搜素
      */
-//    @PostMapping("/list/page/vo")
-//    @AuthCheck(mustRole = UserConstant.ADMIN_ROLE)
-//    public Result<Page<UserVO>> listUserVOByPage(@RequestBody UserQueryRequest userQueryRequest) {
-//        ThrowUtils.throwIf(ObjectUtil.isNull(userQueryRequest), ErrorCode.PARAMS_ERROR);
-//        long current = userQueryRequest.getCurrent();
-//        long pageSize = userQueryRequest.getPageSize();
-//        Page<User> userPage = userService.page(new Page<>(current, pageSize),
-//                userService.getQueryWrapper(userQueryRequest));
-//        Page<UserVO> userVOPage = new Page<>(current, pageSize, userPage.getTotal());
-//        List<UserVO> userVOList = userService.getUserVOList(userPage.getRecords());
-//        userVOPage.setRecords(userVOList);
-//        return ResultUtils.ok(userVOPage);
-//    }
+    @PostMapping("/list/page/vo")
+    @AuthCheck(mustRole = UserConstant.ADMIN_ROLE)
+    public Result<Page<UserVO>> listUserVOByPage(@RequestBody UserQueryRequest userQueryRequest) {
+        ThrowUtils.throwIf(ObjectUtil.isNull(userQueryRequest), ErrorCode.PARAMS_ERROR);
+        long current = userQueryRequest.getCurrent();
+        long pageSize = userQueryRequest.getPageSize();
+        Page<User> userPage = userService.page(new Page<>(current, pageSize),
+                userService.getQueryWrapper(userQueryRequest));
+        Page<UserVO> userVOPage = new Page<>(current, pageSize, userPage.getTotal());
+        List<UserVO> userVOList = userService.getUserVOList(userPage.getRecords());
+        userVOPage.setRecords(userVOList);
+        return ResultUtils.ok(userVOPage);
+    }
 
 }

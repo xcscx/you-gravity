@@ -1,9 +1,12 @@
 package com.itegg.yougravitybackend.service.basic;
 
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.itegg.yougravitybackend.model.vo.user.*;
 import com.itegg.yougravitybackend.model.entity.basic.User;
 import com.baomidou.mybatisplus.extension.service.IService;
 import jakarta.servlet.http.HttpServletRequest;
+
+import java.util.List;
 
 /**
  * 用户 Service层
@@ -80,14 +83,14 @@ public interface UserService extends IService<User> {
      * @param userList 用户列表信息
      * @return 脱敏用户列表信息
      */
-//    List<UserVO> getUserVOList(List<User> userList);
+    List<UserVO> getUserVOList(List<User> userList);
 
     /**
      * 分页查询用户信息接口
      * @param userQueryRequest 分页查询参数
      * @return 符合条件的用户列表信息
      */
-//    QueryWrapper<User> getQueryWrapper(UserQueryRequest userQueryRequest);
+    QueryWrapper<User> getQueryWrapper(UserQueryRequest userQueryRequest);
 
     /**
      * 是否为管理员

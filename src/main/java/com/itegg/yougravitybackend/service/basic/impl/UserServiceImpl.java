@@ -21,6 +21,9 @@ import org.springframework.stereotype.Service;
 import org.springframework.util.DigestUtils;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.stream.Collectors;
 
 import static com.itegg.yougravitybackend.constant.UserConstant.USER_LOGIN_STATE;
 
@@ -41,8 +44,11 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User>
     @Override
     public long userRegister(UserRegisterRequest req) {
         // 校验数据是否合理
-        if(StrUtil.hasBlank(req.getMobile(), req.getPassword())) {
+        if(ObjectUtil.isNull(req.getMobile())) {
             throw new BusinessException(ErrorCode.PARAMS_ERROR, "参数为空");
+        }
+        if(ObjectUtil.isNull(req.getPassword())) {
+            req.setPassword(DEFUALT_PASSWORD);
         }
         // 校验数据是否重复
         QueryWrapper<User> queryWrapper = new QueryWrapper<>();
@@ -157,38 +163,6 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User>
         return signInService.signIn(user.getId(), LocalDate.now());
     }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-    /**
-     * --- 私有方法 ---
-     */
-    private String getEncryptPassword(String userPassword, String salt) {
-        return DigestUtils.md5DigestAsHex((salt + userPassword).getBytes());
-    }
-
-
-
-
-
-
     @Override
     public UserVO getUserVO(User user) {
         if(ObjectUtil.isNull(user)) {
@@ -199,34 +173,42 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User>
         return userVO;
     }
 
-//    @Override
-//    public List<UserVO> getUserVOList(List<User> userList) {
-//        if(ObjectUtil.isNull(userList)) {
-//            return new ArrayList<>();
-//        }
-//        return userList.stream().map(this::getUserVO).collect(Collectors.toList());
-//    }
+    @Override
+    public List<UserVO> getUserVOList(List<User> userList) {
+        if(ObjectUtil.isNull(userList)) {
+            return new ArrayList<>();
+        }
+        return userList.stream().map(this::getUserVO).collect(Collectors.toList());
+    }
 
-//    @Override
-//    public QueryWrapper<User> getQueryWrapper(UserQueryRequest userQueryRequest) {
-//        if(ObjectUtil.isNull(userQueryRequest)) {
-//            throw new BusinessException(ErrorCode.PARAMS_ERROR, "请求参数为空");
-//        }
-//        QueryWrapper<User> queryWrapper = new QueryWrapper<>();
-//        queryWrapper.eq(ObjectUtil.isNotNull(userQueryRequest.getId()), "id", userQueryRequest.getId());
-//        queryWrapper.eq(StrUtil.isNotBlank(userQueryRequest.getUserRole()), "user_role", userQueryRequest.getUserRole());
-//        queryWrapper.like(StrUtil.isNotBlank(userQueryRequest.getUserAccount()), "user_account", userQueryRequest.getUserAccount());
-//        queryWrapper.like(StrUtil.isNotBlank(userQueryRequest.getUserName()), "user_name", userQueryRequest.getUserName());
-//        queryWrapper.like(StrUtil.isNotBlank(userQueryRequest.getUserProfile()), "user_profile", userQueryRequest.getUserProfile());
-//        queryWrapper.orderBy(StrUtil.isNotEmpty(userQueryRequest.getSortOrder()), userQueryRequest.getSortOrder().equals("asc"), userQueryRequest.getSortField());
-//        return queryWrapper;
-//    }
+    @Override
+    public QueryWrapper<User> getQueryWrapper(UserQueryRequest userQueryRequest) {
+        if(ObjectUtil.isNull(userQueryRequest)) {
+            throw new BusinessException(ErrorCode.PARAMS_ERROR, "请求参数为空");
+        }
+        QueryWrapper<User> queryWrapper = new QueryWrapper<>();
+        queryWrapper.eq(ObjectUtil.isNotNull(userQueryRequest.getUserId()), "id", userQueryRequest.getUserId());
+        queryWrapper.eq(StrUtil.isNotBlank(userQueryRequest.getUserRole()), "user_role", userQueryRequest.getUserRole());
+        queryWrapper.eq(StrUtil.isNotBlank(userQueryRequest.getEmail()), "email", userQueryRequest.getEmail());
+        queryWrapper.like(StrUtil.isNotBlank(userQueryRequest.getMobile()), "mobile", userQueryRequest.getMobile());
+        queryWrapper.like(StrUtil.isNotBlank(userQueryRequest.getName()), "name", userQueryRequest.getName());
+        queryWrapper.eq(ObjectUtil.isNotNull(userQueryRequest.getState()), "state", userQueryRequest.getState());
+        queryWrapper.orderBy(StrUtil.isNotEmpty(userQueryRequest.getSortOrder()), "asc".equals(userQueryRequest.getSortOrder()), userQueryRequest.getSortField());
+        return queryWrapper;
+    }
 
     @Override
     public boolean isAdmin(User user) {
         return ObjectUtil.isNotNull(user) && UserRoleEnum.ADMIN.getCode().equals(user.getUserRole());
     }
 
+    /**
+     * --- 私有方法 ---
+     */
+
+    private String getEncryptPassword(String userPassword, String salt) {
+        return DigestUtils.md5DigestAsHex((salt + userPassword).getBytes());
+    }
 }
 
 

@@ -1,25 +1,23 @@
 package com.itegg.yougravitybackend.model.vo.user;
 
+import com.itegg.yougravitybackend.common.PageRequest;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 
-import java.io.Serial;
-import java.io.Serializable;
 import java.time.LocalDateTime;
 
 /**
- * 用户脱敏VO对象类
+ * 用户查询类
  * @author ITegg
  */
+@EqualsAndHashCode(callSuper = true)
 @Data
-public class UserDesVO implements Serializable {
-
-    @Serial
-    private static final long serialVersionUID = 1L;
+public class UserQueryRequest extends PageRequest {
 
     /**
-     * id
+     * 用户id
      */
-    private Long id;
+    private Long userId;
 
     /**
      * 用户名称
@@ -42,24 +40,8 @@ public class UserDesVO implements Serializable {
     private String userRole;
 
     /**
-     * 用户头像
-     */
-    private String avatar;
-
-    /**
-     * 个性签名
-     */
-    private String signature;
-
-    /**
      * 账号状态
      */
     private Integer state;
 
-    /**
-     * 创建时间
-     */
-    private LocalDateTime createTime;
-
 }
-

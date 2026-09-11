@@ -32,16 +32,6 @@ public class UserVO implements Serializable {
     private String mobile;
 
     /**
-     * 账号密码
-     */
-    private String password;
-
-    /**
-     * 密码盐值
-     */
-    private String salt;
-
-    /**
      * 邮箱
      */
     private String email;
