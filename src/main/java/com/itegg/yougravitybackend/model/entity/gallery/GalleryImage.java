@@ -30,8 +30,8 @@ public class GalleryImage extends SuperModel {
     /**
      * 标签
      */
-    @TableField("tag")
-    private String tag;
+    @TableField("tags")
+    private String tags;
 
     /**
      * 图片体积

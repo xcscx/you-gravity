@@ -11,6 +11,13 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/gallery")
 public class GalleryController {
 
+    // 新增图库
+
+
+    // 查询我的图库
+
+
+    // 图库升级
 
 
 }

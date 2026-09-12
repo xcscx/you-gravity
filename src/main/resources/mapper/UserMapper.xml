@@ -12,6 +12,7 @@
             <result property="salt" column="salt" />
             <result property="email" column="email" />
             <result property="avatar" column="avatar" />
+            <result property="userRole" column="user_role" />
             <result property="signature" column="signature" />
             <result property="state" column="state" />
             <result property="createTime" column="create_time" />
@@ -21,6 +22,6 @@
 
     <sql id="Base_Column_List">
         id,`name`,`mobile`,password,salt,email,avatar,signature,
-        `state`,create_time,update_time,remove_flag
+        user_role,`state`,create_time,update_time,remove_flag
     </sql>
 </mapper>
