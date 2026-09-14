@@ -6,23 +6,13 @@ import java.io.Serial;
 import java.io.Serializable;
 
 /**
- * 搜索用户所属图库请求参数
+ * 图库图片信息 VO类
  * @author ITegg
  */
 @Data
-public class GalleryQueryRequest implements Serializable {
+public class GalleryImageVO implements Serializable {
 
     @Serial
     private static final long serialVersionUID = 1L;
-
-    /**
-     * 图库id
-     */
-    private Long galleryId;
-
-    /**
-     * 用户id
-     */
-    private Long userId;
 
 }

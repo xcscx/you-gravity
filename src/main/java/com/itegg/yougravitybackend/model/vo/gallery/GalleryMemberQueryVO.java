@@ -13,7 +13,7 @@ import java.io.Serializable;
  */
 @EqualsAndHashCode(callSuper = true)
 @Data
-public class GalleryQueryUserVO extends PageRequest implements Serializable {
+public class GalleryMemberQueryVO extends PageRequest implements Serializable {
 
     @Serial
     private static final long serialVersionUID = 1L;

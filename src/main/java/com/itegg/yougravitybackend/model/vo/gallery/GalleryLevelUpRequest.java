@@ -6,11 +6,11 @@ import java.io.Serial;
 import java.io.Serializable;
 
 /**
- * 搜索用户所属图库请求参数
+ * 图库升级参数
  * @author ITegg
  */
 @Data
-public class GalleryQueryRequest implements Serializable {
+public class GalleryLevelUpRequest implements Serializable {
 
     @Serial
     private static final long serialVersionUID = 1L;
