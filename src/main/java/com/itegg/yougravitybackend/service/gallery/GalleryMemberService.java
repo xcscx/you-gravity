@@ -5,7 +5,7 @@ import com.itegg.yougravitybackend.model.entity.gallery.GalleryMember;
 import com.itegg.yougravitybackend.model.vo.gallery.GalleryDeleteRequest;
 import com.itegg.yougravitybackend.model.vo.gallery.GalleryJoinRequest;
 import com.itegg.yougravitybackend.model.vo.gallery.GalleryQueryRequest;
-import com.itegg.yougravitybackend.model.vo.gallery.GalleryQueryUserVO;
+import com.itegg.yougravitybackend.model.vo.gallery.GalleryMemberQueryVO;
 
 /**
  * 图库成员 Service层
@@ -25,7 +25,7 @@ public interface GalleryMemberService extends IService<GalleryMember> {
      * @param param 查询参数
      * @return 查询结果
      */
-    GalleryQueryUserVO queryUser(GalleryQueryRequest param);
+    GalleryMemberQueryVO queryUser(GalleryQueryRequest param);
 
     /**
      * 删除图库成员

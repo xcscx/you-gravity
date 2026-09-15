@@ -43,7 +43,7 @@ public class GalleryLevelController {
      */
     @GetMapping("/info")
     public Result<GalleryLevelVO> levelInfo(@RequestParam long id) {
-        log.info("=========> /gallery/level/info id={}", JSONUtil.toJsonStr(id));
+        log.info("=========> /gallery/level/info id={}", id);
         ThrowUtils.throwIf(ObjectUtil.isEmpty(id), ErrorCode.PARAMS_ERROR);
         return ResultUtils.ok(galleryLevelService.levelInfo(id));
     }
@@ -67,9 +67,21 @@ public class GalleryLevelController {
      */
     @PostMapping("/delete")
     public Result<Boolean> delete(@RequestParam long id) {
-        log.info("=========> /gallery/level/delete id={}", JSONUtil.toJsonStr(id));
+        log.info("=========> /gallery/level/delete id={}", id);
         ThrowUtils.throwIf(ObjectUtil.isEmpty(id), ErrorCode.PARAMS_ERROR);
         return ResultUtils.ok(galleryLevelService.delete(id));
+    }
+
+    /**
+     * 图库升级
+     * @param param 参数
+     * @return 结果
+     */
+    @PostMapping("/gallery-up")
+    public Result<Boolean> galleryUp(@RequestBody GalleryLevelUpRequest param) {
+        log.info("=========> /gallery/gallery-up param={}", JSONUtil.toJsonStr(param));
+        ThrowUtils.throwIf(param == null, ErrorCode.PARAMS_ERROR);
+        return ResultUtils.ok(galleryLevelService.LevelUp(param));
     }
 
     /**

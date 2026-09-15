@@ -1,14 +1,12 @@
 package com.itegg.yougravitybackend.controller;
 
 import cn.hutool.json.JSONUtil;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.itegg.yougravitybackend.common.Result;
 import com.itegg.yougravitybackend.common.util.ResultUtils;
 import com.itegg.yougravitybackend.common.util.ThrowUtils;
 import com.itegg.yougravitybackend.exception.ErrorCode;
-import com.itegg.yougravitybackend.model.vo.gallery.GalleryDeleteRequest;
-import com.itegg.yougravitybackend.model.vo.gallery.GalleryJoinRequest;
-import com.itegg.yougravitybackend.model.vo.gallery.GalleryQueryRequest;
-import com.itegg.yougravitybackend.model.vo.gallery.GalleryQueryUserVO;
+import com.itegg.yougravitybackend.model.vo.gallery.*;
 import com.itegg.yougravitybackend.service.gallery.GalleryMemberService;
 import jakarta.annotation.Resource;
 import lombok.extern.slf4j.Slf4j;
@@ -46,11 +44,12 @@ public class GalleryMemberController {
      * @param param 查询参数
      * @return 查询结果
      */
-    @PostMapping("/qurey")
-    public Result<GalleryQueryUserVO> qurey(@RequestBody GalleryQueryRequest param) {
-        log.info("=========> /gallery/member/join param={}", JSONUtil.toJsonStr(param));
+    @PostMapping("/query")
+    public Result<Page<GalleryMemberQueryVO>> query(@RequestBody GalleryMemberQueryRequest param) {
+        log.info("=========> /gallery/member/query param={}", JSONUtil.toJsonStr(param));
         ThrowUtils.throwIf(param == null || param.getGalleryId() == null, ErrorCode.PARAMS_ERROR);
-        return ResultUtils.ok(galleryMemberService.queryUser(param));
+//        return ResultUtils.ok(galleryMemberService.queryUser(param));
+        return null;
     }
 
     /**

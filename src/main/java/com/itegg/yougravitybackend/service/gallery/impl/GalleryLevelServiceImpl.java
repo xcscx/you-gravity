@@ -64,6 +64,17 @@ public class GalleryLevelServiceImpl extends ServiceImpl<GalleryLevelMapper, Gal
     }
 
     @Override
+    public boolean LevelUp(GalleryLevelUpRequest param) {
+        // 权限校验
+
+        // 参数校验
+
+        // 等级更改
+
+         return true;
+    }
+
+    @Override
     public GalleryLevelListVO levelList(GalleryLevelListRequest param) {
         // 查询数据
 

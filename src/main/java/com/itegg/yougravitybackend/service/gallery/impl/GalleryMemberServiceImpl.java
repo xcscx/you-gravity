@@ -6,7 +6,7 @@ import com.itegg.yougravitybackend.model.entity.gallery.GalleryMember;
 import com.itegg.yougravitybackend.model.vo.gallery.GalleryDeleteRequest;
 import com.itegg.yougravitybackend.model.vo.gallery.GalleryJoinRequest;
 import com.itegg.yougravitybackend.model.vo.gallery.GalleryQueryRequest;
-import com.itegg.yougravitybackend.model.vo.gallery.GalleryQueryUserVO;
+import com.itegg.yougravitybackend.model.vo.gallery.GalleryMemberQueryVO;
 import com.itegg.yougravitybackend.service.gallery.GalleryMemberService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -30,7 +30,7 @@ public class GalleryMemberServiceImpl extends ServiceImpl<GalleryMemberMapper, G
     }
 
     @Override
-    public GalleryQueryUserVO queryUser(GalleryQueryRequest param) {
+    public GalleryMemberQueryVO queryUser(GalleryQueryRequest param) {
         // 校验参数
 
         // 关联表查询

@@ -39,6 +39,13 @@ public interface GalleryLevelService extends IService<GalleryLevel> {
     boolean delete(long id);
 
     /**
+     * 图库等级上移
+     * @param param 上移参数
+     * @return 上移结果
+     */
+    boolean LevelUp(GalleryLevelUpRequest param);
+
+    /**
      * 图库列表搜索
      * @param param 搜索参数
      * @return 查询结果
